@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "138534536560",
+    "project_id": "mermas-digitais-2023",
+    "storage_bucket": "mermas-digitais-2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138534536560:android:aba600ed7107b33c55bbb5",
+        "android_client_info": {
+          "package_name": "com.example.mermas_digitais_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138534536560-8irbf3rc1qjjjkdqobnkaj1vpbtc174o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqwtJ39FcEE5IYMf0yM_BW0HqzB76YzNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138534536560-8irbf3rc1qjjjkdqobnkaj1vpbtc174o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
