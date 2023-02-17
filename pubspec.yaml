@@ -37,10 +37,29 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.6.0
   flutter_svg: ^2.0.1
-  flutter_native_splash: ^2.2.17
+  #flutter_native_splash: ^2.2.17
+  persistent_bottom_nav_bar_v2: ^4.2.6
+  custom_line_indicator_bottom_navbar: ^0.0.8
+  flutter_launcher_icons: "^0.11.0"
+
+ 
 flutter_native_splash:
+  ios: false
+  web: false
   color: "#330043"
   image: assets/logo_branca.png
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/mermas_digitais_icon3.png"
+  adaptive_icon_background: "#330043"
+  adaptive_icon_foreground: "assets/logo_branca.png"
+  web:
+    generate: true
+    image_path: "assets/mermas_digitais_icon.png"
+    background_color: "#330043"
+    theme_color: "#330043"
 
 
 dev_dependencies:
@@ -66,8 +85,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+  - assets/logo_branca.png
+  - assets/logo_roxa.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
