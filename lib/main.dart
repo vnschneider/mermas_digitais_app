@@ -1,13 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mermas_digitais_app/homePage.dart';
+import 'package:mermas_digitais_app/loginPages/loginPage.dart';
+import 'package:mermas_digitais_app/menuPages/homePage.dart';
 import 'firebase_options.dart';
+import 'loginPages/checkLogin.dart';
 
-/*await Firebase.initializeApp(
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);*/
+  );
 
-void main() {
   runApp(const MyApp());
 }
 
@@ -18,9 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        bottomAppBarColor: Color.fromARGB(255, 221, 199, 248),
+        primarySwatch: Colors.deepPurple,
       ),
-      home: HomePage(),
+      home: CheckLogin(),
       debugShowCheckedModeBanner: false,
     );
   }

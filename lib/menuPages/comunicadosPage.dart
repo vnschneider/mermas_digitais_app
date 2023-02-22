@@ -14,9 +14,16 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          elevation: 4,
-          toolbarHeight: 60,
-          title: Text('Comunicados'),
+          elevation: 3,
+          toolbarHeight: 70,
+          title: Text(
+            'Comunicados',
+            style: TextStyle(
+                color: Color.fromARGB(255, 221, 199, 248),
+                fontFamily: 'PaytoneOne',
+                //fontWeight: FontWeight.bold,
+                fontSize: 28),
+          ),
           backgroundColor: const Color.fromARGB(255, 51, 0, 67),
         ),
         body: Padding(

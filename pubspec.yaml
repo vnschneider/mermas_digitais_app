@@ -41,23 +41,24 @@ dependencies:
   persistent_bottom_nav_bar_v2: ^4.2.6
   custom_line_indicator_bottom_navbar: ^0.0.8
   flutter_launcher_icons: "^0.11.0"
+  firebase_auth: ^4.2.9
 
  
 flutter_native_splash:
   ios: false
   web: false
   color: "#330043"
-  image: assets/logo_branca.png
+  image: assets/MermasDigitaisIcon.png
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/mermas_digitais_icon3.png"
+  image_path: "assets/MermasDigitaisIcon.png"
   adaptive_icon_background: "#330043"
-  adaptive_icon_foreground: "assets/logo_branca.png"
+  adaptive_icon_foreground: "assets/MermasDigitaisIcon.png"
   web:
     generate: true
-    image_path: "assets/mermas_digitais_icon.png"
+    image_path: "assets/MermasDigitaisIcon.png"
     background_color: "#330043"
     theme_color: "#330043"
 
@@ -88,7 +89,19 @@ flutter:
   assets:
   - assets/logo_branca.png
   - assets/logo_roxa.png
-  #   - images/a_dot_ham.jpeg
+  - assets/logo_branca.svg
+  - assets/logo_roxa.svg
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/Fonts/Poppins/Poppins-Regular.ttf
+
+    - family: PaytoneOne
+      fonts:
+        - asset: assets/Fonts/PaytoneOne-Regular.ttf
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

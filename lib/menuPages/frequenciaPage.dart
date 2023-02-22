@@ -14,7 +14,16 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Frequência'),
+          elevation: 3,
+          toolbarHeight: 70,
+          title: Text(
+            'Frequência',
+            style: TextStyle(
+                color: Color.fromARGB(255, 221, 199, 248),
+                fontFamily: 'PaytoneOne',
+                //fontWeight: FontWeight.bold,
+                fontSize: 28),
+          ),
           backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
       body: Center(
         child: Text('Frequenncia'),
