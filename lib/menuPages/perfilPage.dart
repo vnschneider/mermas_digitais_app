@@ -79,17 +79,19 @@ class _PerfilPageState extends State<PerfilPage> {
                         ),
                         const SizedBox(height: 10),
                         GestureDetector(
-                          onTap: () async {
+                          onTap: () {
                             showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return LoadingWindow();
+                                  return const LoadingWindow();
                                 });
-
-                            await FirebaseAuth.instance.signOut();
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              Navigator.of(context).pop();
+                              FirebaseAuth.instance.signOut();
+                            });
 
                             // ignore: use_build_context_synchronously
-                            Navigator.of(context).pop();
                           },
                           child: Row(
                             // ignore: prefer_const_literals_to_create_immutables
