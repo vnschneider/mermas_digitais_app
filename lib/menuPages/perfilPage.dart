@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:mermas_digitais_app/models/loadingWindow.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -36,91 +37,88 @@ class _PerfilPageState extends State<PerfilPage> {
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-            child: SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Card(
-                margin: const EdgeInsets.only(bottom: 520),
-                color: const Color.fromARGB(255, 221, 199, 248),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Iconsax.personalcard,
-                        size: 90,
-                        color: Color.fromARGB(255, 51, 0, 67),
-                      ),
-                      const SizedBox(width: 10),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            FirebaseAuth.instance.currentUser != null
-                                ? 'Lorem Ipsum da Silva'
-                                : 'Lorem Ipsum da Silva',
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 51, 0, 67),
-                              fontFamily: "PaytoneOne",
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
+            child: Card(
+              //margin: const EdgeInsets.only(bottom: 520),
+              color: const Color.fromARGB(255, 221, 199, 248),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Iconsax.personalcard,
+                      size: 90,
+                      color: Color.fromARGB(255, 51, 0, 67),
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          FirebaseAuth.instance.currentUser != null
+                              ? 'Lorem Ipsum da Silva'
+                              : 'Lorem Ipsum da Silva',
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 51, 0, 67),
+                            fontFamily: "PaytoneOne",
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            user.email!,
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 51, 0, 67),
-                              fontFamily: "Poppins",
-                              fontSize: 16,
-                            ),
+                        ),
+                        Text(
+                          user.email!,
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 51, 0, 67),
+                            fontFamily: "Poppins",
+                            fontSize: 16,
                           ),
-                          const SizedBox(height: 10),
-                          GestureDetector(
-                            onTap: () {
-                              FirebaseAuth.instance.signOut();
-                            },
-                            child: Row(
-                              // ignore: prefer_const_literals_to_create_immutables
-                              children: [
-                                const Icon(
-                                  Iconsax.logout,
-                                  size: 25,
-                                  color: Color.fromARGB(255, 51, 0, 67),
-                                  fill: 1,
-                                ),
-                                const SizedBox(width: 5),
-                                const Text(
-                                  'Sair',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 51, 0, 67),
-                                      fontFamily: "Poppins",
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
+                        ),
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () async {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return LoadingWindow();
+                                });
+
+                            await FirebaseAuth.instance.signOut();
+
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context).pop();
+                          },
+                          child: Row(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              const Icon(
+                                Iconsax.logout,
+                                size: 25,
+                                color: Color.fromARGB(255, 51, 0, 67),
+                                fill: 1,
+                              ),
+                              const SizedBox(width: 5),
+                              const Text(
+                                'Sair',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                        ],
-                      )
-                    ],
-                  ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
           ),
-        )
-        /* Text('Perfil de: ' + user.email!),
-            MaterialButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              color: Colors.deepPurpleAccent,
-              child: Text('Sair'),
-            )*/
-
-        );
+        ));
   }
 }
