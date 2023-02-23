@@ -24,7 +24,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Celular Android ou um emulador
-* Uma máquina com `<Windows / Linux / Mac>`.
+* Uma máquina com `Windows / Linux / MacOS`.
 
 ## 🚀 Instalando Mermãs Digitais app
 
