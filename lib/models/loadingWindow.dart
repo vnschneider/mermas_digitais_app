@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class LoadingWindow extends StatelessWidget {
   const LoadingWindow({super.key});
