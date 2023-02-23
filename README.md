@@ -31,7 +31,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 Para instalar o <Mermãs Digitais app>, siga estas etapas:
 
 
-* Baixe o apk de acordo com o seu aparelho [AQUI](https://github.com/1mrschneider/mermas_digitais_app/tree/main/apk/release)
+* Baixe o apk de acordo com o seu aparelho [AQUI](https://github.com/1mrschneider/mermas_digitais_app/releases/)
 * "app-arm64-v8a-release.apk" para aparelhos arm 64x
 * "app-armeabi-v7a-release.apk" para os demais aparelhos
 * Instale o apk no seu aparelho android ou emulador e aproveite :)
