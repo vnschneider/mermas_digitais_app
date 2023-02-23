@@ -1,5 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
@@ -55,11 +57,11 @@ class _LoginPageState extends State<LoginPage> {
                   width: 150,
                   height: 150,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 //Ola merma
-                Text(
-                  'Bem vinda mermã!',
+                const Text(
+                  'Bem vinda, mermã!',
                   style: TextStyle(
                       color: Color.fromARGB(255, 221, 199, 248),
                       fontFamily: 'PaytoneOne',
@@ -68,8 +70,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 //Bemvinda
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   'Consulte suas faltas e muito mais.',
                   style: TextStyle(
                       color: Color.fromARGB(255, 221, 199, 248),
@@ -77,23 +79,23 @@ class _LoginPageState extends State<LoginPage> {
                       //fontWeight: FontWeight.bold,
                       fontSize: 18),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
 
                 //Email TextField
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 51, 0, 67),
-                      border:
-                          Border.all(color: Color.fromARGB(255, 221, 199, 248)),
+                      color: const Color.fromARGB(255, 51, 0, 67),
+                      border: Border.all(
+                          color: const Color.fromARGB(200, 221, 199, 248)),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
                         controller: _emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Email',
                           hintStyle: TextStyle(
@@ -104,16 +106,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 //Password TextField
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 51, 0, 67),
-                      border:
-                          Border.all(color: Color.fromARGB(255, 221, 199, 248)),
+                      color: const Color.fromARGB(255, 51, 0, 67),
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 221, 199, 248)),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
@@ -129,14 +131,14 @@ class _LoginPageState extends State<LoginPage> {
                               });
                               print(showpassword);
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.remove_red_eye_sharp,
-                              color: Color.fromARGB(255, 221, 199, 248),
+                              color: Color.fromARGB(200, 221, 199, 248),
                             ),
                           ),
                           border: InputBorder.none,
                           hintText: 'Senha',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               fontFamily: 'Poppins',
                               color: Color.fromARGB(255, 221, 199, 248)),
                         ),
@@ -144,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
 
                 //Esqueceu sua senha?
                 Padding(
@@ -154,12 +156,12 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       GestureDetector(
                         onTap: () {},
-                        child: Text(
-                          'Esqueceu sua senha?',
+                        child: const Text(
+                          'Primeiro acesso ou esqueceu sua senha?',
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               color: Color.fromARGB(255, 221, 199, 248),
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -167,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
 
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
 
                 //LoginButton
                 Padding(
@@ -175,14 +177,14 @@ class _LoginPageState extends State<LoginPage> {
                   child: GestureDetector(
                     onTap: signIn,
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 51, 0, 67),
+                        color: const Color.fromARGB(255, 51, 0, 67),
                         border: Border.all(
-                            color: Color.fromARGB(255, 221, 199, 248)),
+                            color: const Color.fromARGB(255, 221, 199, 248)),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Entrar',
                           style: TextStyle(
