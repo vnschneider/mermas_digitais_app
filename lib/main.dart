@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mermas_digitais_app/loginPages/loginPage.dart';
-import 'package:mermas_digitais_app/menuPages/homePage.dart';
 import 'firebase_options.dart';
 import 'loginPages/checkLogin.dart';
 
@@ -22,10 +19,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        bottomAppBarColor: Color.fromARGB(255, 221, 199, 248),
-        primarySwatch: Colors.deepPurple,
+        useMaterial3: true,
+        //light scheme
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Color.fromARGB(255, 51, 0, 68),
+          onPrimary: Color.fromARGB(255, 221, 199, 248),
+          secondary: Color.fromARGB(255, 221, 199, 248),
+          onSecondary: Color.fromARGB(255, 51, 0, 68),
+          error: Color.fromARGB(255, 186, 26, 26),
+          onError: Color.fromARGB(255, 255, 218, 214),
+          background: Color.fromARGB(255, 255, 255, 255),
+          onBackground: Color.fromARGB(255, 51, 0, 68),
+          surface: Color.fromARGB(255, 51, 0, 68),
+          onSurface: Color.fromARGB(255, 221, 199, 248),
+        ),
       ),
-      home: CheckLogin(),
+      home: const CheckLogin(),
       debugShowCheckedModeBanner: false,
     );
   }
