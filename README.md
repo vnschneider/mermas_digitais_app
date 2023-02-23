@@ -10,6 +10,16 @@
 
 > Protótipo do app, produzido no Figma.
 
+### Objetivos
+
+O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
+
+- [x] Criar um app com interface agradável e intuitiva.
+- [x] Melhorar a comunicação entre a equipe e as alunas.
+- [x] Consultar material de aula.
+- [ ] Consultar ou justificar faltas.
+- [ ] Suportar matrículas.
+
 ## 💻 Pré-requisitos
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
