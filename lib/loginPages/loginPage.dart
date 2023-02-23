@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mermas_digitais_app/loginPages/newUserPage.dart';
+import 'package:mermas_digitais_app/models/loadingWindow.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,6 +19,11 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   Future signIn() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const LoadingWindow();
+        });
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
@@ -24,11 +31,18 @@ class _LoginPageState extends State<LoginPage> {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('Emaail não encontrado!');
+        print('Email não encontrado!');
+        //'Email não encontrado!';
+        // Navigator.of(context).pop();
       } else if (e.code == 'wrong-password') {
         print('Senha incorreta!');
+        //'Senha incorreta!';
+        // Navigator.of(context).pop();
       }
     }
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
   }
 
   @override
@@ -155,7 +169,11 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => NewUserPage(),
+                          ));
+                        },
                         child: const Text(
                           'Primeiro acesso ou esqueceu sua senha?',
                           style: TextStyle(
