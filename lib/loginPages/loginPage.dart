@@ -29,20 +29,19 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('Email não encontrado!');
         //'Email não encontrado!';
-        // Navigator.of(context).pop();
+        Navigator.of(context).pop();
       } else if (e.code == 'wrong-password') {
         print('Senha incorreta!');
         //'Senha incorreta!';
-        // Navigator.of(context).pop();
+        Navigator.of(context).pop();
       }
     }
-
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).pop();
   }
 
   @override
@@ -171,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => NewUserPage(),
+                            builder: (context) => const NewUserPage(),
                           ));
                         },
                         child: const Text(
