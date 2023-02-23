@@ -26,9 +26,9 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Celular Android ou um emulador
 * Uma máquina com `<Windows / Linux / Mac>`.
 
-## 🚀 Instalando <Mermãs Digitais app>
+## 🚀 Instalando Mermãs Digitais app
 
-Para instalar o <Mermãs Digitais app>, siga estas etapas:
+Para instalar o Mermãs Digitais app, siga estas etapas:
 
 
 * Baixe o apk de acordo com o seu aparelho [AQUI](https://github.com/1mrschneider/mermas_digitais_app/releases/)
