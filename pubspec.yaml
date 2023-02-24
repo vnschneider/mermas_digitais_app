@@ -44,6 +44,7 @@ dependencies:
   firebase_auth: ^4.2.9
   iconsax: ^0.0.8
   percent_indicator: ^4.2.2
+  cloud_firestore: ^4.4.3
 
  
 flutter_native_splash:

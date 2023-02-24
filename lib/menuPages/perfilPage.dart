@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:mermas_digitais_app/loginPages/newUserPage.dart';
 import 'package:mermas_digitais_app/models/loadingWindow.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -105,6 +106,44 @@ class _PerfilPageState extends State<PerfilPage> {
                               const SizedBox(width: 5),
                               const Text(
                                 'Sair',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const LoadingWindow();
+                                });
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const NewUserPage(),
+                              ));
+                            });
+
+                            // ignore: use_build_context_synchronously
+                          },
+                          child: Row(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              const Icon(
+                                Iconsax.document_upload,
+                                size: 25,
+                                color: Color.fromARGB(255, 51, 0, 67),
+                                fill: 1,
+                              ),
+                              const SizedBox(width: 5),
+                              const Text(
+                                'UpdateUser',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
                                     fontFamily: "Poppins",

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -15,7 +16,30 @@ class FrequenciaPage extends StatefulWidget {
 
 class _FrequenciaPageState extends State<FrequenciaPage> {
   final user = FirebaseAuth.instance.currentUser!;
+  final CollectionReference _users =
+      FirebaseFirestore.instance.collection('users');
 
+  var value = 0;
+
+//document IDs
+  // List<String> docIDs = [];
+
+//get docIDs
+  /* Future getDocId() async {
+    await FirebaseFirestore.instance
+        .collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get()
+        .then((snapshot) => snapshotforEach((document) {
+              print(document.reference);
+              docIDs.add(document.reference.id);
+            }));
+  }
+
+  @override
+  void initState() {
+    getDocId();
+    super.initState();
+  }
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +59,13 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                 fontSize: 28),
           ),
           backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
-      body: FirebaseAuth.instance.currentUser != null
-          ? SafeArea(
+      body: StreamBuilder(
+        stream: _users.snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+          if (streamSnapshot.hasData) {
+            final DocumentSnapshot documentSnapshot =
+                streamSnapshot.data!.docs[value];
+            return SafeArea(
               child: Center(
                 child: Card(
                   margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -71,7 +100,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                         ),
                         Text(
                           user.displayName != null
-                              ? user.displayName!
+                              ? documentSnapshot['name']
                               : 'Lorem Ipsum da Silva',
                           style: const TextStyle(
                             color: Color.fromARGB(255, 51, 0, 67),
@@ -87,7 +116,8 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                           animateFromLastPercent: true,
                           animationDuration: 1000,
                           lineHeight: 30,
-                          percent: 0.8,
+                          percent:
+                              documentSnapshot['frequence'], //_userFrequence,
                           progressColor: const Color.fromARGB(255, 51, 0, 67),
                           backgroundColor:
                               const Color.fromARGB(255, 221, 199, 248),
@@ -141,8 +171,12 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                   ),
                 ),
               ),
-            )
-          : const LoadingWindow(),
+            );
+          }
+
+          return const LoadingWindow();
+        },
+      ),
     );
   }
 }

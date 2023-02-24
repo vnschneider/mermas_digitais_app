@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
+                      child: TextFormField(
                         controller: _emailController,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
+                      child: TextFormField(
                         controller: _passwordController,
                         obscureText: showpassword,
                         decoration: InputDecoration(
@@ -192,7 +192,9 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: GestureDetector(
-                    onTap: signIn,
+                    onTap: () {
+                      signIn();
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
