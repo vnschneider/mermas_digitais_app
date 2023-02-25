@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/loginPages/newUserPage.dart';
 import 'package:mermas_digitais_app/models/loadingWindow.dart';
+import 'package:mermas_digitais_app/models/userInformation.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -126,7 +127,7 @@ class _PerfilPageState extends State<PerfilPage> {
                             Future.delayed(const Duration(milliseconds: 1000),
                                 () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const NewUserPage(),
+                                builder: (context) => UserInformation(),
                               ));
                             });
 

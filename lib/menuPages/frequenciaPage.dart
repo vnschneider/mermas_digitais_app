@@ -19,6 +19,13 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
   final CollectionReference _users =
       FirebaseFirestore.instance.collection('users');
 
+  Stream collectionStream =
+      FirebaseFirestore.instance.collection('users').snapshots();
+  Stream documentStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
+
   var value = 0;
 
 //document IDs

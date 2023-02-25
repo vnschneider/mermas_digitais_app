@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mermas_digitais_app/models/loadingWindow.dart';
-import 'package:mermas_digitais_app/models/usersModel.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key});
