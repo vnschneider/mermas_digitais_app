@@ -28,25 +28,16 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
 
   var value = 0;
 
-//document IDs
-  // List<String> docIDs = [];
+  // Future userMe() async {
+  //   final docRef = FirebaseFirestore.instance.collection("users").doc(user.uid);
+  //   final doc = await docRef.get();
+  //   final data = doc.data() as Map<String, dynamic>;
 
-//get docIDs
-  /* Future getDocId() async {
-    await FirebaseFirestore.instance
-        .collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get()
-        .then((snapshot) => snapshotforEach((document) {
-              print(document.reference);
-              docIDs.add(document.reference.id);
-            }));
-  }
+  //   String name = data['name'];
 
-  @override
-  void initState() {
-    getDocId();
-    super.initState();
-  }
-*/
+  //   print(name);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,9 +97,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                           color: Color.fromARGB(255, 51, 0, 67),
                         ),
                         Text(
-                          user.displayName != null
-                              ? documentSnapshot['name']
-                              : 'Lorem Ipsum da Silva',
+                          documentSnapshot['name'],
                           style: const TextStyle(
                             color: Color.fromARGB(255, 51, 0, 67),
                             fontFamily: "Poppins",
