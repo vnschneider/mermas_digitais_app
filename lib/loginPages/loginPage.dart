@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //TextController
+  //TextControllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -24,24 +24,22 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context) {
           return const LoadingWindow();
         });
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('Email não encontrado!');
         //'Email não encontrado!';
-        Navigator.of(context).pop();
       } else if (e.code == 'wrong-password') {
         print('Senha incorreta!');
         //'Senha incorreta!';
-        Navigator.of(context).pop();
       }
     }
+    Navigator.of(context).pop();
   }
 
   @override
