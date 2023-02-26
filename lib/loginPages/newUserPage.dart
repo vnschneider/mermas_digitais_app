@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,29 +37,22 @@ class _NewUserPageState extends State<NewUserPage> {
         addUserDetails(_nameController.text.trim(),
             FirebaseAuth.instance.currentUser!.email.toString());
       }
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('Email não encontrado!');
         //'Email não encontrado!';
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
       } else if (e.code == 'wrong-password') {
         print('Senha incorreta!');
         //'Senha incorreta!';
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
       } else if (e.code == 'auth/email-already-exists') {
         UpdateUser();
         //add user details
         addUserDetails(_nameController.text.trim(),
             FirebaseAuth.instance.currentUser!.email.toString());
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
       }
     }
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 
   Future UpdateUser() async {
@@ -78,7 +71,7 @@ class _NewUserPageState extends State<NewUserPage> {
         .set({
       'email': email,
       'name': name,
-      'frequence': 1,
+      'frequence': 1.0,
       'status': 'Aluna',
     });
   }
@@ -300,10 +293,8 @@ class _NewUserPageState extends State<NewUserPage> {
                             builder: (context) {
                               return const LoadingWindow();
                             });
-                        UpdateUser();
-                        Future.delayed(const Duration(milliseconds: 800), () {
-                          Navigator.of(context).pop();
-                        });
+                        UpdateUser()
+                            .whenComplete(() => Navigator.of(context).pop());
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),

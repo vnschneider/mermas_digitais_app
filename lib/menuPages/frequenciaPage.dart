@@ -22,20 +22,25 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
   String userName = '';
   double userFrequence = 0;
 
-  Future userInfo() async {
-    final docRef = FirebaseFirestore.instance.collection("users").doc(user.uid);
-    final doc = await docRef.get();
-    final data = doc.data() as Map<String, dynamic>;
+  userInfo() async {
+    try {
+      final docRef =
+          FirebaseFirestore.instance.collection("users").doc(user.uid);
+      final doc = await docRef.get();
+      final data = doc.data() as Map<String, dynamic>;
 
-    userUID = user.uid;
-    userName = data['name'];
-    userEmail = data['email'];
-    userFrequence = data['frequence'];
+      userUID = user.uid;
+      userName = data['name'];
+      userEmail = data['email'];
+      userFrequence = data['frequence'];
 
-    print(userUID);
-    print(userName);
-    print(userEmail);
-    print(userFrequence);
+      print(userUID);
+      print(userName);
+      print(userEmail);
+      print(userFrequence);
+    } catch (e) {
+      return print('Banco de dados vazio!');
+    }
   }
 
   @override

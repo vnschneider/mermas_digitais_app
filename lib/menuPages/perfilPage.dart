@@ -20,15 +20,20 @@ class _PerfilPageState extends State<PerfilPage> {
   String userName = '';
 
   Future userInfo() async {
-    final docRef = FirebaseFirestore.instance.collection("users").doc(user.uid);
-    final doc = await docRef.get();
-    final data = doc.data() as Map<String, dynamic>;
+    try {
+      final docRef =
+          FirebaseFirestore.instance.collection("users").doc(user.uid);
+      final doc = await docRef.get();
+      final data = doc.data() as Map<String, dynamic>;
 
-    userName = data['name'];
-    userEmail = data['email'];
+      userName = data['name'];
+      userEmail = data['email'];
 
-    print(userName);
-    print(userEmail);
+      print(userName);
+      print(userEmail);
+    } catch (e) {
+      return print('Banco de dados vazio');
+    }
   }
 
   @override
@@ -52,134 +57,130 @@ class _PerfilPageState extends State<PerfilPage> {
                   fontSize: 28),
             ),
             backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
-        body: userName == ''
-            ? const LoadingWindow()
-            : SafeArea(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-                  child: Card(
-                    //margin: const EdgeInsets.only(bottom: 520),
-                    color: const Color.fromARGB(255, 221, 199, 248),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        // mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Iconsax.personalcard,
-                            size: 90,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+            child: Card(
+              //margin: const EdgeInsets.only(bottom: 520),
+              color: const Color.fromARGB(255, 221, 199, 248),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  // mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Iconsax.personalcard,
+                      size: 90,
+                      color: Color.fromARGB(255, 51, 0, 67),
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          userName,
+                          style: const TextStyle(
                             color: Color.fromARGB(255, 51, 0, 67),
+                            fontFamily: "PaytoneOne",
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(width: 10),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        Text(
+                          userEmail,
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 51, 0, 67),
+                            fontFamily: "Poppins",
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const LoadingWindow();
+                                });
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              Navigator.of(context).pop();
+                              FirebaseAuth.instance.signOut();
+                            });
+
+                            // ignore: use_build_context_synchronously
+                          },
+                          child: Row(
+                            // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              Text(
-                                userName,
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 51, 0, 67),
-                                  fontFamily: "PaytoneOne",
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              const Icon(
+                                Iconsax.logout,
+                                size: 25,
+                                color: Color.fromARGB(255, 51, 0, 67),
+                                fill: 1,
                               ),
-                              Text(
-                                userEmail,
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 51, 0, 67),
-                                  fontFamily: "Poppins",
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return const LoadingWindow();
-                                      });
-                                  Future.delayed(
-                                      const Duration(milliseconds: 1000), () {
-                                    Navigator.of(context).pop();
-                                    FirebaseAuth.instance.signOut();
-                                  });
-
-                                  // ignore: use_build_context_synchronously
-                                },
-                                child: Row(
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  children: [
-                                    const Icon(
-                                      Iconsax.logout,
-                                      size: 25,
-                                      color: Color.fromARGB(255, 51, 0, 67),
-                                      fill: 1,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Text(
-                                      'Sair',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(255, 51, 0, 67),
-                                          fontFamily: "Poppins",
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return const LoadingWindow();
-                                      });
-                                  Future.delayed(
-                                      const Duration(milliseconds: 1000), () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => NewUserPage(),
-                                    ));
-                                  });
-
-                                  // ignore: use_build_context_synchronously
-                                },
-                                child: Row(
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  children: [
-                                    const Icon(
-                                      Iconsax.document_upload,
-                                      size: 25,
-                                      color: Color.fromARGB(255, 51, 0, 67),
-                                      fill: 1,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Text(
-                                      'UpdateUser',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(255, 51, 0, 67),
-                                          fontFamily: "Poppins",
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
+                              const SizedBox(width: 5),
+                              const Text(
+                                'Sair',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const LoadingWindow();
+                                });
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => NewUserPage(),
+                              ));
+                            });
+
+                            // ignore: use_build_context_synchronously
+                          },
+                          child: Row(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              const Icon(
+                                Iconsax.document_upload,
+                                size: 25,
+                                color: Color.fromARGB(255, 51, 0, 67),
+                                fill: 1,
+                              ),
+                              const SizedBox(width: 5),
+                              const Text(
+                                'UpdateUser',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
+            ),
+          ),
+        ),
       ),
     );
   }
