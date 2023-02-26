@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         useMaterial3: true,
+
         //light scheme
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
