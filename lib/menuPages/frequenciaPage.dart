@@ -123,10 +123,10 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                           const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
-                                'Você Possui 80% de presença nas aulas.',
-                                style: TextStyle(
+                                'Você Possui $userFrequence% de presença nas aulas.',
+                                style: const TextStyle(
                                   color: Color.fromARGB(255, 51, 0, 67),
                                   fontFamily: "Poppins",
                                   fontSize: 16,
@@ -136,15 +136,24 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Parabéns pelo seu empenho!',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 51, 0, 67),
-                                  fontFamily: "Poppins",
-                                  fontSize: 16,
-                                ),
-                              ),
+                            children: [
+                              userFrequence <= 0.25
+                                  ? const Text(
+                                      'Parabéns pelo seu empenho!',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 51, 0, 67),
+                                        fontFamily: "Poppins",
+                                        fontSize: 16,
+                                      ),
+                                    )
+                                  : const Text(
+                                      'Cuidado, você corre o risco de ser reprovada. :(',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 51, 0, 67),
+                                        fontFamily: "Poppins",
+                                        fontSize: 16,
+                                      ),
+                                    ),
                             ],
                           ),
                           const SizedBox(height: 100),
