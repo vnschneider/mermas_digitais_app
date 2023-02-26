@@ -61,7 +61,7 @@ flutter_icons:
   adaptive_icon_foreground: "assets/MermasDigitaisIcon.png"
   web:
     generate: true
-    image_path: "assets/MermasDigitaisIcon.png"
+    image_path: "assets/logo_roxa.png"
     background_color: "#330043"
     theme_color: "#330043"
 
