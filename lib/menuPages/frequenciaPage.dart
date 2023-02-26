@@ -125,7 +125,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Você Possui $userFrequence% de presença nas aulas.',
+                                'Você Possui ${userFrequence * 100}% de presença nas aulas.',
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 51, 0, 67),
                                   fontFamily: "Poppins",
