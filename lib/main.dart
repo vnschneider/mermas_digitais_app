@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           onSurface: Color.fromARGB(255, 221, 199, 248),
         ),
       ),
-      home: const CheckLogin(),
+      home: CheckLogin(),
       debugShowCheckedModeBanner: false,
     );
   }
