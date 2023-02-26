@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/models/loadingWindow.dart';
@@ -21,6 +22,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
   String userEmail = '';
   String userName = '';
   double userFrequence = 0;
+  String userProfilePhoto = '';
 
   userInfo() async {
     try {
@@ -33,6 +35,14 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
       userName = data['name'];
       userEmail = data['email'];
       userFrequence = data['frequence'];
+
+      final profilephotoRef = FirebaseStorage.instance
+          .ref()
+          .child('users/${user.uid}/profilephoto.jpg');
+
+      await profilephotoRef.getDownloadURL().then((value) {
+        userProfilePhoto = value;
+      });
 
       print(userUID);
       print(userName);
@@ -94,11 +104,17 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             ],
                           ),
                           const SizedBox(height: 60),
-                          const Icon(
-                            Iconsax.personalcard,
-                            size: 120,
-                            color: Color.fromARGB(255, 51, 0, 67),
-                          ),
+                          userProfilePhoto != ''
+                              ? CircleAvatar(
+                                  radius: 60,
+                                  backgroundImage:
+                                      NetworkImage(userProfilePhoto))
+                              : const Icon(
+                                  Iconsax.personalcard,
+                                  size: 120,
+                                  color: Color.fromARGB(255, 51, 0, 67),
+                                ),
+                          const SizedBox(height: 10),
                           Text(
                             userName,
                             style: const TextStyle(
@@ -108,7 +124,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 30),
                           LinearPercentIndicator(
                             barRadius: const Radius.circular(8),
                             animation: true,
@@ -125,7 +141,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Você Possui ${userFrequence * 100}% de presença nas aulas.',
+                                'Você Possui ${(userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 51, 0, 67),
                                   fontFamily: "Poppins",
@@ -137,7 +153,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              userFrequence <= 0.25
+                              userFrequence >= 0.25
                                   ? const Text(
                                       'Parabéns pelo seu empenho!',
                                       style: TextStyle(
@@ -146,12 +162,17 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                         fontSize: 16,
                                       ),
                                     )
-                                  : const Text(
-                                      'Cuidado, você corre o risco de ser reprovada. :(',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 51, 0, 67),
-                                        fontFamily: "Poppins",
-                                        fontSize: 16,
+                                  : const Expanded(
+                                      child: Text(
+                                        maxLines: 2,
+                                        textAlign: TextAlign.start,
+                                        overflow: TextOverflow.ellipsis,
+                                        'Cuidado, você corre o risco de ser reprovada. :(',
+                                        style: TextStyle(
+                                          color: Color.fromARGB(255, 51, 0, 67),
+                                          fontFamily: "Poppins",
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                             ],

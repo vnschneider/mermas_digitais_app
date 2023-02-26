@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/loginPages/newUserPage.dart';
@@ -18,6 +19,7 @@ class _PerfilPageState extends State<PerfilPage> {
   final user = FirebaseAuth.instance.currentUser!;
   String userEmail = '';
   String userName = '';
+  String userProfilePhoto = '';
 
   Future userInfo() async {
     try {
@@ -29,6 +31,14 @@ class _PerfilPageState extends State<PerfilPage> {
       userName = data['name'];
       userEmail = data['email'];
 
+      //getProfilePhoto
+      final profilephotoRef = FirebaseStorage.instance
+          .ref()
+          .child('users/${user.uid}/profilephoto.jpg');
+
+      await profilephotoRef.getDownloadURL().then((value) {
+        userProfilePhoto = value;
+      });
       print(userName);
       print(userEmail);
     } catch (e) {
@@ -66,36 +76,52 @@ class _PerfilPageState extends State<PerfilPage> {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
-                  // mainAxisSize: MainAxisSize.min,
+                  //mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Iconsax.personalcard,
-                      size: 90,
-                      color: Color.fromARGB(255, 51, 0, 67),
-                    ),
+                    userProfilePhoto != ''
+                        ? CircleAvatar(
+                            radius: 45,
+                            backgroundImage: NetworkImage(userProfilePhoto))
+                        : const Icon(
+                            Iconsax.personalcard,
+                            size: 90,
+                            color: Color.fromARGB(255, 51, 0, 67),
+                          ),
                     const SizedBox(width: 10),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          userName,
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 51, 0, 67),
-                            fontFamily: "PaytoneOne",
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(
+                          width: 240,
+                          child: Text(
+                            maxLines: 1,
+                            //textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+                            userName,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 51, 0, 67),
+                              fontFamily: "PaytoneOne",
+                              fontSize: 20,
+                              //fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                        Text(
-                          userEmail,
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 51, 0, 67),
-                            fontFamily: "Poppins",
-                            fontSize: 16,
+                        SizedBox(
+                          width: 240,
+                          child: Text(
+                            maxLines: 1,
+                            //textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+                            userEmail,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 51, 0, 67),
+                              fontFamily: "Poppins",
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),

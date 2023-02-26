@@ -1,9 +1,14 @@
-// ignore_for_file: file_names, use_build_context_synchronously
+// ignore_for_file: file_names, use_build_context_synchronously, non_constant_identifier_names
+
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mermas_digitais_app/models/loadingWindow.dart';
 
 class NewUserPage extends StatefulWidget {
@@ -14,66 +19,73 @@ class NewUserPage extends StatefulWidget {
 }
 
 class _NewUserPageState extends State<NewUserPage> {
+  final user = FirebaseAuth.instance.currentUser!;
   final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-
-  Future signUp() async {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const LoadingWindow();
-        });
-    try {
-      //create user
-      if (passwordConfirmed()) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
-
-        //add user details
-        addUserDetails(_nameController.text.trim(),
-            FirebaseAuth.instance.currentUser!.email.toString());
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('Email não encontrado!');
-        //'Email não encontrado!';
-      } else if (e.code == 'wrong-password') {
-        print('Senha incorreta!');
-        //'Senha incorreta!';
-      } else if (e.code == 'auth/email-already-exists') {
-        UpdateUser();
-        //add user details
-        addUserDetails(_nameController.text.trim(),
-            FirebaseAuth.instance.currentUser!.email.toString());
-      }
-    }
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-  }
+  var userProfilePhoto = '';
+  String userUID = '';
+  String userEmail = '';
 
   Future UpdateUser() async {
-    await FirebaseAuth.instance.currentUser!
-        .updatePassword(_passwordController.text.trim());
-    addUserDetails(_nameController.text.trim(),
-        FirebaseAuth.instance.currentUser!.email.toString());
+    try {
+      await user.updatePassword(_passwordController.text.trim());
+
+      addUserDetails(_nameController.text.trim());
+    } catch (e) {
+      print('Algo deu errado!');
+    }
+
     Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
-  Future addUserDetails(String name, String email) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set({
-      'email': email,
+  Future addUserDetails(String name) async {
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'name': name,
+      'email': user.email,
       'frequence': 1.0,
       'status': 'Aluna',
     });
+  }
+
+  Future userInfo() async {
+    try {
+      final docRef =
+          FirebaseFirestore.instance.collection("users").doc(user.uid);
+      final doc = await docRef.get();
+      final data = doc.data() as Map<String, dynamic>;
+
+      userUID = docRef.toString();
+      userEmail = data['email'];
+
+      print(userUID);
+      print(userEmail);
+      print(userProfilePhoto);
+    } catch (e) {
+      return print('Banco de dados vazio');
+    }
+  }
+
+  void UploadImage() async {
+    try {
+      final profilePhoto = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+      final profilephotoRef = FirebaseStorage.instance
+          .ref()
+          .child('users/${user.uid}/profilephoto.jpg');
+
+      await profilephotoRef.putFile(File(profilePhoto!.path));
+      profilephotoRef.getDownloadURL().then((value) {
+        setState(() {
+          userProfilePhoto = value;
+        });
+        print(value);
+      });
+    } catch (e) {
+      print("O processo falhou: ");
+    }
   }
 
   bool passwordConfirmed() {
@@ -87,7 +99,6 @@ class _NewUserPageState extends State<NewUserPage> {
 
   @override
   void dispose() {
-    _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
     _confirmPasswordController.dispose();
@@ -139,7 +150,28 @@ class _NewUserPageState extends State<NewUserPage> {
                         //fontWeight: FontWeight.bold,
                         fontSize: 18),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
+
+                  //ProfilePhoto Container
+
+                  GestureDetector(
+                    onTap: () {
+                      UploadImage();
+                    },
+                    child: userProfilePhoto != ''
+                        ? CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(userProfilePhoto))
+                        : const CircleAvatar(
+                            radius: 50,
+                            child: Icon(
+                              Iconsax.personalcard,
+                              size: 120,
+                              color: Color.fromARGB(255, 221, 199, 248),
+                            ),
+                          ),
+                  ),
+                  const SizedBox(height: 20),
                   //UID TextField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -150,14 +182,43 @@ class _NewUserPageState extends State<NewUserPage> {
                             color: const Color.fromARGB(200, 221, 199, 248)),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(left: 20.0),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
                         child: TextField(
                           enabled: false,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Seu UID: ',
-                            hintStyle: TextStyle(
+                            hintText: 'Seu UID: ${user.uid.toString()}',
+                            hintStyle: const TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Color.fromARGB(255, 221, 199, 248),
+                                fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  //Email TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 51, 0, 67),
+                        border: Border.all(
+                            color: const Color.fromARGB(200, 221, 199, 248)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: TextField(
+                          enabled: false,
+                          //controller: _emailController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Email: ${user.email}',
+                            hintStyle: const TextStyle(
                                 fontFamily: 'Poppins',
                                 color: Color.fromARGB(255, 221, 199, 248)),
                           ),
@@ -191,33 +252,7 @@ class _NewUserPageState extends State<NewUserPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
 
-                  //Email TextField
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 51, 0, 67),
-                        border: Border.all(
-                            color: const Color.fromARGB(200, 221, 199, 248)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          controller: _emailController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Email',
-                            hintStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Color.fromARGB(255, 221, 199, 248)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 20),
 
                   //Password TextField
