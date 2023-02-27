@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mermas_digitais_app/loginPages/newUserPage.dart';
+import 'package:mermas_digitais_app/loginPages/verifyEmail.dart';
 import 'package:mermas_digitais_app/models/loadingWindow.dart';
 
 class LoginPage extends StatefulWidget {
@@ -118,7 +119,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-
                 //Password TextField
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const NewUserPage(),
+                            builder: (context) => const VerifyEmail(),
                           ));
                         },
                         child: const Text(
