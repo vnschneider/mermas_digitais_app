@@ -58,7 +58,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const OlaMerma(text: 'Vamos verificar seu email'),
+                const OlaMerma(
+                  title: 'Vamos verificar seu email',
+                  usetext: false,
+                  text: '',
+                ),
 
                 //Email TextField
                 EmailField(
