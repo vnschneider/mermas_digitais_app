@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mermas_digitais_app/src/models/loading_window.dart';
@@ -105,203 +104,200 @@ class _NewUserPageState extends State<NewUserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 51, 0, 67),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: SafeArea(
-            top: false,
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const OlaMerma(text: 'Bem vinda, mermã!'),
-                  const Text(
-                    'Conclua seu cadastro para consultar suas faltas e muito mais.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 221, 199, 248),
-                        fontFamily: 'Poppins',
-                        //fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  const SizedBox(height: 30),
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 51, 0, 67),
+      body: ListView(
+        shrinkWrap: true,
+        reverse: true,
+        padding: const EdgeInsets.all(20),
+        children: [
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 30),
+                const OlaMerma(
+                  title: 'Conclua seu cadastro',
+                  usetext: false,
+                  text: '',
+                ),
 
-                  //ProfilePhoto Container
+                //ProfilePhoto Container
 
-                  GestureDetector(
-                    onTap: () {
-                      uploadImage();
-                    },
-                    child: userProfilePhoto != ''
-                        ? CircleAvatar(
-                            radius: 50,
-                            backgroundImage: NetworkImage(userProfilePhoto))
-                        : const CircleAvatar(
-                            radius: 50,
-                            child: Icon(
-                              Iconsax.personalcard,
-                              size: 120,
+                GestureDetector(
+                  onTap: () {
+                    uploadImage();
+                  },
+                  child: userProfilePhoto != ''
+                      ? CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(userProfilePhoto))
+                      : const CircleAvatar(
+                          radius: 40,
+                          child: Icon(
+                            Iconsax.personalcard,
+                            size: 100,
+                            color: Color.fromARGB(255, 221, 199, 248),
+                          ),
+                        ),
+                ),
+                const SizedBox(height: 50),
+                //UID TextField
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 51, 0, 67),
+                      border: Border.all(
+                          color: const Color.fromARGB(200, 221, 199, 248)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Seu UID: ${user.uid.toString()}',
+                          hintStyle: const TextStyle(
+                              fontFamily: 'Poppins',
                               color: Color.fromARGB(255, 221, 199, 248),
+                              fontSize: 14),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                //Email TextField
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 51, 0, 67),
+                      border: Border.all(
+                          color: const Color.fromARGB(200, 221, 199, 248)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        enabled: false,
+                        //controller: _emailController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Email: ${user.email}',
+                          hintStyle: const TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Color.fromARGB(255, 221, 199, 248)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                //Name TextField
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 51, 0, 67),
+                      border: Border.all(
+                          color: const Color.fromARGB(200, 221, 199, 248)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Nome',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Color.fromARGB(255, 221, 199, 248)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                //Password TextField
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 51, 0, 67),
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 221, 199, 248)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          suffixIcon: GestureDetector(
+                            onTap: () {},
+                            child: const Icon(
+                              Icons.remove_red_eye_sharp,
+                              color: Color.fromARGB(200, 221, 199, 248),
                             ),
                           ),
-                  ),
-                  const SizedBox(height: 20),
-                  //UID TextField
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 51, 0, 67),
-                        border: Border.all(
-                            color: const Color.fromARGB(200, 221, 199, 248)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Seu UID: ${user.uid.toString()}',
-                            hintStyle: const TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Color.fromARGB(255, 221, 199, 248),
-                                fontSize: 14),
-                          ),
+                          border: InputBorder.none,
+                          hintText: 'Senha',
+                          hintStyle: const TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Color.fromARGB(255, 221, 199, 248)),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                ),
+                const SizedBox(height: 20),
 
-                  //Email TextField
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 51, 0, 67),
-                        border: Border.all(
-                            color: const Color.fromARGB(200, 221, 199, 248)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          enabled: false,
-                          //controller: _emailController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Email: ${user.email}',
-                            hintStyle: const TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Color.fromARGB(255, 221, 199, 248)),
-                          ),
+                //Confirm Password TextField
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 51, 0, 67),
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 221, 199, 248)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _confirmPasswordController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Confirmar senha',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Color.fromARGB(255, 221, 199, 248)),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  //Name TextField
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 51, 0, 67),
-                        border: Border.all(
-                            color: const Color.fromARGB(200, 221, 199, 248)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          controller: _nameController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Nome',
-                            hintStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Color.fromARGB(255, 221, 199, 248)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                ),
+                const SizedBox(height: 40),
 
-                  const SizedBox(height: 20),
-
-                  //Password TextField
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 51, 0, 67),
-                        border: Border.all(
-                            color: const Color.fromARGB(255, 221, 199, 248)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            suffixIcon: GestureDetector(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.remove_red_eye_sharp,
-                                color: Color.fromARGB(200, 221, 199, 248),
-                              ),
-                            ),
-                            border: InputBorder.none,
-                            hintText: 'Senha',
-                            hintStyle: const TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Color.fromARGB(255, 221, 199, 248)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  //Confirm Password TextField
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 51, 0, 67),
-                        border: Border.all(
-                            color: const Color.fromARGB(255, 221, 199, 248)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          controller: _confirmPasswordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Confirmar senha',
-                            hintStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Color.fromARGB(255, 221, 199, 248)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-
-                  //RegisterButton
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 100),
-                    child: GestureDetector(
-                      onTap: () {
+                //RegisterButton
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 100),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_nameController.text.isNotEmpty &&
+                          _passwordController.text.isNotEmpty &&
+                          _confirmPasswordController.text.isNotEmpty) {
                         showDialog(
                             context: context,
                             builder: (context) {
@@ -309,33 +305,33 @@ class _NewUserPageState extends State<NewUserPage> {
                             });
                         updateUser()
                             .whenComplete(() => Navigator.of(context).pop());
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 51, 0, 67),
-                          border: Border.all(
-                              color: const Color.fromARGB(255, 221, 199, 248)),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Cadastrar',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 221, 199, 248),
-                                fontFamily: 'Poppins',
-                                //fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 51, 0, 67),
+                        border: Border.all(
+                            color: const Color.fromARGB(255, 221, 199, 248)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Cadastrar',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 221, 199, 248),
+                              fontFamily: 'Poppins',
+                              //fontWeight: FontWeight.bold,
+                              fontSize: 18),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

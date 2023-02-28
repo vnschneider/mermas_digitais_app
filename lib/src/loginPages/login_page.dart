@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mermas_digitais_app/src/loginPages/verify_email.dart';
 import 'package:mermas_digitais_app/src/models/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/textFields/email_field.dart';
@@ -64,8 +63,11 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const OlaMerma(
+                  title: 'Bem vinda, mermã!',
+                  usetext: true,
                   text: 'Consulte suas faltas e muito mais.',
                 ),
+                const SizedBox(height: 50),
                 //Email TextField
                 EmailField(
                   controller: _emailController,
@@ -103,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 50),
 
                 //LoginButton
                 Padding(
