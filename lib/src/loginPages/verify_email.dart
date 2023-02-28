@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mermas_digitais_app/src/loginPages/new_user_page.dart';
 import 'package:mermas_digitais_app/src/models/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/ola_merma.dart';
@@ -73,12 +72,16 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: GestureDetector(
                     onTap: () {
-                      signIn().whenComplete(
-                        () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const NewUserPage()));
-                        },
-                      );
+                      _emailController.toString().isEmpty
+                          ?
+                          //adicionar alerta >> snackbar
+                          print('Email textfield vazio!')
+                          : signIn().whenComplete(
+                              () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const NewUserPage()));
+                              },
+                            );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10),
