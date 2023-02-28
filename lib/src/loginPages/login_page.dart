@@ -51,7 +51,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool showpassword = true;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 51, 0, 67),
       body: Padding(
@@ -76,7 +75,6 @@ class _LoginPageState extends State<LoginPage> {
                 //Password TextField
                 PasswordField(
                   controller: _passwordController,
-                  showPassword: showpassword,
                 ),
                 const SizedBox(height: 5),
 

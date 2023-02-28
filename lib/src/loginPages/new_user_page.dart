@@ -23,6 +23,7 @@ class _NewUserPageState extends State<NewUserPage> {
   var userProfilePhoto = '';
   String userUID = '';
   String userEmail = '';
+  bool _showPassword = true;
 
   Future updateUser() async {
     try {
@@ -94,6 +95,12 @@ class _NewUserPageState extends State<NewUserPage> {
     }
   }
 
+  void showPassword() {
+    setState(() {
+      _showPassword == false ? _showPassword = true : _showPassword = false;
+    });
+  }
+
   @override
   void dispose() {
     _passwordController.dispose();
@@ -132,10 +139,10 @@ class _NewUserPageState extends State<NewUserPage> {
                   },
                   child: userProfilePhoto != ''
                       ? CircleAvatar(
-                          radius: 50,
+                          radius: 60,
                           backgroundImage: NetworkImage(userProfilePhoto))
                       : const CircleAvatar(
-                          radius: 40,
+                          radius: 60,
                           child: Icon(
                             Iconsax.personalcard,
                             size: 100,
@@ -143,7 +150,7 @@ class _NewUserPageState extends State<NewUserPage> {
                           ),
                         ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 //UID TextField
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -241,13 +248,17 @@ class _NewUserPageState extends State<NewUserPage> {
                       padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText: _showPassword,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
-                            onTap: () {},
-                            child: const Icon(
-                              Icons.remove_red_eye_sharp,
-                              color: Color.fromARGB(200, 221, 199, 248),
+                            onTap: () {
+                              showPassword();
+                            },
+                            child: Icon(
+                              _showPassword == true
+                                  ? Iconsax.eye_slash
+                                  : Iconsax.eye,
+                              color: const Color.fromARGB(200, 221, 199, 248),
                             ),
                           ),
                           border: InputBorder.none,

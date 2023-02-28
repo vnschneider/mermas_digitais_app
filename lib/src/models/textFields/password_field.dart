@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 // ignore: must_be_immutable
 class PasswordField extends StatefulWidget {
-  PasswordField(
-      {super.key, required this.controller, required this.showPassword});
+  PasswordField({super.key, required this.controller});
 
   final TextEditingController controller;
-  bool showPassword;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
 }
 
 class _PasswordFieldState extends State<PasswordField> {
+  bool _showPassword = true;
+  void showPassword() {
+    setState(() {
+      _showPassword == false ? _showPassword = true : _showPassword = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,18 +33,15 @@ class _PasswordFieldState extends State<PasswordField> {
           padding: const EdgeInsets.only(left: 20.0),
           child: TextFormField(
             controller: widget.controller,
-            obscureText: widget.showPassword,
+            obscureText: _showPassword,
             decoration: InputDecoration(
               suffixIcon: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    widget.showPassword = false;
-                  });
-                  print(widget.showPassword);
+                  showPassword();
                 },
-                child: const Icon(
-                  Icons.remove_red_eye_sharp,
-                  color: Color.fromARGB(200, 221, 199, 248),
+                child: Icon(
+                  _showPassword == true ? Iconsax.eye_slash : Iconsax.eye,
+                  color: const Color.fromARGB(200, 221, 199, 248),
                 ),
               ),
               border: InputBorder.none,
