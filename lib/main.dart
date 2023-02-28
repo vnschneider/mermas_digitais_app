@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'services/firebase_options.dart';
-import 'services/checkLogin.dart';
+import 'package:mermas_digitais_app/core/firebase/firebase_options.dart';
+import 'core/auth/check_login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

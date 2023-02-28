@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import '../menuPages/homePage.dart';
-import '../loginPages/loginPage.dart';
+import 'package:mermas_digitais_app/src/menuPages/home_page.dart';
+import 'package:mermas_digitais_app/src/loginPages/login_page.dart';
 
 class CheckLogin extends StatelessWidget {
   const CheckLogin({super.key});
@@ -14,9 +13,9 @@ class CheckLogin extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return HomePage();
+            return const HomePage();
           } else {
-            return LoginPage();
+            return const LoginPage();
           }
         },
       ),

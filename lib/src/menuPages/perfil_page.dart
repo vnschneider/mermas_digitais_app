@@ -1,12 +1,10 @@
-// ignore_for_file: file_names
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:mermas_digitais_app/loginPages/newUserPage.dart';
-import 'package:mermas_digitais_app/models/loadingWindow.dart';
+import 'package:mermas_digitais_app/src/loginPages/new_user_page.dart';
+import 'package:mermas_digitais_app/src/models/loading_window.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -128,29 +126,29 @@ class _PerfilPageState extends State<PerfilPage> {
                         GestureDetector(
                           onTap: () {
                             showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return const LoadingWindow();
-                                });
-                            Future.delayed(const Duration(milliseconds: 1000),
-                                () {
-                              Navigator.of(context).pop();
-                              FirebaseAuth.instance.signOut();
-                            });
-
-                            // ignore: use_build_context_synchronously
+                              context: context,
+                              builder: (context) {
+                                return const LoadingWindow();
+                              },
+                            );
+                            Future.delayed(
+                              const Duration(milliseconds: 1000),
+                              () {
+                                Navigator.of(context).pop();
+                                FirebaseAuth.instance.signOut();
+                              },
+                            );
                           },
                           child: Row(
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              const Icon(
+                            children: const [
+                              Icon(
                                 Iconsax.logout,
                                 size: 25,
                                 color: Color.fromARGB(255, 51, 0, 67),
                                 fill: 1,
                               ),
-                              const SizedBox(width: 5),
-                              const Text(
+                              SizedBox(width: 5),
+                              Text(
                                 'Sair',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
@@ -165,30 +163,32 @@ class _PerfilPageState extends State<PerfilPage> {
                         GestureDetector(
                           onTap: () {
                             showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return const LoadingWindow();
-                                });
-                            Future.delayed(const Duration(milliseconds: 1000),
-                                () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => NewUserPage(),
-                              ));
-                            });
-
-                            // ignore: use_build_context_synchronously
+                              context: context,
+                              builder: (context) {
+                                return const LoadingWindow();
+                              },
+                            );
+                            Future.delayed(
+                              const Duration(milliseconds: 1000),
+                              () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const NewUserPage(),
+                                  ),
+                                );
+                              },
+                            );
                           },
                           child: Row(
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              const Icon(
+                            children: const [
+                              Icon(
                                 Iconsax.document_upload,
                                 size: 25,
                                 color: Color.fromARGB(255, 51, 0, 67),
                                 fill: 1,
                               ),
-                              const SizedBox(width: 5),
-                              const Text(
+                              SizedBox(width: 5),
+                              Text(
                                 'UpdateUser',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),

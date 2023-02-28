@@ -94,10 +94,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/logo_branca.png
-  - assets/logo_roxa.png
-  - assets/logo_branca.svg
-  - assets/logo_roxa.svg
+  - assets/
 
   fonts:
     - family: Poppins

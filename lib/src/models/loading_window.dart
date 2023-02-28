@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 
 class LoadingWindow extends StatelessWidget {
@@ -16,11 +14,10 @@ class LoadingWindow extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 5),
-              const Text(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(height: 5),
+              Text(
                 "Carregando",
                 style: TextStyle(
                   color: Color.fromARGB(255, 51, 0, 67),
