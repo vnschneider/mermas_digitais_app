@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mermas_digitais_app/src/models/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/ola_merma.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key});
@@ -118,26 +119,7 @@ class _NewUserPageState extends State<NewUserPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //logo
-                  SvgPicture.asset(
-                    'assets/logo_branca.svg',
-                    width: 150,
-                    height: 150,
-                  ),
-                  const SizedBox(height: 20),
-
-                  //Ola merma
-                  const Text(
-                    'Bem vinda, mermã!',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 221, 199, 248),
-                        fontFamily: 'PaytoneOne',
-                        //fontWeight: FontWeight.bold,
-                        fontSize: 30),
-                  ),
-
-                  //Bemvinda
-                  const SizedBox(height: 5),
+                  const OlaMerma(text: 'Bem vinda, mermã!'),
                   const Text(
                     'Conclua seu cadastro para consultar suas faltas e muito mais.',
                     textAlign: TextAlign.center,
