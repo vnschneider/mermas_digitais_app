@@ -1,7 +1,4 @@
-// ignore_for_file: file_names, use_build_context_synchronously, non_constant_identifier_names
-
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mermas_digitais_app/models/loadingWindow.dart';
+import 'package:mermas_digitais_app/src/models/loading_window.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key});
@@ -27,7 +24,7 @@ class _NewUserPageState extends State<NewUserPage> {
   String userUID = '';
   String userEmail = '';
 
-  Future UpdateUser() async {
+  Future updateUser() async {
     try {
       await user.updatePassword(_passwordController.text.trim());
 
@@ -67,7 +64,7 @@ class _NewUserPageState extends State<NewUserPage> {
     }
   }
 
-  void UploadImage() async {
+  void uploadImage() async {
     try {
       final profilePhoto = await ImagePicker()
           .pickImage(source: ImageSource.gallery, imageQuality: 50);
@@ -156,7 +153,7 @@ class _NewUserPageState extends State<NewUserPage> {
 
                   GestureDetector(
                     onTap: () {
-                      UploadImage();
+                      uploadImage();
                     },
                     child: userProfilePhoto != ''
                         ? CircleAvatar(
@@ -328,7 +325,7 @@ class _NewUserPageState extends State<NewUserPage> {
                             builder: (context) {
                               return const LoadingWindow();
                             });
-                        UpdateUser()
+                        updateUser()
                             .whenComplete(() => Navigator.of(context).pop());
                       },
                       child: Container(

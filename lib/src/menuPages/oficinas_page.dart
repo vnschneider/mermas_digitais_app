@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:mermas_digitais_app/models/oficinaModel.dart';
+import 'package:mermas_digitais_app/src/models/oficina_model.dart';
 
 class OficinasPage extends StatefulWidget {
   const OficinasPage({super.key});

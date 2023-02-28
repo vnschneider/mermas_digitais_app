@@ -1,11 +1,9 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:mermas_digitais_app/menuPages/comunicadosPage.dart';
-import 'package:mermas_digitais_app/menuPages/frequenciaPage.dart';
-import 'package:mermas_digitais_app/menuPages/oficinasPage.dart';
-import 'package:mermas_digitais_app/menuPages/perfilPage.dart';
+import 'package:mermas_digitais_app/src/menuPages/comunicados_page.dart';
+import 'package:mermas_digitais_app/src/menuPages/frequencia_page.dart';
+import 'package:mermas_digitais_app/src/menuPages/oficinas_page.dart';
+import 'package:mermas_digitais_app/src/menuPages/perfil_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,11 +1,8 @@
-// ignore_for_file: file_names, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mermas_digitais_app/loginPages/newUserPage.dart';
-import 'package:mermas_digitais_app/loginPages/verifyEmail.dart';
-import 'package:mermas_digitais_app/models/loadingWindow.dart';
+import 'package:mermas_digitais_app/src/loginPages/verify_email.dart';
+import 'package:mermas_digitais_app/src/models/loading_window.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
