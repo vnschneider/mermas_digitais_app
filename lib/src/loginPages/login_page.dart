@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mermas_digitais_app/src/loginPages/verify_email.dart';
@@ -53,11 +54,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 51, 0, 67),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: SafeArea(
-          top: false,
-          child: Center(
+      body: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        shrinkWrap: true,
+        reverse: true,
+        padding:
+            const EdgeInsets.only(top: 150, right: 20, left: 20, bottom: 20),
+        children: [
+          Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -91,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                           ));
                         },
                         child: const Text(
-                          'Primeiro acesso ou esqueceu sua senha?',
+                          'Esqueci minha senha',
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               color: Color.fromARGB(255, 221, 199, 248),
@@ -133,10 +137,28 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 40,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const VerifyEmail(),
+                    ));
+                  },
+                  child: const Text(
+                    'Seu primeiro acesso?',
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Color.fromARGB(255, 221, 199, 248),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

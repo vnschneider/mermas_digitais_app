@@ -114,17 +114,16 @@ class _NewUserPageState extends State<NewUserPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 51, 0, 67),
       body: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         shrinkWrap: true,
         reverse: true,
-        padding: const EdgeInsets.all(20),
+        padding:
+            const EdgeInsets.only(top: 60, right: 20, left: 20, bottom: 20),
         children: [
           Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              //crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 30),
                 const OlaMerma(
                   title: 'Conclua seu cadastro',
                   usetext: false,
@@ -145,7 +144,7 @@ class _NewUserPageState extends State<NewUserPage> {
                           radius: 60,
                           child: Icon(
                             Iconsax.personalcard,
-                            size: 100,
+                            size: 120,
                             color: Color.fromARGB(255, 221, 199, 248),
                           ),
                         ),
