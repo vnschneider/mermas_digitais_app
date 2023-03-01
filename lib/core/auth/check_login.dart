@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mermas_digitais_app/src/menuPages/home_page.dart';
 import 'package:mermas_digitais_app/src/loginPages/login_page.dart';
+import 'package:mermas_digitais_app/src/models/navbar/navbar.dart';
 
 class CheckLogin extends StatelessWidget {
   const CheckLogin({super.key});
@@ -13,7 +14,7 @@ class CheckLogin extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomePage();
+            return const Navbar();
           } else {
             return const LoginPage();
           }

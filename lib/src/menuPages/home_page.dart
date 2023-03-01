@@ -115,17 +115,17 @@ class _HomePageState extends State<HomePage> {
         customBottomBarItems: [
           CustomBottomBarItems(
             label: 'Comunicados',
-            icon: Icons.home,
+            icon: _widgetIcons[i],
           ),
           CustomBottomBarItems(
             label: 'Oficinas',
-            icon: Icons.account_box_outlined,
+            icon: _widgetIcons[i],
           ),
           CustomBottomBarItems(
-              label: 'Frequência', icon: Icons.calendar_today_outlined),
+              label: 'Frequência', icon: _widgetIcons[i],),
           CustomBottomBarItems(
             label: 'Perfil',
-            icon: Icons.person,
+            icon: _widgetIcons[i],
           ),
         ],
       ),*/
