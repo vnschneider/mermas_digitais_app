@@ -189,7 +189,7 @@ class _PerfilPageState extends State<PerfilPage> {
                               ),
                               SizedBox(width: 5),
                               Text(
-                                'UpdateUser',
+                                'Atualizar Usuário',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
                                     fontFamily: "Poppins",

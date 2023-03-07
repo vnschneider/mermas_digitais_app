@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 
 // ignore: must_be_immutable
 class PasswordField extends StatefulWidget {
-  PasswordField({super.key, required this.controller});
+  const PasswordField({super.key, required this.controller});
 
   final TextEditingController controller;
 
