@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:mermas_digitais_app/src/menuPages/comunicados_page.dart';
-import 'package:mermas_digitais_app/src/menuPages/frequencia_page.dart';
-import 'package:mermas_digitais_app/src/menuPages/oficinas_page.dart';
-import 'package:mermas_digitais_app/src/menuPages/perfil_page.dart';
+import 'package:mermas_digitais_app/core/exports/home_exports.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,31 +1,29 @@
-// ignore_for_file: file_names, non_constant_identifier_names
-
 class OficinaModel {
-  String OficinaTitle;
-  String OficinaDescri;
-  String Oficinalink;
+  String oficinaTitle;
+  String oficinaDescri;
+  String oficinaLink;
 
   OficinaModel({
-    required this.OficinaTitle,
-    required this.OficinaDescri,
-    required this.Oficinalink,
+    required this.oficinaTitle,
+    required this.oficinaDescri,
+    required this.oficinaLink,
   });
 }
 
 List<OficinaModel> oficinas = [
   OficinaModel(
-    OficinaTitle: 'OficinaTitle',
-    OficinaDescri: 'OficinaDescri',
-    Oficinalink: 'OficinaLink',
+    oficinaTitle: 'oficinaTitle',
+    oficinaDescri: 'oficinaDescri',
+    oficinaLink: 'oficinaLink',
   ),
   OficinaModel(
-    OficinaTitle: 'OficinaTitle1',
-    OficinaDescri: 'OficinaDescri1',
-    Oficinalink: 'OficinaLink1',
+    oficinaTitle: 'oficinaTitle1',
+    oficinaDescri: 'oficinaDescri1',
+    oficinaLink: 'oficinaLink1',
   ),
   OficinaModel(
-    OficinaTitle: 'OficinaTitle2',
-    OficinaDescri: 'OficinaDescri2',
-    Oficinalink: 'OficinaLink2',
+    oficinaTitle: 'oficinaTitle2',
+    oficinaDescri: 'oficinaDescri2',
+    oficinaLink: 'oficinaLink2',
   ),
 ];

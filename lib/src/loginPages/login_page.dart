@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mermas_digitais_app/src/loginPages/verify_email.dart';
-import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/textFields/email_field.dart';
-import 'package:mermas_digitais_app/src/models/textFields/password_field.dart';
-import 'package:mermas_digitais_app/src/models/ola_merma.dart';
+import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

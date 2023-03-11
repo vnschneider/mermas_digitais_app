@@ -1,12 +1,4 @@
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/ola_merma.dart';
+import 'package:mermas_digitais_app/core/exports/new_user_exports.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key});

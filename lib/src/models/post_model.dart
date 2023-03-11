@@ -1,46 +1,44 @@
-// ignore_for_file: file_names, non_constant_identifier_names
-
 class PostModel {
-  String PostTitle;
-  String PostConteudo;
+  String postTitle;
+  String postConteudo;
 
   PostModel({
-    required this.PostTitle,
-    required this.PostConteudo,
+    required this.postTitle,
+    required this.postConteudo,
   });
 }
 
 List<PostModel> posts = [
   PostModel(
-    PostTitle: 'PostTitle',
-    PostConteudo: 'PostConteudo',
+    postTitle: 'postTitle',
+    postConteudo: 'postConteudo',
   ),
   PostModel(
-    PostTitle: 'PostTitle1',
-    PostConteudo: 'PostConteudo1',
+    postTitle: 'postTitle1',
+    postConteudo: 'postConteudo1',
   ),
   PostModel(
-    PostTitle: 'PostTitle2',
-    PostConteudo: 'PostConteudo2',
+    postTitle: 'postTitle2',
+    postConteudo: 'postConteudo2',
   ),
   PostModel(
-    PostTitle: 'PostTitle3',
-    PostConteudo: 'PostConteudo3',
+    postTitle: 'postTitle3',
+    postConteudo: 'postConteudo3',
   ),
   PostModel(
-    PostTitle: 'PostTitle4',
-    PostConteudo: 'PostConteudo4',
+    postTitle: 'postTitle4',
+    postConteudo: 'postConteudo4',
   ),
   PostModel(
-    PostTitle: 'PostTitle5',
-    PostConteudo: 'PostConteudo5',
+    postTitle: 'postTitle5',
+    postConteudo: 'postConteudo5',
   ),
   PostModel(
-    PostTitle: 'PostTitle6',
-    PostConteudo: 'PostConteudo6',
+    postTitle: 'postTitle6',
+    postConteudo: 'postConteudo6',
   ),
   PostModel(
-    PostTitle: 'PostTitle7',
-    PostConteudo: 'PostConteudo7',
+    postTitle: 'postTitle7',
+    postConteudo: 'postConteudo7',
   ),
 ];

@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:mermas_digitais_app/src/models/oficina_model.dart';
 
@@ -56,7 +54,7 @@ class _OficinasPageState extends State<OficinasPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    oficinas[index].OficinaTitle,
+                                    oficinas[index].oficinaTitle,
                                     style: const TextStyle(
                                         color: Color.fromARGB(255, 51, 0, 67),
                                         fontFamily: "PaytoneOne",
@@ -71,7 +69,7 @@ class _OficinasPageState extends State<OficinasPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    oficinas[index].OficinaDescri,
+                                    oficinas[index].oficinaDescri,
                                     style: const TextStyle(
                                       color: Color.fromARGB(255, 51, 0, 67),
                                       fontFamily: "Poppins",

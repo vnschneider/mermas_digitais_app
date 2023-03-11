@@ -53,7 +53,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  posts[index].PostTitle,
+                                  posts[index].postTitle,
                                   style: const TextStyle(
                                       color: Color.fromARGB(255, 51, 0, 67),
                                       fontFamily: "PaytoneOne",
@@ -68,7 +68,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  posts[index].PostConteudo,
+                                  posts[index].postConteudo,
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
                                     fontFamily: "Poppins",
