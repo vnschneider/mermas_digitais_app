@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mermas_digitais_app/src/models/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/loadin_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/ola_merma.dart';
 
 class NewUserPage extends StatefulWidget {
@@ -28,14 +28,10 @@ class _NewUserPageState extends State<NewUserPage> {
   Future updateUser() async {
     try {
       await user.updatePassword(_passwordController.text.trim());
-
       addUserDetails(_nameController.text.trim());
     } catch (e) {
       print('Algo deu errado!');
     }
-
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
   }
 
   Future addUserDetails(String name) async {
