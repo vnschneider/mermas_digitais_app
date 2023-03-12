@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
+import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,26 +14,36 @@ class _LoginPageState extends State<LoginPage> {
   //TextControllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  Duration duration = const Duration(seconds: 3);
 
   Future signIn() async {
-    showDialog(
+    try {
+      showDialog(
         context: context,
         builder: (context) {
           return const LoadingWindow();
-        });
-    Navigator.of(context).pop();
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+        },
       );
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          )
+          .then((value) => Navigator.pushNamed(context, 'navbar'));
     } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
       if (e.code == 'user-not-found') {
-        print('Email não encontrado!');
-        //'Email não encontrado!';
+        scaffoldMessenger(
+          context: context,
+          duration: duration,
+          text: "Email não encontrado!",
+        );
       } else if (e.code == 'wrong-password') {
-        print('Senha incorreta!');
-        //'Senha incorreta!';
+        scaffoldMessenger(
+          context: context,
+          duration: duration,
+          text: "Senha incorreta!",
+        );
       }
     }
   }

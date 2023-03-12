@@ -11,6 +11,12 @@ class Navbar extends StatefulWidget {
 
 class _NavbarState extends State<Navbar> {
   int indexOf = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +24,15 @@ class _NavbarState extends State<Navbar> {
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+            topRight: Radius.circular(15),
+            topLeft: Radius.circular(15),
+          ),
           boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+            BoxShadow(
+              color: Colors.black38,
+              spreadRadius: 0,
+              blurRadius: 10,
+            ),
           ],
         ),
         child: ClipRRect(
@@ -33,8 +45,9 @@ class _NavbarState extends State<Navbar> {
             selectedFontSize: 15,
             unselectedFontSize: 14,
             showSelectedLabels: false,
-            showUnselectedLabels: false,
+            showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
+            landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
             backgroundColor: const Color.fromARGB(255, 51, 0, 67),
             unselectedItemColor: const Color.fromARGB(150, 221, 199, 248),
             selectedItemColor: const Color.fromARGB(255, 221, 199, 248),
@@ -42,7 +55,7 @@ class _NavbarState extends State<Navbar> {
             onTap: (index) => setState(() => indexOf = index),
             items: [
               BottomNavigationBarItem(
-                icon: Icon(widgetIcons[indexOf]),
+                icon: Icon(widgetIcons[0]),
                 label: '',
               ),
               BottomNavigationBarItem(
