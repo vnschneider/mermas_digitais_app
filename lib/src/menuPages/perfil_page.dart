@@ -1,4 +1,5 @@
 import 'package:mermas_digitais_app/core/exports/perfil_exports.dart';
+import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -13,35 +14,14 @@ class _PerfilPageState extends State<PerfilPage> {
   String userName = '';
   String userProfilePhoto = '';
 
-  Future userInfo() async {
-    try {
-      final docRef =
-          FirebaseFirestore.instance.collection("users").doc(user.uid);
-      final doc = await docRef.get();
-      final data = doc.data() as Map<String, dynamic>;
-
-      userName = data['name'];
-      userEmail = data['email'];
-
-      //getProfilePhoto
-      final profilephotoRef = FirebaseStorage.instance
-          .ref()
-          .child('users/${user.uid}/profilephoto.jpg');
-
-      await profilephotoRef.getDownloadURL().then((value) {
-        userProfilePhoto = value;
-      });
-      print(userName);
-      print(userEmail);
-    } catch (e) {
-      return print('Banco de dados vazio');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: userInfo(),
+      future: getUserInfo(
+          user: user,
+          userEmail: userEmail,
+          userName: userName,
+          userProfilePhoto: userProfilePhoto),
       builder: (context, snapshot) => Scaffold(
         appBar: AppBar(
             elevation: 3,

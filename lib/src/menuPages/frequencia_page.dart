@@ -1,4 +1,5 @@
 import 'package:mermas_digitais_app/core/exports/frequencia_exports.dart';
+import 'package:mermas_digitais_app/src/functions/user_info.dart';
 
 class FrequenciaPage extends StatefulWidget {
   const FrequenciaPage({super.key});
@@ -16,39 +17,16 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
   double userFrequence = 0;
   String userProfilePhoto = '';
 
-  userInfo() async {
-    try {
-      final docRef =
-          FirebaseFirestore.instance.collection("users").doc(user.uid);
-      final doc = await docRef.get();
-      final data = doc.data() as Map<String, dynamic>;
-
-      userUID = user.uid;
-      userName = data['name'];
-      userEmail = data['email'];
-      userFrequence = data['frequence'];
-
-      final profilephotoRef = FirebaseStorage.instance
-          .ref()
-          .child('users/${user.uid}/profilephoto.jpg');
-
-      await profilephotoRef.getDownloadURL().then((value) {
-        userProfilePhoto = value;
-      });
-
-      print(userUID);
-      print(userName);
-      print(userEmail);
-      print(userFrequence);
-    } catch (e) {
-      return print('Banco de dados vazio!');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: userInfo(),
+      future: userInfo(
+          user: user,
+          userUID: userUID,
+          userEmail: userEmail,
+          userName: userName,
+          userFrequence: userFrequence,
+          userProfilePhoto: userProfilePhoto),
       builder: (context, snapshot) => Scaffold(
         appBar: AppBar(
             elevation: 3,
