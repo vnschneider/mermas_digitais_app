@@ -70,12 +70,17 @@ class _OficinasPageState extends State<OficinasPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    oficinas[index].OficinaDescri,
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 51, 0, 67),
-                                      fontFamily: "Poppins",
-                                      fontSize: 14,
+                                  Expanded(
+                                    child: Text(
+                                      maxLines: 3,
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      oficinas[index].OficinaDescri,
+                                      style: const TextStyle(
+                                        color: Color.fromARGB(255, 51, 0, 67),
+                                        fontFamily: "Poppins",
+                                        fontSize: 14,
+                                      ),
                                     ),
                                   ),
                                 ],

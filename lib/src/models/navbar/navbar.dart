@@ -34,7 +34,7 @@ class _NavbarState extends State<Navbar> {
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+              topRight: Radius.circular(8), topLeft: Radius.circular(8)),
           boxShadow: [
             BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
           ],
@@ -45,7 +45,7 @@ class _NavbarState extends State<Navbar> {
             topRight: Radius.circular(30.0),
           ),
           child: BottomNavigationBar(
-            iconSize: 32,
+            iconSize: 38,
             selectedFontSize: 15,
             unselectedFontSize: 14,
             showSelectedLabels: false,

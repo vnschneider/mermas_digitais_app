@@ -67,12 +67,17 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  posts[index].PostConteudo,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 51, 0, 67),
-                                    fontFamily: "Poppins",
-                                    fontSize: 14,
+                                Expanded(
+                                  child: Text(
+                                    maxLines: 3,
+                                    textAlign: TextAlign.start,
+                                    overflow: TextOverflow.ellipsis,
+                                    posts[index].PostConteudo,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 51, 0, 67),
+                                      fontFamily: "Poppins",
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ),
                               ],

@@ -12,35 +12,8 @@ class PostModel {
 
 List<PostModel> posts = [
   PostModel(
-    PostTitle: 'PostTitle',
-    PostConteudo: 'PostConteudo',
-  ),
-  PostModel(
-    PostTitle: 'PostTitle1',
-    PostConteudo: 'PostConteudo1',
-  ),
-  PostModel(
-    PostTitle: 'PostTitle2',
-    PostConteudo: 'PostConteudo2',
-  ),
-  PostModel(
-    PostTitle: 'PostTitle3',
-    PostConteudo: 'PostConteudo3',
-  ),
-  PostModel(
-    PostTitle: 'PostTitle4',
-    PostConteudo: 'PostConteudo4',
-  ),
-  PostModel(
-    PostTitle: 'PostTitle5',
-    PostConteudo: 'PostConteudo5',
-  ),
-  PostModel(
-    PostTitle: 'PostTitle6',
-    PostConteudo: 'PostConteudo6',
-  ),
-  PostModel(
-    PostTitle: 'PostTitle7',
-    PostConteudo: 'PostConteudo7',
+    PostTitle: 'Evento dia 08/03',
+    PostConteudo:
+        'Neste dia 8 teremos diversas atividades no campus para comemorar o dia das mulheres. Esperamos você!',
   ),
 ];
