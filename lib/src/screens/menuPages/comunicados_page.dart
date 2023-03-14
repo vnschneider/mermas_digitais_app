@@ -72,7 +72,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                                     maxLines: 3,
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
-                                    posts[index].PostConteudo,
+                                    posts[index].postConteudo,
                                     style: const TextStyle(
                                       color: Color.fromARGB(255, 51, 0, 67),
                                       fontFamily: "Poppins",

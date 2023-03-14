@@ -10,8 +10,8 @@ class PostModel {
 
 List<PostModel> posts = [
   PostModel(
-    PostTitle: 'Evento dia 08/03',
-    PostConteudo:
+    postTitle: 'Evento dia 08/03',
+    postConteudo:
         'Neste dia 8 teremos diversas atividades no campus para comemorar o dia das mulheres. Esperamos você!',
   ),
 ];

@@ -73,7 +73,7 @@ class _OficinasPageState extends State<OficinasPage> {
                                       maxLines: 3,
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.ellipsis,
-                                      oficinas[index].OficinaDescri,
+                                      oficinas[index].oficinaDescri,
                                       style: const TextStyle(
                                         color: Color.fromARGB(255, 51, 0, 67),
                                         fontFamily: "Poppins",
