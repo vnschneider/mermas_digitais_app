@@ -12,18 +12,20 @@ class OficinaModel {
 
 List<OficinaModel> oficinas = [
   OficinaModel(
-    oficinaTitle: 'oficinaTitle',
-    oficinaDescri: 'oficinaDescri',
-    oficinaLink: 'oficinaLink',
+    OficinaTitle: 'Ferramentas Tecnológicas',
+    OficinaDescri: 'Aqui você irá aprender noções básicas de informática.',
+    Oficinalink: 'OficinaLink',
   ),
   OficinaModel(
-    oficinaTitle: 'oficinaTitle1',
-    oficinaDescri: 'oficinaDescri1',
-    oficinaLink: 'oficinaLink1',
+    OficinaTitle: 'Mão no Hardware',
+    OficinaDescri:
+        'Noções básicas de software e hardware incluindo instalação de SOs e montangem e manutenção de microcomputadores.',
+    Oficinalink: 'OficinaLink1',
   ),
   OficinaModel(
-    oficinaTitle: 'oficinaTitle2',
-    oficinaDescri: 'oficinaDescri2',
-    oficinaLink: 'oficinaLink2',
+    OficinaTitle: 'Aprendendo a Programar',
+    OficinaDescri:
+        'O conteúdo da oficina inclui: Algorítimos e introdução à lógica de programação.',
+    Oficinalink: 'OficinaLink2',
   ),
 ];

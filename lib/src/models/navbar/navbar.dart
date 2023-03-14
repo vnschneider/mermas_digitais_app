@@ -41,7 +41,7 @@ class _NavbarState extends State<Navbar> {
             topRight: Radius.circular(30.0),
           ),
           child: BottomNavigationBar(
-            iconSize: 32,
+            iconSize: 38,
             selectedFontSize: 15,
             unselectedFontSize: 14,
             showSelectedLabels: false,
