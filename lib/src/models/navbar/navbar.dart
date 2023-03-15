@@ -29,7 +29,7 @@ class _NavbarState extends State<Navbar> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black38,
+              color: Color.fromARGB(54, 0, 0, 0),
               spreadRadius: 0,
               blurRadius: 10,
             ),
@@ -45,7 +45,7 @@ class _NavbarState extends State<Navbar> {
             selectedFontSize: 15,
             unselectedFontSize: 14,
             showSelectedLabels: false,
-            showUnselectedLabels: true,
+            showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
             landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
             backgroundColor: const Color.fromARGB(255, 51, 0, 67),

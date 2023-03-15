@@ -1,3 +1,4 @@
+import 'package:mermas_digitais_app/core/exports/main_exports.dart';
 import 'package:mermas_digitais_app/core/exports/new_user_exports.dart';
 
 class NewUserPage extends StatefulWidget {
