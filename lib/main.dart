@@ -7,7 +7,7 @@ import 'package:mermas_digitais_app/src/utils/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.web,
   );
   runApp(const MyApp());
 }
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: themeData,
       routes: routes,
-      initialRoute: 'auth',
+      initialRoute: 'newUser',
       debugShowCheckedModeBanner: false,
     );
   }

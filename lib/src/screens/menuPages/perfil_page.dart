@@ -9,19 +9,12 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
-  final user = FirebaseAuth.instance.currentUser!;
-  String userEmail = '';
-  String userName = '';
-  String userProfilePhoto = '';
+  GetUserInfo userInfo = GetUserInfo();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getUserInfo(
-          user: user,
-          userEmail: userEmail,
-          userName: userName,
-          userProfilePhoto: userProfilePhoto),
+      future: userInfo.getUserInfo(),
       builder: (context, snapshot) => Scaffold(
         appBar: AppBar(
             elevation: 3,
@@ -52,10 +45,11 @@ class _PerfilPageState extends State<PerfilPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    userProfilePhoto != ''
+                    userInfo.userProfilePhoto != ''
                         ? CircleAvatar(
                             radius: 45,
-                            backgroundImage: NetworkImage(userProfilePhoto))
+                            backgroundImage:
+                                NetworkImage(userInfo.userProfilePhoto))
                         : const Icon(
                             Iconsax.personalcard,
                             size: 90,
@@ -73,7 +67,7 @@ class _PerfilPageState extends State<PerfilPage> {
                             maxLines: 1,
                             //textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
-                            userName,
+                            userInfo.userName,
                             style: const TextStyle(
                               color: Color.fromARGB(255, 51, 0, 67),
                               fontFamily: "PaytoneOne",
@@ -88,7 +82,7 @@ class _PerfilPageState extends State<PerfilPage> {
                             maxLines: 1,
                             //textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
-                            userEmail,
+                            userInfo.userEmail,
                             style: const TextStyle(
                               color: Color.fromARGB(255, 51, 0, 67),
                               fontFamily: "Poppins",

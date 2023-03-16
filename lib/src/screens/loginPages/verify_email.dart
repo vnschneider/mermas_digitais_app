@@ -59,11 +59,12 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 ),
 
                 //Email TextField
-                EmailField(
+                CustomTextField(
                   controller: _emailController,
+                  hintText: "Email",
                 ),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
 
                 //VerifyButton
                 Padding(

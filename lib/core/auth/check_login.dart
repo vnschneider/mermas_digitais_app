@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mermas_digitais_app/src/screens/loginPages/login_page.dart';
 import 'package:mermas_digitais_app/src/models/navbar/navbar.dart';
+import 'package:mermas_digitais_app/src/screens/loginPages/login_page.dart';
 
 class CheckLogin extends StatelessWidget {
   const CheckLogin({super.key});
