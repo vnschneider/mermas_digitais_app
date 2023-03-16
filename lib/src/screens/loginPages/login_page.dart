@@ -77,15 +77,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 50),
                 //Email TextField
-                EmailField(
+                CustomTextField(
                   controller: _emailController,
+                  hintText: "Email",
                 ),
-                const SizedBox(height: 20),
                 //Password TextField
-                PasswordField(
+                CustomTextField(
                   controller: _passwordController,
+                  hintText: "Senha",
                 ),
-                const SizedBox(height: 5),
 
                 //Esqueceu sua senha?
                 Padding(
@@ -147,9 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const VerifyEmail(),
-                    ));
+                    Navigator.pushNamed(context, 'newUser');
                   },
                   child: const Text(
                     'Seu primeiro acesso?',

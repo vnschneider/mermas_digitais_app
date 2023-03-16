@@ -1,5 +1,5 @@
 import 'package:mermas_digitais_app/core/exports/frequencia_exports.dart';
-import 'package:mermas_digitais_app/src/functions/user_info.dart';
+import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 
 class FrequenciaPage extends StatefulWidget {
   const FrequenciaPage({super.key});
@@ -9,24 +9,12 @@ class FrequenciaPage extends StatefulWidget {
 }
 
 class _FrequenciaPageState extends State<FrequenciaPage> {
-  final user = FirebaseAuth.instance.currentUser!;
-
-  String userUID = '';
-  String userEmail = '';
-  String userName = '';
-  double userFrequence = 0;
-  String userProfilePhoto = '';
+  GetUserInfo userInfo = GetUserInfo();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: userInfo(
-          user: user,
-          userUID: user.uid,
-          userEmail: userEmail,
-          userName: userName,
-          userFrequence: userFrequence,
-          userProfilePhoto: userProfilePhoto),
+      future: userInfo.getUserInfo(),
       builder: (context, snapshot) => Scaffold(
         appBar: AppBar(
             elevation: 3,
@@ -46,7 +34,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
             backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
         body: SafeArea(
           child: Center(
-            child: userName == ''
+            child: userInfo.userName == ''
                 ? const LoadingWindow()
                 : Card(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -74,11 +62,11 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             ],
                           ),
                           const SizedBox(height: 60),
-                          userProfilePhoto != ''
+                          userInfo.userProfilePhoto != ''
                               ? CircleAvatar(
                                   radius: 60,
                                   backgroundImage:
-                                      NetworkImage(userProfilePhoto))
+                                      NetworkImage(userInfo.userProfilePhoto))
                               : const Icon(
                                   Iconsax.personalcard,
                                   size: 120,
@@ -86,7 +74,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                 ),
                           const SizedBox(height: 10),
                           Text(
-                            userName,
+                            userInfo.userName,
                             style: const TextStyle(
                               color: Color.fromARGB(255, 51, 0, 67),
                               fontFamily: "Poppins",
@@ -101,7 +89,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             animateFromLastPercent: true,
                             animationDuration: 1000,
                             lineHeight: 30,
-                            percent: userFrequence, //_userFrequence,
+                            percent: userInfo.userFrequence, //_userFrequence,
                             progressColor: const Color.fromARGB(255, 51, 0, 67),
                             backgroundColor:
                                 const Color.fromARGB(255, 221, 199, 248),
@@ -111,7 +99,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Você Possui ${(userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
+                                'Você Possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 51, 0, 67),
                                   fontFamily: "Poppins",
@@ -123,7 +111,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              userFrequence >= 0.25
+                              userInfo.userFrequence >= 0.25
                                   ? const Text(
                                       'Parabéns pelo seu empenho!',
                                       style: TextStyle(

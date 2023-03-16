@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '138534536560',
     projectId: 'mermas-digitais-2023',
     storageBucket: 'mermas-digitais-2023.appspot.com',
-    iosClientId: '138534536560-agpid8bgfui5ks3a2gi5qj7f8f2cfb64.apps.googleusercontent.com',
+    iosClientId:
+        '138534536560-agpid8bgfui5ks3a2gi5qj7f8f2cfb64.apps.googleusercontent.com',
     iosBundleId: 'com.example.mermasDigitaisApp',
   );
 }

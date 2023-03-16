@@ -1,4 +1,4 @@
-import 'package:mermas_digitais_app/core/exports/main_exports.dart';
+import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
 import 'package:mermas_digitais_app/core/exports/new_user_exports.dart';
 
 class NewUserPage extends StatefulWidget {
@@ -9,8 +9,9 @@ class NewUserPage extends StatefulWidget {
 }
 
 class _NewUserPageState extends State<NewUserPage> {
-  final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance;
   final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   var userProfilePhoto = '';
@@ -18,70 +19,26 @@ class _NewUserPageState extends State<NewUserPage> {
   String userEmail = '';
   bool _showPassword = true;
 
-  Future updateUser() async {
+  Future newUser() async {
     try {
-      await user.updatePassword(_passwordController.text.trim());
-      addUserDetails(_nameController.text.trim());
+      await user.createUserWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
     } catch (e) {
-      print('Algo deu errado!');
+      print(e);
     }
   }
 
-  Future addUserDetails(String name) async {
-    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+  Future createUserDB(String name) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.currentUser!.uid)
+        .set({
       'name': name,
-      'email': user.email,
+      'email': user.currentUser!.email,
       'frequence': 1.0,
       'status': 'Aluna',
     });
-  }
-
-  Future userInfo() async {
-    try {
-      final docRef =
-          FirebaseFirestore.instance.collection("users").doc(user.uid);
-      final doc = await docRef.get();
-      final data = doc.data() as Map<String, dynamic>;
-
-      userUID = docRef.toString();
-      userEmail = data['email'];
-
-      print(userUID);
-      print(userEmail);
-      print(userProfilePhoto);
-    } catch (e) {
-      return print('Banco de dados vazio');
-    }
-  }
-
-  void uploadImage() async {
-    try {
-      final profilePhoto = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 50);
-
-      final profilephotoRef = FirebaseStorage.instance
-          .ref()
-          .child('users/${user.uid}/profilephoto.jpg');
-
-      await profilephotoRef.putFile(File(profilePhoto!.path));
-      profilephotoRef.getDownloadURL().then((value) {
-        setState(() {
-          userProfilePhoto = value;
-        });
-        print(value);
-      });
-    } catch (e) {
-      print("O processo falhou: ");
-    }
-  }
-
-  bool passwordConfirmed() {
-    if (_passwordController.text.trim() ==
-        _confirmPasswordController.text.trim()) {
-      return true;
-    } else {
-      return false;
-    }
+    print(user.currentUser!.uid);
   }
 
   void showPassword() {
@@ -92,8 +49,9 @@ class _NewUserPageState extends State<NewUserPage> {
 
   @override
   void dispose() {
-    _passwordController.dispose();
     _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
   }
@@ -123,7 +81,7 @@ class _NewUserPageState extends State<NewUserPage> {
 
                 GestureDetector(
                   onTap: () {
-                    uploadImage();
+                    // uploadImage();
                   },
                   child: userProfilePhoto != ''
                       ? CircleAvatar(
@@ -140,88 +98,14 @@ class _NewUserPageState extends State<NewUserPage> {
                 ),
                 const SizedBox(height: 30),
                 //UID TextField
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 51, 0, 67),
-                      border: Border.all(
-                          color: const Color.fromARGB(200, 221, 199, 248)),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        enabled: false,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Seu UID: ${user.uid.toString()}',
-                          hintStyle: const TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Color.fromARGB(255, 221, 199, 248),
-                              fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ),
+                CustomTextField(
+                  controller: _nameController,
+                  hintText: "Nome",
                 ),
-                const SizedBox(height: 20),
-
-                //Email TextField
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 51, 0, 67),
-                      border: Border.all(
-                          color: const Color.fromARGB(200, 221, 199, 248)),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        enabled: false,
-                        //controller: _emailController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Email: ${user.email}',
-                          hintStyle: const TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Color.fromARGB(255, 221, 199, 248)),
-                        ),
-                      ),
-                    ),
-                  ),
+                CustomTextField(
+                  controller: _emailController,
+                  hintText: "Email",
                 ),
-                const SizedBox(height: 20),
-                //Name TextField
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 51, 0, 67),
-                      border: Border.all(
-                          color: const Color.fromARGB(200, 221, 199, 248)),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        controller: _nameController,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Nome',
-                          hintStyle: TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Color.fromARGB(255, 221, 199, 248)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
                 //Password TextField
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -294,7 +178,7 @@ class _NewUserPageState extends State<NewUserPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: GestureDetector(
                     onTap: () {
-                      if (_nameController.text.isNotEmpty &&
+                      if (_emailController.text.isNotEmpty &&
                           _passwordController.text.isNotEmpty &&
                           _confirmPasswordController.text.isNotEmpty) {
                         showDialog(
@@ -302,8 +186,38 @@ class _NewUserPageState extends State<NewUserPage> {
                             builder: (context) {
                               return const LoadingWindow();
                             });
-                        updateUser()
-                            .whenComplete(() => Navigator.of(context).pop());
+                        newUser().whenComplete(() {
+                          createUserDB(_nameController.text.trim());
+                          Navigator.pushNamed(context, "login");
+                        });
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              backgroundColor:
+                                  Color.fromARGB(255, 221, 199, 248),
+                              title: Text(
+                                "Algo deu errado!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromARGB(255, 51, 0, 67),
+                                ),
+                              ),
+                              content: Text(
+                                "Tenha certeza de que preencheu os campos corretamente!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromARGB(255, 51, 0, 67),
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       }
                     },
                     child: Container(
