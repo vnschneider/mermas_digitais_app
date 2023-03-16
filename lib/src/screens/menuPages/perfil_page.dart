@@ -48,7 +48,7 @@ class _PerfilPageState extends State<PerfilPage> {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
-                  //mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,7 +68,7 @@ class _PerfilPageState extends State<PerfilPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: 240,
+                          width: 223,
                           child: Text(
                             maxLines: 1,
                             //textAlign: TextAlign.start,
@@ -83,7 +83,7 @@ class _PerfilPageState extends State<PerfilPage> {
                           ),
                         ),
                         SizedBox(
-                          width: 240,
+                          width: 223,
                           child: Text(
                             maxLines: 1,
                             //textAlign: TextAlign.start,
