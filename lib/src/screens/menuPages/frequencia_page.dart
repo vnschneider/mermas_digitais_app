@@ -22,7 +22,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
     return FutureBuilder(
       future: userInfo(
           user: user,
-          userUID: userUID,
+          userUID: user.uid,
           userEmail: userEmail,
           userName: userName,
           userFrequence: userFrequence,
