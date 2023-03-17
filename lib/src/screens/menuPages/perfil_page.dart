@@ -1,6 +1,7 @@
 import 'package:mermas_digitais_app/core/exports/perfil_exports.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/changePassword_window/changePassword_window.dart';
+import 'package:mermas_digitais_app/src/models/studentsList_window/studentsList_window.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -165,6 +166,22 @@ class _PerfilPageState extends State<PerfilPage> {
                   ),
           ),
         ),
+        floatingActionButton: userInfo.userStatus == 'Admin'
+            ? FloatingActionButton(
+                elevation: 2,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const StudentsList();
+                    },
+                  );
+                },
+                child: const Icon(
+                  Iconsax.additem,
+                  size: 40,
+                ))
+            : null,
       ),
     );
   }
