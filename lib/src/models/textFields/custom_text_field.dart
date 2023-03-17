@@ -6,12 +6,16 @@ class CustomTextField extends StatelessWidget {
       required this.enabled,
       required this.useController,
       required this.controller,
+      required this.keyboardType,
+      required this.expanded,
       this.hintText});
 
   final TextEditingController controller;
   final String? hintText;
+  final TextInputType keyboardType;
   final bool enabled;
   final bool useController;
+  final bool expanded;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,16 +31,21 @@ class CustomTextField extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
-              child: TextFormField(
-                enabled: enabled,
-                controller: controller,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: hintText,
-                  hintStyle: const TextStyle(
-                      //fontSize: 15,
-                      fontFamily: 'Poppins',
-                      color: Color.fromARGB(255, 221, 199, 248)),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 100),
+                child: TextFormField(
+                  maxLines: expanded == false ? 1 : null,
+                  keyboardType: keyboardType,
+                  enabled: enabled,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: hintText,
+                    hintStyle: const TextStyle(
+                        //fontSize: 15,
+                        fontFamily: 'Poppins',
+                        color: Color.fromARGB(255, 221, 199, 248)),
+                  ),
+                  controller: useController == true ? controller : null,
                 ),
               ),
             ),
