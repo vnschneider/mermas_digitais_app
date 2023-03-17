@@ -23,13 +23,13 @@ class GetUserInfo {
       userFrequence = data['frequence'];
 
       //getProfilePhoto
-      // final profilephotoRef = FirebaseStorage.instance
-      //     .ref()
-      //     .child('users/${user.uid}/profilephoto.jpg');
+      final profilephotoRef = FirebaseStorage.instance
+          .ref()
+          .child('users/${user.uid}/profilephoto.jpg');
 
-      // await profilephotoRef.getDownloadURL().then((value) {
-      //   userProfilePhoto = value;
-      // });
+      await profilephotoRef.getDownloadURL().then((value) {
+        userProfilePhoto = value;
+      });
     } catch (e) {
       return print('Banco de dados vazio!');
     }
