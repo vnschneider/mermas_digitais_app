@@ -86,6 +86,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 50),
                 //Email TextField
                 CustomTextField(
+                  keyboardType: TextInputType.emailAddress,
+                  expanded: false,
                   useController: true,
                   enabled: true,
                   controller: _emailController,
