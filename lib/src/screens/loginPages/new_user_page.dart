@@ -136,12 +136,16 @@ class _NewUserPageState extends State<NewUserPage> {
                   //UID TextField
 
                   CustomTextField(
+                    expanded: false,
+                    keyboardType: TextInputType.name,
                     useController: true,
                     enabled: true,
                     controller: _nameController,
                     hintText: 'Nome',
                   ),
                   CustomTextField(
+                    expanded: false,
+                    keyboardType: TextInputType.emailAddress,
                     useController: false,
                     enabled: false,
                     controller: _emailController,
@@ -222,7 +226,7 @@ class _NewUserPageState extends State<NewUserPage> {
                         if (_nameController.text.isNotEmpty &&
                             _passwordController.text.isNotEmpty &&
                             _confirmPasswordController.text.isNotEmpty &&
-                            userProfilePhoto.isNotEmpty) {
+                            userInfo.userProfilePhoto.isNotEmpty) {
                           showDialog(
                               context: context,
                               builder: (context) {
