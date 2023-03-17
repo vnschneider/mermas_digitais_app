@@ -98,12 +98,18 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                'Você Possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 51, 0, 67),
-                                  fontFamily: "Poppins",
-                                  fontSize: 16,
+                              SizedBox(
+                                width: 330,
+                                child: Text(
+                                  'Você Possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
+                                  overflow: TextOverflow.clip,
+                                  textAlign: TextAlign.justify,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                    fontFamily: "Poppins",
+                                    fontSize: 15,
+                                  ),
                                 ),
                               ),
                             ],
@@ -117,19 +123,19 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 51, 0, 67),
                                         fontFamily: "Poppins",
-                                        fontSize: 16,
+                                        fontSize: 15,
                                       ),
                                     )
                                   : const Expanded(
                                       child: Text(
                                         maxLines: 2,
                                         textAlign: TextAlign.start,
-                                        overflow: TextOverflow.ellipsis,
+                                        overflow: TextOverflow.clip,
                                         'Cuidado, você corre o risco de ser reprovada. :(',
                                         style: TextStyle(
                                           color: Color.fromARGB(255, 51, 0, 67),
                                           fontFamily: "Poppins",
-                                          fontSize: 16,
+                                          fontSize: 15,
                                         ),
                                       ),
                                     ),
