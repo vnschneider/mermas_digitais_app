@@ -78,11 +78,15 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 50),
                 //Email TextField
                 CustomTextField(
+                  useController: true,
+                  enabled: true,
                   controller: _emailController,
                   hintText: "Email",
                 ),
                 //Password TextField
                 CustomTextField(
+                  useController: true,
+                  enabled: true,
                   controller: _passwordController,
                   hintText: "Senha",
                 ),
@@ -147,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, 'newUser');
+                    Navigator.pushNamed(context, 'verifyEmail');
                   },
                   child: const Text(
                     'Seu primeiro acesso?',
