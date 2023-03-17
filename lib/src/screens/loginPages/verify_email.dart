@@ -60,6 +60,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
                 //Email TextField
                 CustomTextField(
+                  useController: true,
+                  enabled: true,
                   controller: _emailController,
                   hintText: "Email",
                 ),
