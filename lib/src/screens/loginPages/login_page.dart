@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 
@@ -15,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   Duration duration = const Duration(seconds: 3);
+  bool _showPassword = true;
 
   Future signIn() async {
     try {
@@ -55,6 +57,12 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  void showPassword() {
+    setState(() {
+      _showPassword == false ? _showPassword = true : _showPassword = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,13 +92,42 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: "Email",
                 ),
                 //Password TextField
-                CustomTextField(
-                  useController: true,
-                  enabled: true,
-                  controller: _passwordController,
-                  hintText: "Senha",
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 51, 0, 67),
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 221, 199, 248)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _passwordController,
+                        obscureText: _showPassword,
+                        decoration: InputDecoration(
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              showPassword();
+                            },
+                            child: Icon(
+                              _showPassword == true
+                                  ? Iconsax.eye_slash
+                                  : Iconsax.eye,
+                              color: const Color.fromARGB(200, 221, 199, 248),
+                            ),
+                          ),
+                          border: InputBorder.none,
+                          hintText: 'Senha',
+                          hintStyle: const TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Color.fromARGB(255, 221, 199, 248)),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-
                 //Esqueceu sua senha?
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -123,7 +160,45 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: GestureDetector(
                     onTap: () {
-                      signIn();
+                      if (_emailController.text.isNotEmpty &&
+                          _passwordController.text.isNotEmpty) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const LoadingWindow();
+                            });
+                        signIn();
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              backgroundColor:
+                                  Color.fromARGB(255, 221, 199, 248),
+                              title: Text(
+                                "Algo deu errado!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: "Poppins",
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 51, 0, 67),
+                                ),
+                              ),
+                              content: Text(
+                                "Tenha certeza de que preencheu os campos corretamente.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: "Poppins",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromARGB(255, 51, 0, 67),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10),
