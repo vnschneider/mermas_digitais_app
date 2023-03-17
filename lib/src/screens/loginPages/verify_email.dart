@@ -60,6 +60,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
                 //Email TextField
                 CustomTextField(
+                  expanded: false,
+                  keyboardType: TextInputType.emailAddress,
                   useController: true,
                   enabled: true,
                   controller: _emailController,
