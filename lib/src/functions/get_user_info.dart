@@ -10,6 +10,7 @@ class GetUserInfo {
   String userName = '';
   double userFrequence = 0;
   String userProfilePhoto = '';
+  String userStatus = '';
 
   Future getUserInfo() async {
     try {
@@ -21,6 +22,7 @@ class GetUserInfo {
       userName = data['name'];
       userEmail = data['email'];
       userFrequence = data['frequence'];
+      userStatus = data['status'];
 
       //getProfilePhoto
       final profilephotoRef = FirebaseStorage.instance
