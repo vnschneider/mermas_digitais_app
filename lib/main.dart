@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: themeData,
       routes: routes,
-      initialRoute: 'newUser',
+      initialRoute: 'auth',
       debugShowCheckedModeBanner: false,
     );
   }
