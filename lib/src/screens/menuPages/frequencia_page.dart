@@ -1,5 +1,8 @@
 import 'package:mermas_digitais_app/core/exports/frequencia_exports.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/newFrequence_window/newFrequence_window.dart';
+
+import '../../models/newPost_window/newPost_window.dart';
 
 class FrequenciaPage extends StatefulWidget {
   const FrequenciaPage({super.key});
@@ -165,6 +168,22 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                   ),
           ),
         ),
+        floatingActionButton: userInfo.userStatus == 'Admin'
+            ? FloatingActionButton(
+                elevation: 2,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const NewFrequenceWindow();
+                    },
+                  );
+                },
+                child: const Icon(
+                  Iconsax.additem,
+                  size: 40,
+                ))
+            : null,
       ),
     );
   }
