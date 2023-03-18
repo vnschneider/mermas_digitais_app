@@ -234,7 +234,7 @@ class _NewUserPageState extends State<NewUserPage> {
                               });
                           newUser().whenComplete(() {
                             createUserDB(_nameController.text.trim());
-                            Navigator.pushNamed(context, "login");
+                            Navigator.of(context).popAndPushNamed("auth");
                           });
                         } else {
                           showDialog(

@@ -31,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
             email: _emailController.text.trim(),
             password: _passwordController.text.trim(),
           )
-          .then((value) => Navigator.pushNamed(context, 'navbar'));
+          .then((value) => Navigator.pushNamedAndRemoveUntil(
+              context, 'auth', ModalRoute.withName('/')));
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       if (e.code == 'user-not-found') {
