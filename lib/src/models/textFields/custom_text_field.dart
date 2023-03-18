@@ -5,17 +5,21 @@ class CustomTextField extends StatelessWidget {
       {super.key,
       required this.enabled,
       required this.useController,
-      required this.controller,
-      required this.keyboardType,
-      required this.expanded,
-      this.hintText});
+      this.controller,
+      this.keyboardType,
+      this.expanded,
+      this.hintText,
+      this.useSufixIcon,
+      this.icon});
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? hintText;
-  final TextInputType keyboardType;
-  final bool enabled;
-  final bool useController;
-  final bool expanded;
+  final TextInputType? keyboardType;
+  final bool? useSufixIcon;
+  final Icon? icon;
+  final bool? enabled;
+  final bool? useController;
+  final bool? expanded;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,6 +42,7 @@ class CustomTextField extends StatelessWidget {
                   keyboardType: keyboardType,
                   enabled: enabled,
                   decoration: InputDecoration(
+                    suffixIcon: useSufixIcon == true ? icon : null,
                     border: InputBorder.none,
                     hintText: hintText,
                     hintStyle: const TextStyle(
