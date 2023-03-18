@@ -11,10 +11,45 @@ class Navbar extends StatefulWidget {
 
 class _NavbarState extends State<Navbar> {
   int indexOf = 0;
+  bool selected = false;
 
   @override
   void initState() {
     super.initState();
+    selected = !selected;
+  }
+
+  lineAnimation() {
+    selected = !selected;
+  }
+
+  ativatedIcon(IconData icon) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          size: 38,
+          color: const Color.fromARGB(255, 221, 199, 248),
+        ),
+        const SizedBox(height: 6),
+        AnimatedContainer(
+          onEnd: () => setState(() {
+            selected = true;
+          }),
+          curve: Curves.elasticOut,
+          duration: const Duration(milliseconds: 300),
+          width: selected ? 38 : 10,
+          decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+            width: 1.0,
+            color: selected
+                ? const Color.fromARGB(255, 221, 199, 248)
+                : Colors.transparent,
+          ))),
+        ),
+      ],
+    );
   }
 
   @override
@@ -41,6 +76,7 @@ class _NavbarState extends State<Navbar> {
             topRight: Radius.circular(30.0),
           ),
           child: BottomNavigationBar(
+            enableFeedback: true,
             iconSize: 38,
             selectedFontSize: 15,
             unselectedFontSize: 14,
@@ -52,22 +88,34 @@ class _NavbarState extends State<Navbar> {
             unselectedItemColor: const Color.fromARGB(150, 221, 199, 248),
             selectedItemColor: const Color.fromARGB(255, 221, 199, 248),
             currentIndex: indexOf,
-            onTap: (index) => setState(() => indexOf = index),
+            onTap: (index) => setState(() {
+              indexOf = index;
+              //selected = !selected;
+              lineAnimation();
+            }),
             items: [
               BottomNavigationBarItem(
+                tooltip: 'Comunicados',
                 icon: Icon(widgetIcons[0]),
+                activeIcon: ativatedIcon(widgetIcons[0]),
                 label: '',
               ),
               BottomNavigationBarItem(
                 icon: Icon(widgetIcons[1]),
                 label: '',
+                tooltip: 'Oficinas',
+                activeIcon: ativatedIcon(widgetIcons[1]),
               ),
               BottomNavigationBarItem(
+                tooltip: 'Frequência',
                 icon: Icon(widgetIcons[2]),
+                activeIcon: ativatedIcon(widgetIcons[2]),
                 label: '',
               ),
               BottomNavigationBarItem(
+                tooltip: 'Perfil',
                 icon: Icon(widgetIcons[3]),
+                activeIcon: ativatedIcon(widgetIcons[3]),
                 label: '',
               ),
             ],
