@@ -1,3 +1,4 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/exports/frequencia_exports.dart';
@@ -156,6 +157,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
           ),
           floatingActionButton: userInfo.userStatus == 'Admin'
               ? FloatingActionButton(
+                  tooltip: 'Novo comunicado',
                   elevation: 2,
                   onPressed: () {
                     showDialog(
@@ -166,8 +168,8 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                     );
                   },
                   child: const Icon(
-                    Iconsax.additem,
-                    size: 40,
+                    BootstrapIcons.send_plus,
+                    size: 38,
                   ))
               : null,
         ),
