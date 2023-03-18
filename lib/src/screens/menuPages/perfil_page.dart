@@ -37,7 +37,7 @@ class _PerfilPageState extends State<PerfilPage> {
             backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 12),
             child: userInfo.userName == ''
                 ? const LoadingWindow()
                 : Card(
@@ -46,9 +46,8 @@ class _PerfilPageState extends State<PerfilPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           CircleAvatar(
                               radius: 45,
@@ -108,7 +107,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                     child: Row(
                                       children: const [
                                         Icon(
-                                          Iconsax.logout,
+                                          BootstrapIcons.escape,
                                           size: 25,
                                           color: Color.fromARGB(255, 51, 0, 67),
                                           fill: 1,
@@ -182,7 +181,8 @@ class _PerfilPageState extends State<PerfilPage> {
                 child: const Icon(
                   BootstrapIcons.person_gear,
                   size: 38,
-                ))
+                ),
+              )
             : null,
       ),
     );
