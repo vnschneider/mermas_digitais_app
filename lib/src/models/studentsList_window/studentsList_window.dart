@@ -6,6 +6,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
 import 'package:mermas_digitais_app/src/models/editUserProfile_window/editUserProfile_window.dart';
 
+import '../../functions/get_user_info.dart';
+
 class StudentsList extends StatefulWidget {
   const StudentsList({super.key});
 
@@ -14,10 +16,12 @@ class StudentsList extends StatefulWidget {
 }
 
 class _StudentsListState extends State<StudentsList> {
+  GetUserInfo userInfo = GetUserInfo();
   final _searchController = TextEditingController();
   String searchValue = '';
   bool onSearch = false;
   late Future<List<String>> _searchvalue;
+
   Future loadSearchValue() async {
     try {
       var doc = FirebaseFirestore.instance.collection('users');
@@ -36,6 +40,7 @@ class _StudentsListState extends State<StudentsList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      future: userInfo.getUserInfo(),
       builder: (context, snapshot) => StreamBuilder(
         stream: FirebaseFirestore.instance.collection('users').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => !snapshot
@@ -43,6 +48,7 @@ class _StudentsListState extends State<StudentsList> {
             ? const LoadingWindow()
             : Scaffold(
                 appBar: EasySearchBar(
+                  isFloating: true,
                   backgroundColor: const Color.fromARGB(255, 51, 0, 67),
                   searchBackgroundColor: const Color.fromARGB(255, 51, 0, 67),
                   searchHintText: 'Insira um nome',
@@ -97,8 +103,7 @@ class _StudentsListState extends State<StudentsList> {
               backgroundColor: const Color.fromARGB(255, 51, 0, 67)),*/
                 body: SafeArea(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: ListView.builder(
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
@@ -206,24 +211,28 @@ class _StudentsListState extends State<StudentsList> {
                                             ),
                                           ],
                                         ),
-                                        IconButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return EditUserProfileWindow(
-                                                    userName: doc['name'],
-                                                    userEmail: doc['email'],
-                                                    userStatus: doc['status'],
+                                        userInfo.userStatus == 'Admin'
+                                            ? IconButton(
+                                                onPressed: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return EditUserProfileWindow(
+                                                        userName: doc['name'],
+                                                        userEmail: doc['email'],
+                                                        userStatus:
+                                                            doc['status'],
+                                                      );
+                                                    },
                                                   );
                                                 },
-                                              );
-                                            },
-                                            icon: const Icon(
-                                              Iconsax.edit,
-                                              color: Color.fromARGB(
-                                                  255, 51, 0, 67),
-                                            ))
+                                                icon: const Icon(
+                                                  Iconsax.edit,
+                                                  color: Color.fromARGB(
+                                                      255, 51, 0, 67),
+                                                ),
+                                              )
+                                            : const SizedBox(),
                                       ],
                                     ),
                                   ),
