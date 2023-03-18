@@ -1,3 +1,4 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/exports/frequencia_exports.dart';
@@ -176,6 +177,7 @@ class _OficinasPageState extends State<OficinasPage> {
           ),
           floatingActionButton: userInfo.userStatus == 'Admin'
               ? FloatingActionButton(
+                  tooltip: 'Nova oficina',
                   elevation: 2,
                   onPressed: () {
                     showDialog(
@@ -186,8 +188,8 @@ class _OficinasPageState extends State<OficinasPage> {
                     );
                   },
                   child: const Icon(
-                    Iconsax.additem,
-                    size: 40,
+                    BootstrapIcons.journal_plus,
+                    size: 38,
                   ))
               : null,
         ),
