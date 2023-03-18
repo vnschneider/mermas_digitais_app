@@ -40,6 +40,7 @@ class _NewUserPageState extends State<NewUserPage> {
       'email': user.currentUser!.email,
       'frequence': 1.0,
       'status': 'Aluna',
+      'profilePhoto': userInfo.userProfilePhoto,
     });
     print(user.currentUser!.uid);
   }
@@ -56,7 +57,7 @@ class _NewUserPageState extends State<NewUserPage> {
       await profilephotoRef.putFile(File(profilePhoto!.path));
       profilephotoRef.getDownloadURL().then((value) {
         setState(() {
-          userProfilePhoto = value;
+          userInfo.userProfilePhoto = value;
         });
         print(value);
       });
@@ -149,7 +150,7 @@ class _NewUserPageState extends State<NewUserPage> {
                     useController: false,
                     enabled: false,
                     controller: _emailController,
-                    hintText: userInfo.userEmail,
+                    hintText: user.currentUser!.email,
                   ),
                   //Password TextField
                   Padding(
@@ -234,7 +235,8 @@ class _NewUserPageState extends State<NewUserPage> {
                               });
                           newUser().whenComplete(() {
                             createUserDB(_nameController.text.trim());
-                            Navigator.of(context).popAndPushNamed("auth");
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, 'auth', ModalRoute.withName('/'));
                           });
                         } else {
                           showDialog(
