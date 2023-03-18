@@ -49,6 +49,7 @@ dependencies:
   percent_indicator: ^4.2.2
   firebase_messaging_platform_interface: ^4.2.14
   url_launcher: ^6.1.10
+  easy_search_bar: ^2.4.2
   
 
  
