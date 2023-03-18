@@ -48,6 +48,7 @@ class _LoginPageState extends State<LoginPage> {
           text: "Senha incorreta!",
         );
       }
+      Navigator.of(context).pop();
     }
   }
 
