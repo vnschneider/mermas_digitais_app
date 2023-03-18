@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bootstrap_icons:
+    dependency: "direct main"
+    description:
+      name: bootstrap_icons
+      sha256: "65d579eb63cd85c2ce3285043cbe5e966a9b047b830175ca799a273b47932876"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.2"
   characters:
     dependency: transitive
     description:
