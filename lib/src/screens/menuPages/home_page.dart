@@ -1,3 +1,4 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:mermas_digitais_app/core/exports/home_exports.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,10 +12,10 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0; //default index
 
   final List<IconData> _widgetIcons = [
-    Iconsax.home,
-    Iconsax.book,
-    Iconsax.chart,
-    Iconsax.profile_2user,
+    BootstrapIcons.house,
+    BootstrapIcons.journals,
+    BootstrapIcons.clipboard_data,
+    BootstrapIcons.people,
   ];
 
   final List<Widget> _widgetOptions = [
