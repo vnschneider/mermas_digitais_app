@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:mermas_digitais_app/core/exports/verify_email_exports.dart';
 
 import '../../functions/get_user_info.dart';
 
