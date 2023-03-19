@@ -28,8 +28,8 @@ class _ChangePasswordState extends State<ChangePassword> {
           ),
         ),
         content: Text(
-          "Enviaremos um email solicitando uma nova senha. Confira sua caixa de entrada em ${userInfo.userEmail}",
-          textAlign: TextAlign.justify,
+          "Enviaremos um email solicitando uma nova senha. Confira sua caixa de entrada em: ${userInfo.userEmail}",
+          textAlign: TextAlign.start,
           style: const TextStyle(
             color: Color.fromARGB(255, 51, 0, 67),
             fontFamily: "Poppins",
