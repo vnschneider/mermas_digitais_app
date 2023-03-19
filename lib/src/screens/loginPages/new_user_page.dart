@@ -1,7 +1,9 @@
 import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
 import 'package:mermas_digitais_app/core/exports/new_user_exports.dart';
+import 'package:mermas_digitais_app/src/models/errorAlertDialog/errorAlertDialog.dart';
 
 import '../../functions/get_user_info.dart';
+import '../../models/snack_bar/snack_bar.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key});
@@ -16,6 +18,7 @@ class _NewUserPageState extends State<NewUserPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  Duration duration = const Duration(seconds: 3);
   GetUserInfo userInfo = GetUserInfo();
   var userProfilePhoto = '';
   String userUID = '';
@@ -24,10 +27,13 @@ class _NewUserPageState extends State<NewUserPage> {
 
   Future newUser() async {
     try {
-      await user.createUserWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
+      await user.currentUser!.updatePassword(_passwordController.text);
     } catch (e) {
-      print(e);
+      scaffoldMessenger(
+        context: context,
+        duration: duration,
+        text: "Erro em newUser: $e",
+      );
     }
   }
 
@@ -62,7 +68,11 @@ class _NewUserPageState extends State<NewUserPage> {
         print(value);
       });
     } catch (e) {
-      print("O processo falhou: $e");
+      scaffoldMessenger(
+        context: context,
+        duration: duration,
+        text: "Erro em Upload Img: $e",
+      );
     }
   }
 
@@ -224,7 +234,16 @@ class _NewUserPageState extends State<NewUserPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 100),
                     child: GestureDetector(
                       onTap: () {
-                        if (_nameController.text.isNotEmpty &&
+                        if (_passwordController.text.length < 6) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const ErrorAlertDialog(
+                                    title: 'Ops...',
+                                    content:
+                                        'Sua senha deve conter no mínimo 6 caracteres.');
+                              });
+                        } else if (_nameController.text.isNotEmpty &&
                             _passwordController.text.isNotEmpty &&
                             _confirmPasswordController.text.isNotEmpty &&
                             userInfo.userProfilePhoto.isNotEmpty) {
@@ -235,9 +254,13 @@ class _NewUserPageState extends State<NewUserPage> {
                               });
                           newUser().whenComplete(() {
                             createUserDB(_nameController.text.trim());
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, 'auth', ModalRoute.withName('/'));
-                          });
+                            user.currentUser!.reauthenticateWithCredential(
+                                EmailAuthProvider.credential(
+                                    email: user.currentUser!.email.toString(),
+                                    password: _passwordController.text));
+                          }).whenComplete(() =>
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, 'auth', ModalRoute.withName('/')));
                         } else {
                           showDialog(
                             context: context,
