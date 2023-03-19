@@ -110,29 +110,6 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                                       ],
                                     ),
                                     const SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            doc['postContent'].toString(),
-                                            maxLines: 3,
-                                            textAlign: TextAlign.start,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 51, 0, 67),
-                                              fontFamily: "Poppins",
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
                                     doc['postLink'].toString().isNotEmpty
                                         ? Row(
                                             mainAxisAlignment:

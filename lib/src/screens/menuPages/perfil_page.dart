@@ -7,6 +7,8 @@ import 'package:mermas_digitais_app/src/models/change_assword_window/change_assw
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/students_list_window/students_list_window.dart';
 
+import '../../models/app_bar/app_bar.dart';
+
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
 
@@ -22,22 +24,10 @@ class _PerfilPageState extends State<PerfilPage> {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => Scaffold(
-        appBar: AppBar(
-            elevation: 3,
-            toolbarHeight: 70,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15))),
-            title: const Text(
-              'Perfil',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 221, 199, 248),
-                  fontFamily: 'PaytoneOne',
-                  //fontWeight: FontWeight.bold,
-                  fontSize: 28),
-            ),
-            backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: CustomAppBar(text: 'Perfil'),
+        ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
