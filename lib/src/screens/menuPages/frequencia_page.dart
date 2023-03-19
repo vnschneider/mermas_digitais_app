@@ -95,11 +95,11 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 330,
+                                width: 320,
                                 child: Text(
                                   'Você possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
                                   overflow: TextOverflow.clip,
-                                  textAlign: TextAlign.justify,
+                                  textAlign: TextAlign.start,
                                   maxLines: 1,
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
