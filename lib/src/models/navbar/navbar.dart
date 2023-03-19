@@ -19,11 +19,7 @@ class _NavbarState extends State<Navbar> {
     selected = !selected;
   }
 
-  lineAnimation() {
-    selected = !selected;
-  }
-
-  ativatedIcon(IconData icon) {
+  activeIcon(IconData icon) {
     return Column(
       children: [
         Icon(
@@ -56,70 +52,53 @@ class _NavbarState extends State<Navbar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: telas[indexOf],
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(15),
-            topLeft: Radius.circular(15),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromARGB(54, 0, 0, 0),
-              spreadRadius: 0,
-              blurRadius: 10,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(22.0),
+          topRight: Radius.circular(22.0),
+        ),
+        child: BottomNavigationBar(
+          enableFeedback: true,
+          iconSize: 36,
+          selectedFontSize: 15,
+          unselectedFontSize: 14,
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+          backgroundColor: const Color.fromARGB(255, 51, 0, 67),
+          unselectedItemColor: const Color.fromARGB(150, 221, 199, 248),
+          selectedItemColor: const Color.fromARGB(255, 221, 199, 248),
+          currentIndex: indexOf,
+          onTap: (index) => setState(() {
+            indexOf = index;
+          }),
+          items: [
+            BottomNavigationBarItem(
+              tooltip: 'Comunicados',
+              icon: Icon(widgetIcons[0]),
+              activeIcon: activeIcon(widgetIcons[0]),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(widgetIcons[1]),
+              label: '',
+              tooltip: 'Oficinas',
+              activeIcon: activeIcon(widgetIcons[1]),
+            ),
+            BottomNavigationBarItem(
+              tooltip: 'Frequência',
+              icon: Icon(widgetIcons[2]),
+              activeIcon: activeIcon(widgetIcons[2]),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              tooltip: 'Perfil',
+              icon: Icon(widgetIcons[3]),
+              activeIcon: activeIcon(widgetIcons[3]),
+              label: '',
             ),
           ],
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-          ),
-          child: BottomNavigationBar(
-            enableFeedback: true,
-            iconSize: 36,
-            selectedFontSize: 15,
-            unselectedFontSize: 14,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-            backgroundColor: const Color.fromARGB(255, 51, 0, 67),
-            unselectedItemColor: const Color.fromARGB(150, 221, 199, 248),
-            selectedItemColor: const Color.fromARGB(255, 221, 199, 248),
-            currentIndex: indexOf,
-            onTap: (index) => setState(() {
-              indexOf = index;
-              //selected = !selected;
-              lineAnimation();
-            }),
-            items: [
-              BottomNavigationBarItem(
-                tooltip: 'Comunicados',
-                icon: Icon(widgetIcons[0]),
-                activeIcon: ativatedIcon(widgetIcons[0]),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(widgetIcons[1]),
-                label: '',
-                tooltip: 'Oficinas',
-                activeIcon: ativatedIcon(widgetIcons[1]),
-              ),
-              BottomNavigationBarItem(
-                tooltip: 'Frequência',
-                icon: Icon(widgetIcons[2]),
-                activeIcon: ativatedIcon(widgetIcons[2]),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                tooltip: 'Perfil',
-                icon: Icon(widgetIcons[3]),
-                activeIcon: ativatedIcon(widgetIcons[3]),
-                label: '',
-              ),
-            ],
-          ),
         ),
       ),
     );
