@@ -82,7 +82,7 @@ class _NewOficinaWindowState extends State<NewOficinaWindow> {
               enabled: true,
               useController: true,
               controller: _linkController,
-              hintText: 'Link para o material de aula',
+              hintText: 'Link do material de apoio',
             ),
           ],
         ),
