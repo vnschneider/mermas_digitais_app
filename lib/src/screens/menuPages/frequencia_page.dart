@@ -103,7 +103,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                               SizedBox(
                                 width: 330,
                                 child: Text(
-                                  'Você Possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
+                                  'Você possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
                                   overflow: TextOverflow.clip,
                                   textAlign: TextAlign.justify,
                                   maxLines: 1,
