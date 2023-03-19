@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:email_validator/email_validator.dart';
+// import 'package:email_validator/email_validator.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
@@ -106,8 +106,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         TextButton(
           onPressed: () {
-            if (_emailController.text.isNotEmpty &&
-                EmailValidator.validate(_emailController.text)) {
+            if (_emailController.text.isNotEmpty) {
               try {
                 FirebaseAuth.instance
                     .sendPasswordResetEmail(email: _emailController.text);

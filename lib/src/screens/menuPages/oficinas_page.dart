@@ -48,7 +48,7 @@ class _OficinasPageState extends State<OficinasPage> {
               backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+              padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
               child: !snapshot.hasData
                   ? const LoadingWindow()
                   : ListView.builder(

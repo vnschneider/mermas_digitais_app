@@ -52,7 +52,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
           ),
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+              padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
               child: !snapshot.hasData
                   ? const LoadingWindow()
                   : ListView.builder(

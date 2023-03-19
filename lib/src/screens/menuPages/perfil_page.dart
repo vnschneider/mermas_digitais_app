@@ -37,7 +37,7 @@ class _PerfilPageState extends State<PerfilPage> {
             backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 12),
+            padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
             child: userInfo.userName == ''
                 ? const LoadingWindow()
                 : Card(
