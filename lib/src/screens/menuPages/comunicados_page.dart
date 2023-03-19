@@ -76,14 +76,19 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          doc['postTitle'].toString(),
-                                          style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 51, 0, 67),
-                                              fontFamily: "PaytoneOne",
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                        Expanded(
+                                          child: Text(
+                                            doc['postTitle'].toString(),
+                                            maxLines: 1,
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 51, 0, 67),
+                                                fontFamily: "PaytoneOne",
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -168,7 +173,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                     );
                   },
                   child: const Icon(
-                    BootstrapIcons.send_plus,
+                    BootstrapIcons.envelope_plus,
                     size: 38,
                   ))
               : null,
