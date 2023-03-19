@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
+import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import '../../functions/get_user_info.dart';
 
 class NewPostWindow extends StatefulWidget {
@@ -126,38 +127,16 @@ class _NewPostWindowState extends State<NewPostWindow> {
                     });
                 createPostDB(_titleController.text, _contentController.text,
                         _linkController.text)
-                    .whenComplete(() => Navigator.of(context).pop());
+                    .whenComplete(() {
+                  showToastMessage(message: 'Comunicado adicionado!');
+                  Navigator.of(context).pop();
+                });
+                Navigator.of(context).pop();
               } else {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const AlertDialog(
-                      backgroundColor: Color.fromARGB(255, 221, 199, 248),
-                      title: Text(
-                        "Algo deu errado!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 51, 0, 67),
-                        ),
-                      ),
-                      content: Text(
-                        "Tenha certeza de que preencheu os campos corretamente.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 51, 0, 67),
-                        ),
-                      ),
-                    );
-                  },
-                );
+                showToastMessage(
+                    message:
+                        'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
               }
-              Navigator.of(context).pop();
             },
             child: const Text('Adicionar'),
           ),

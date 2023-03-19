@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
 import '../../functions/get_user_info.dart';
 import '../errorAlertDialog/errorAlertDialog.dart';
+import '../showToastMessage.dart';
 
 class NewOficinaWindow extends StatefulWidget {
   const NewOficinaWindow({super.key});
@@ -105,20 +106,16 @@ class _NewOficinaWindowState extends State<NewOficinaWindow> {
                     });
                 createPostDB(_titleController.text,
                         _classContentController.text, _linkController.text)
-                    .whenComplete(() => Navigator.of(context).pop());
+                    .whenComplete(() {
+                  showToastMessage(message: 'Oficina adicionada!');
+                  Navigator.of(context).pop();
+                });
+                Navigator.of(context).pop();
               } else {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const ErrorAlertDialog(
-                      title: 'Algo deu errado!',
-                      content:
-                          'Tenha certeza de que preencheu os campos corretamente.',
-                    );
-                  },
-                );
+                showToastMessage(
+                    message:
+                        'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
               }
-              Navigator.of(context).pop();
             },
             child: const Text('Adicionar'),
           ),
