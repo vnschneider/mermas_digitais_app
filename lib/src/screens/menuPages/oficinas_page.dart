@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/newClass_window/newClass_window.dart';
+import 'package:mermas_digitais_app/src/models/new_class_window/new_class_window.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OficinasPage extends StatefulWidget {

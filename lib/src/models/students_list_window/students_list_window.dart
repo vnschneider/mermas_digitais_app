@@ -3,7 +3,7 @@ import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
-import 'package:mermas_digitais_app/src/models/editUserProfile_window/editUserProfile_window.dart';
+import 'package:mermas_digitais_app/src/models/edit_user_profile_window/edit_user_profile_window.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 
 class StudentsList extends StatefulWidget {
@@ -18,13 +18,9 @@ class _StudentsListState extends State<StudentsList> {
   final _searchController = TextEditingController();
   String searchValue = '';
   bool onSearch = false;
-  late Future<List<String>> _searchvalue;
 
   Future loadSearchValue() async {
-    try {
-      var doc = FirebaseFirestore.instance.collection('users');
-      _searchvalue = doc as Future<List<String>>;
-    } catch (e) {
+    try {} catch (e) {
       print('Não foi possível pegar sugestões: $e');
     }
   }

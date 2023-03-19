@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/newPost_window/newPost_window.dart';
+import 'package:mermas_digitais_app/src/models/new_post_window/new_post_window.dart';
 import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
