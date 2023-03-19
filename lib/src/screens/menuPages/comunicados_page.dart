@@ -1,4 +1,7 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/exports/frequencia_exports.dart';
@@ -161,21 +164,54 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
             ),
           ),
           floatingActionButton: userInfo.userStatus == 'Admin'
-              ? FloatingActionButton(
-                  tooltip: 'Novo comunicado',
-                  elevation: 2,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const NewPostWindow();
-                      },
-                    );
-                  },
-                  child: const Icon(
-                    BootstrapIcons.envelope_plus,
-                    size: 38,
-                  ))
+              ? SpeedDial(
+                  tooltip: 'Menu',
+
+                  curve: Curves.elasticInOut,
+                  overlayColor: Colors.black,
+                  overlayOpacity: 0.2,
+                  buttonSize: const Size(58, 58),
+                  //shape: const StadiumBorder(side: BorderSide.none),
+                  icon: BootstrapIcons.menu_up,
+                  activeIcon: BootstrapIcons.x,
+                  children: [
+                    SpeedDialChild(
+                      child: const Icon(
+                        BootstrapIcons.envelope_plus,
+                        color: Color.fromARGB(255, 221, 199, 248),
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 51, 0, 67),
+                      labelBackgroundColor:
+                          const Color.fromARGB(255, 221, 199, 248),
+                      labelStyle: const TextStyle(
+                          color: Color.fromARGB(255, 51, 0, 67),
+                          fontFamily: 'Poppins'),
+                      label: 'Novo comunicado',
+                      onTap: () => showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const Hero(
+                              tag: 'tag1', child: NewPostWindow());
+                        },
+                      ),
+                    ),
+                    SpeedDialChild(
+                      child: const Icon(
+                        BootstrapIcons.send_plus,
+                        color: Color.fromARGB(255, 221, 199, 248),
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 51, 0, 67),
+                      labelBackgroundColor:
+                          const Color.fromARGB(255, 221, 199, 248),
+                      labelStyle: const TextStyle(
+                          color: Color.fromARGB(255, 51, 0, 67),
+                          fontFamily: 'Poppins'),
+                      label: 'Nova notificação',
+                      onTap: () => showToastMessage(
+                          message: 'Em breve você poderá enviar notificações'),
+                    )
+                  ],
+                )
               : null,
         ),
       ),
