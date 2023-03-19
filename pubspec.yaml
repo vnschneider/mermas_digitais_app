@@ -51,6 +51,7 @@ dependencies:
   url_launcher: ^6.1.10
   easy_search_bar: ^2.4.2
   bootstrap_icons: ^1.10.2
+  email_validator: ^2.1.17
   
 
  
