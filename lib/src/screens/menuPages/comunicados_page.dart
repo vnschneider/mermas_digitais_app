@@ -17,13 +17,16 @@ class ComunicadosPage extends StatefulWidget {
 }
 
 class _ComunicadosPageState extends State<ComunicadosPage> {
+  final isDialOpen = ValueNotifier(false);
   GetUserInfo userInfo = GetUserInfo();
 
   _launchUrl(Uri url) async {
-    if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      await canLaunchUrl(url);
-    } else {
-      print("Não foi possível abrir o link");
+    try {
+      if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        await canLaunchUrl(url);
+      }
+    } catch (e) {
+      showToastMessage(message: 'Não foi possível abrir o link. Erro: $e');
     }
   }
 
@@ -107,6 +110,29 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                                       ],
                                     ),
                                     const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            doc['postContent'].toString(),
+                                            maxLines: 3,
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 51, 0, 67),
+                                              fontFamily: "Poppins",
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
                                     doc['postLink'].toString().isNotEmpty
                                         ? Row(
                                             mainAxisAlignment:
@@ -154,7 +180,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
           floatingActionButton: userInfo.userStatus == 'Admin'
               ? SpeedDial(
                   tooltip: 'Menu',
-
+                  openCloseDial: isDialOpen,
                   curve: Curves.elasticInOut,
                   overlayColor: Colors.black,
                   overlayOpacity: 0.2,

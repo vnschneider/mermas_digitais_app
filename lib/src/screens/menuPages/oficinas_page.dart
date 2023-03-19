@@ -6,6 +6,8 @@ import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dar
 import 'package:mermas_digitais_app/src/models/new_class_window/new_class_window.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../models/showToastMessage.dart';
+
 class OficinasPage extends StatefulWidget {
   const OficinasPage({super.key});
 
@@ -17,10 +19,12 @@ class _OficinasPageState extends State<OficinasPage> {
   GetUserInfo userInfo = GetUserInfo();
 
   _launchUrl(Uri url) async {
-    if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      await canLaunchUrl(url);
-    } else {
-      print("Não foi possível abrir o link");
+    try {
+      if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        await canLaunchUrl(url);
+      }
+    } catch (e) {
+      showToastMessage(message: 'Não foi possível abrir o link. Erro: $e');
     }
   }
 
