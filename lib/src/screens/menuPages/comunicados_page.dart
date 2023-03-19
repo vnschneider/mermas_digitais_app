@@ -38,7 +38,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
           appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(70),
+            preferredSize: Size.fromHeight(65),
             child: CustomAppBar(text: 'Comunicados'),
           ),
           body: SafeArea(

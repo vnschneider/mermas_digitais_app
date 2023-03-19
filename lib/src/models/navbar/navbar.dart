@@ -24,17 +24,21 @@ class _NavbarState extends State<Navbar> {
       children: [
         Icon(
           icon,
-          size: 36,
+          size: 37,
           color: const Color.fromARGB(255, 221, 199, 248),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
         AnimatedContainer(
-          onEnd: () => setState(() {
-            selected = true;
-          }),
+          /* onEnd: () => setState(() {
+            Future.delayed(const Duration(milliseconds: 250), () {
+              selected = true;
+            });
+            print('feito');
+            selected = false;
+          }),*/
           curve: Curves.elasticOut,
           duration: const Duration(milliseconds: 300),
-          width: selected ? 36 : 10,
+          width: selected ? 37 : 10,
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(
@@ -60,9 +64,9 @@ class _NavbarState extends State<Navbar> {
         child: BottomNavigationBar(
           enableFeedback: true,
           iconSize: 36,
-          selectedFontSize: 15,
-          unselectedFontSize: 14,
-          showSelectedLabels: true,
+          selectedFontSize: 10,
+          unselectedFontSize: 10,
+          // showSelectedLabels: true,
           showUnselectedLabels: false,
           type: BottomNavigationBarType.fixed,
           landscapeLayout: BottomNavigationBarLandscapeLayout.centered,

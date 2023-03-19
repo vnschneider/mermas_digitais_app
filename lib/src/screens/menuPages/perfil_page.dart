@@ -25,7 +25,7 @@ class _PerfilPageState extends State<PerfilPage> {
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => Scaffold(
         appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70),
+          preferredSize: Size.fromHeight(65),
           child: CustomAppBar(text: 'Perfil'),
         ),
         body: SafeArea(

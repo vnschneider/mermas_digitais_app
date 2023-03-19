@@ -37,7 +37,7 @@ class _OficinasPageState extends State<OficinasPage> {
         stream: FirebaseFirestore.instance.collection('class').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
           appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(70),
+            preferredSize: Size.fromHeight(65),
             child: CustomAppBar(text: 'Oficinas'),
           ),
           body: SafeArea(
