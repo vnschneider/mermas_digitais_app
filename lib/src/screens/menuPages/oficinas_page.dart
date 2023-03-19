@@ -1,4 +1,5 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/exports/frequencia_exports.dart';
@@ -16,10 +17,12 @@ class _OficinasPageState extends State<OficinasPage> {
   GetUserInfo userInfo = GetUserInfo();
 
   _launchUrl(Uri url) async {
-    if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      await canLaunchUrl(url);
-    } else {
-      print("Não foi possível abrir o link");
+    try {
+      if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        await canLaunchUrl(url);
+      }
+    } catch (e) {
+      showToastMessage(message: 'Não foi possível abrir o link. Erro: $e');
     }
   }
 
