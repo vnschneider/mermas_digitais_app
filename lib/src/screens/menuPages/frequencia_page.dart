@@ -30,12 +30,12 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
           child: Center(
             child: userInfo.userName == ''
                 ? const LoadingWindow()
-                : Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    color: const Color.fromARGB(255, 221, 199, 248),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 12, right: 12, top: 12),
+                : Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      color: const Color.fromARGB(255, 221, 199, 248),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,

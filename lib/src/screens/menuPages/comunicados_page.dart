@@ -42,20 +42,20 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
             child: CustomAppBar(text: 'Comunicados'),
           ),
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
-              child: !snapshot.hasData
-                  ? const LoadingWindow()
-                  : ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        final DocumentSnapshot doc = snapshot.data!.docs[index];
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 20),
-                            Card(
+            child: !snapshot.hasData
+                ? const LoadingWindow()
+                : ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      final DocumentSnapshot doc = snapshot.data!.docs[index];
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                            child: Card(
                               color: const Color.fromARGB(255, 221, 199, 248),
                               child: Padding(
                                 padding: const EdgeInsets.all(20.0),
@@ -149,10 +149,10 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                                 ),
                               ),
                             ),
-                          ],
-                        );
-                      }),
-            ),
+                          ),
+                        ],
+                      );
+                    }),
           ),
           floatingActionButton: userInfo.userStatus == 'Admin'
               ? SpeedDial(
