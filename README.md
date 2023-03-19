@@ -1,10 +1,11 @@
 # Mermãs Digitais app
 
-![GitHub repo size](https://img.shields.io/github/languages/code-size/1mrschneider/mermas_digitais_app?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/1mrschneider/mermas_digitais_app?style=for-the-badge)
+![GitHub last release](https://img.shields.io/github/release-date/1mrschneider/mermas_digitais_app?style=for-the-badge)
+![GitHub las commit](https://img.shields.io/github/last-commit/1mrschneider/mermas_digitais_app?style=for-the-badge)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/1mrschneider/mermas_digitais_app?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/1mrschneider/mermas_digitais_app?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/1mrschneider/mermas_digitais_app?style=for-the-badge)
-![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/1mrschneider/mermas_digitais_app?style=for-the-badge)
+![GitHub open issues](https://img.shields.io/github/issues/1mrschneider/mermas_digitais_app?style=for-the-badge)
+
 
 <img src="https://github.com/1mrschneider/mermas_digitais_app/blob/main/assets/AppImages.svg" alt="Protótipo">
 
