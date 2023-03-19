@@ -46,7 +46,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
         scaffoldMessenger(
           context: context,
           duration: duration,
-          text: "Senha incorreta!",
+          text: "Esse email já está cadastrado. Faça o login!",
         );
 
         //'Senha incorreta!';
