@@ -1,7 +1,10 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
-import 'package:mermas_digitais_app/core/exports/frequencia_exports.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/newFrequence_window/newFrequence_window.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class FrequenciaPage extends StatefulWidget {
   const FrequenciaPage({super.key});

@@ -24,8 +24,8 @@ class _NewFrequenceWindowState extends State<NewFrequenceWindow> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
+        children: const [
+          Text(
             'content',
             style: TextStyle(
               color: Color.fromARGB(255, 51, 0, 67),

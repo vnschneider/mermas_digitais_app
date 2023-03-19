@@ -1,7 +1,8 @@
-// ignore_for_file: file_names
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/textFields/custom_text_field.dart';
 import '../../functions/get_user_info.dart';
 import '../errorAlertDialog/errorAlertDialog.dart';
 

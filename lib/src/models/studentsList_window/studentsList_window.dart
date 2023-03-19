@@ -1,12 +1,10 @@
-// ignore_for_file: file_names
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
+import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/editUserProfile_window/editUserProfile_window.dart';
-
-import '../../functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 
 class StudentsList extends StatefulWidget {
   const StudentsList({super.key});

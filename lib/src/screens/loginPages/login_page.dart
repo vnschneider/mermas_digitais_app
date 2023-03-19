@@ -1,9 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
 // import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
+import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/ola_merma.dart';
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
+import 'package:mermas_digitais_app/src/models/textFields/custom_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

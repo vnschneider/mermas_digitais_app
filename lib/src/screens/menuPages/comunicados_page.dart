@@ -1,12 +1,12 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/newPost_window/newPost_window.dart';
 import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../../core/exports/frequencia_exports.dart';
-import '../../functions/get_user_info.dart';
-import '../../models/newPost_window/newPost_window.dart';
 
 class ComunicadosPage extends StatefulWidget {
   const ComunicadosPage({super.key});
