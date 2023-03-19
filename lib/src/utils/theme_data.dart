@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 
 final ThemeData themeData = ThemeData(
+  indicatorColor: const Color.fromARGB(255, 221, 199, 248),
+  textButtonTheme: const TextButtonThemeData(
+    style: ButtonStyle(
+      surfaceTintColor:
+          MaterialStatePropertyAll<Color>(Color.fromARGB(255, 51, 0, 68)),
+      backgroundColor:
+          MaterialStatePropertyAll<Color>(Color.fromARGB(255, 221, 199, 248)),
+    ),
+  ),
+  //buttonBarTheme: ButtonBarThemeData(),
+  textSelectionTheme: const TextSelectionThemeData(
+    selectionColor: Color.fromARGB(30, 221, 199, 248),
+    selectionHandleColor: Color.fromARGB(255, 221, 199, 248),
+    cursorColor: Color.fromARGB(255, 221, 199, 248),
+  ),
   useMaterial3: true,
   //light scheme
   colorScheme: const ColorScheme(
