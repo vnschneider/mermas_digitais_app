@@ -28,7 +28,7 @@ class _NavbarState extends State<Navbar> {
       children: [
         Icon(
           icon,
-          size: 38,
+          size: 36,
           color: const Color.fromARGB(255, 221, 199, 248),
         ),
         const SizedBox(height: 6),
@@ -38,7 +38,7 @@ class _NavbarState extends State<Navbar> {
           }),
           curve: Curves.elasticOut,
           duration: const Duration(milliseconds: 300),
-          width: selected ? 38 : 10,
+          width: selected ? 36 : 10,
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(
@@ -77,7 +77,7 @@ class _NavbarState extends State<Navbar> {
           ),
           child: BottomNavigationBar(
             enableFeedback: true,
-            iconSize: 38,
+            iconSize: 36,
             selectedFontSize: 15,
             unselectedFontSize: 14,
             showSelectedLabels: false,
