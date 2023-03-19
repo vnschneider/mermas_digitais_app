@@ -1,8 +1,11 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
-import 'package:mermas_digitais_app/core/exports/perfil_exports.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
-import 'package:mermas_digitais_app/src/models/changePassword_window/changePassword_window.dart';
-import 'package:mermas_digitais_app/src/models/studentsList_window/studentsList_window.dart';
+import 'package:mermas_digitais_app/src/models/change_assword_window/change_assword_window.dart';
+import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/students_list_window/students_list_window.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -37,7 +40,7 @@ class _PerfilPageState extends State<PerfilPage> {
             backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 12),
+            padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
             child: userInfo.userName == ''
                 ? const LoadingWindow()
                 : Card(
