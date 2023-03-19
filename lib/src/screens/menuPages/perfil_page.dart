@@ -94,8 +94,12 @@ class _PerfilPageState extends State<PerfilPage> {
                                       );
                                       await FirebaseAuth.instance
                                           .signOut()
-                                          .then((value) => Navigator.pushNamed(
-                                              context, 'login'));
+                                          .then((value) =>
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                  context,
+                                                  'login',
+                                                  ModalRoute.withName(
+                                                      '/login')));
                                     },
                                     child: Row(
                                       children: const [
