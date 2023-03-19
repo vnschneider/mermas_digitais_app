@@ -155,6 +155,20 @@ class _PerfilPageState extends State<PerfilPage> {
                                   ),
                                 ],
                               ),
+                              TextButton(
+                                onPressed: () {
+                                  print(userInfo.userProfilePhoto);
+                                },
+                                child: const Text(
+                                  "Aperta aqui",
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                    fontFamily: "PaytoneOne",
+                                    fontSize: 20,
+                                    //fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
                             ],
                           )
                         ],

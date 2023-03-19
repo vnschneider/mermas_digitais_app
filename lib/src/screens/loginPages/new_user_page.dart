@@ -64,7 +64,7 @@ class _NewUserPageState extends State<NewUserPage> {
 
       final profilephotoRef = FirebaseStorage.instance
           .ref()
-          .child('users/${userInfo.user.uid}/profilephoto.jpg');
+          .child('users/${userInfo.user.uid}/profilePhoto.jpg');
 
       await profilephotoRef.putFile(File(profilePhoto!.path));
       profilephotoRef.getDownloadURL().then((value) {
