@@ -5,5 +5,5 @@ const List<IconData> widgetIcons = [
   BootstrapIcons.house,
   BootstrapIcons.journals,
   BootstrapIcons.clipboard_data,
-  BootstrapIcons.people,
+  BootstrapIcons.person,
 ];
