@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/new_post_window/new_post_window.dart';
 import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
@@ -33,22 +34,9 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
       builder: (context, snapshot) => StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
-          appBar: AppBar(
-            elevation: 3,
-            toolbarHeight: 70,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15))),
-            title: const Text(
-              'Comunicados',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 221, 199, 248),
-                  fontFamily: 'PaytoneOne',
-                  //fontWeight: FontWeight.bold,
-                  fontSize: 28),
-            ),
-            backgroundColor: const Color.fromARGB(255, 51, 0, 67),
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(70),
+            child: CustomAppBar(text: 'Comunicados'),
           ),
           body: SafeArea(
             child: Padding(
