@@ -1,9 +1,16 @@
-import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
-import 'package:mermas_digitais_app/core/exports/new_user_exports.dart';
-import 'package:mermas_digitais_app/src/models/errorAlertDialog/errorAlertDialog.dart';
+import 'dart:io';
 
-import '../../functions/get_user_info.dart';
-import '../../models/snack_bar/snack_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/error_alert_dialog/error_alert_dialog.dart';
+import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
+import 'package:mermas_digitais_app/src/models/textFields/custom_text_field.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key});

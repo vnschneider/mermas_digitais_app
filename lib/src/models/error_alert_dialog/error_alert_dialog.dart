@@ -1,6 +1,4 @@
-// ignore_for_file: file_names
-
-import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
+import 'package:flutter/material.dart';
 
 class ErrorAlertDialog extends StatelessWidget {
   const ErrorAlertDialog(

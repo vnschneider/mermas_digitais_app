@@ -38,6 +38,10 @@ class CustomTextField extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: 100),
                 child: TextFormField(
+                  showCursor: true,
+                  cursorHeight: 15,
+                  cursorWidth: 1,
+                  cursorColor: Colors.white,
                   maxLines: expanded == false ? 1 : null,
                   keyboardType: keyboardType,
                   enabled: enabled,
