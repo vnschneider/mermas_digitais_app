@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:email_validator/email_validator.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/core/exports/login_page_exports.dart';
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
@@ -63,6 +64,70 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _showPassword == false ? _showPassword = true : _showPassword = false;
     });
+  }
+
+  ///MODULARIZAR/////
+  changePassword() {
+    return AlertDialog(
+      title: const Text(
+        "Deseja alterar sua senha?",
+        style: TextStyle(
+          color: Color.fromARGB(255, 51, 0, 67),
+          fontFamily: "PaytoneOne",
+          fontSize: 16,
+        ),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustomTextField(
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
+              hintText: 'Email',
+              enabled: true,
+              useController: true),
+          const Text(
+            "Enviaremos um email solicitando uma nova senha. Confira sua caixa de entrada!",
+            textAlign: TextAlign.start,
+            style: TextStyle(
+              color: Color.fromARGB(255, 51, 0, 67),
+              fontFamily: "Poppins",
+              fontSize: 14,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Cancelar'),
+        ),
+        TextButton(
+          onPressed: () {
+            if (_emailController.text.isNotEmpty &&
+                EmailValidator.validate(_emailController.text)) {
+              try {
+                FirebaseAuth.instance
+                    .sendPasswordResetEmail(email: _emailController.text);
+              } catch (e) {
+                return print("Algo deu errado $e");
+              }
+              Navigator.of(context).pop();
+            } else {
+              _emailController.clear();
+              scaffoldMessenger(
+                context: context,
+                duration: duration,
+                text: "Insira um email válido!",
+              );
+            }
+          },
+          child: const Text('Confirmar'),
+        ),
+      ],
+    );
   }
 
   @override
@@ -140,9 +205,12 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const VerifyEmail(),
-                          ));
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return changePassword();
+                            },
+                          );
                         },
                         child: const Text(
                           'Esqueci minha senha',
