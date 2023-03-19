@@ -2,6 +2,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/new_frequence_window/new_frequence_window.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -21,22 +22,10 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => Scaffold(
-        appBar: AppBar(
-            elevation: 3,
-            toolbarHeight: 70,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15))),
-            title: const Text(
-              'Frequência',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 221, 199, 248),
-                  fontFamily: 'PaytoneOne',
-                  //fontWeight: FontWeight.bold,
-                  fontSize: 28),
-            ),
-            backgroundColor: const Color.fromARGB(255, 51, 0, 67)),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: CustomAppBar(text: 'Frequência'),
+        ),
         body: SafeArea(
           child: Center(
             child: userInfo.userName == ''
