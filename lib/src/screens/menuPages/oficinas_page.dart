@@ -5,8 +5,9 @@ import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/new_class_window/new_class_window.dart';
-import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../models/showToastMessage.dart';
 
 class OficinasPage extends StatefulWidget {
   const OficinasPage({super.key});
@@ -36,7 +37,7 @@ class _OficinasPageState extends State<OficinasPage> {
         stream: FirebaseFirestore.instance.collection('class').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
           appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(70),
+            preferredSize: Size.fromHeight(65),
             child: CustomAppBar(text: 'Oficinas'),
           ),
           body: SafeArea(

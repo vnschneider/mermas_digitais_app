@@ -54,6 +54,8 @@ dependencies:
   email_validator: ^2.1.17
   flutter_speed_dial: ^6.2.0
   fluttertoast: ^8.2.1
+  firebase_messaging: ^14.3.0
+  cached_network_image: ^3.2.3
   
 
  

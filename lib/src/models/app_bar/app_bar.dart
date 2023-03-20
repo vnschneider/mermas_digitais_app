@@ -14,11 +14,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
   PreferredSizeWidget build(BuildContext context) {
     return AppBar(
       elevation: 3,
-      toolbarHeight: 70,
+      toolbarHeight: 65,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(22),
-              bottomRight: Radius.circular(22))),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20))),
       title: Text(
         widget.text,
         style: const TextStyle(

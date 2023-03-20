@@ -116,6 +116,7 @@ class _StudentsListState extends State<StudentsList> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Row(
+                                      mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       crossAxisAlignment:
@@ -140,13 +141,14 @@ class _StudentsListState extends State<StudentsList> {
                                               ),
                                         const SizedBox(width: 10),
                                         Column(
+                                          mainAxisSize: MainAxisSize.min,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
-                                              width: 190,
+                                              width: 170,
                                               child: Text(
                                                 maxLines: 1,
                                                 textAlign: TextAlign.start,
@@ -163,7 +165,7 @@ class _StudentsListState extends State<StudentsList> {
                                             ),
                                             const SizedBox(height: 10),
                                             SizedBox(
-                                              width: 190,
+                                              width: 170,
                                               child: Text(
                                                 maxLines: 1,
                                                 textAlign: TextAlign.start,

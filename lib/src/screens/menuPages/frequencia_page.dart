@@ -7,6 +7,8 @@ import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dar
 import 'package:mermas_digitais_app/src/models/new_frequence_window/new_frequence_window.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../models/app_bar/app_bar.dart';
+
 class FrequenciaPage extends StatefulWidget {
   const FrequenciaPage({super.key});
 
@@ -23,7 +25,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => Scaffold(
         appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70),
+          preferredSize: Size.fromHeight(65),
           child: CustomAppBar(text: 'Frequência'),
         ),
         body: SafeArea(
@@ -94,11 +96,11 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 330,
+                                width: 320,
                                 child: Text(
                                   'Você possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
                                   overflow: TextOverflow.clip,
-                                  textAlign: TextAlign.justify,
+                                  textAlign: TextAlign.start,
                                   maxLines: 1,
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
@@ -154,6 +156,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 10),
                         ],
                       ),
                     ),

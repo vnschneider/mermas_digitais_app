@@ -13,6 +13,8 @@ import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dar
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/students_list_window/students_list_window.dart';
 
+import '../../models/app_bar/app_bar.dart';
+
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
 
@@ -38,7 +40,7 @@ class _PerfilPageState extends State<PerfilPage> {
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => Scaffold(
         appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70),
+          preferredSize: Size.fromHeight(65),
           child: CustomAppBar(text: 'Perfil'),
         ),
         body: SafeArea(
@@ -53,6 +55,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -65,14 +68,14 @@ class _PerfilPageState extends State<PerfilPage> {
                           const SizedBox(width: 10),
                           Column(
                             mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            // mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 223,
+                                width: 220,
                                 child: Text(
                                   maxLines: 1,
-                                  //textAlign: TextAlign.start,
+                                  textAlign: TextAlign.start,
                                   overflow: TextOverflow.ellipsis,
                                   userInfo.userName,
                                   style: const TextStyle(
@@ -84,10 +87,10 @@ class _PerfilPageState extends State<PerfilPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 223,
+                                width: 220,
                                 child: Text(
                                   maxLines: 1,
-                                  //textAlign: TextAlign.start,
+                                  textAlign: TextAlign.start,
                                   overflow: TextOverflow.ellipsis,
                                   userInfo.userEmail,
                                   style: const TextStyle(
@@ -99,6 +102,7 @@ class _PerfilPageState extends State<PerfilPage> {
                               ),
                               const SizedBox(height: 10),
                               Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   GestureDetector(
                                     onTap: () async {
@@ -118,10 +122,11 @@ class _PerfilPageState extends State<PerfilPage> {
                                                       '/login')));
                                     },
                                     child: Row(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: const [
                                         Icon(
                                           BootstrapIcons.escape,
-                                          size: 25,
+                                          size: 22,
                                           color: Color.fromARGB(255, 51, 0, 67),
                                           fill: 1,
                                         ),
@@ -132,7 +137,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                               color: Color.fromARGB(
                                                   255, 51, 0, 67),
                                               fontFamily: "Poppins",
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ],
@@ -149,10 +154,11 @@ class _PerfilPageState extends State<PerfilPage> {
                                       );
                                     },
                                     child: Row(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: const [
                                         Icon(
                                           Iconsax.refresh,
-                                          size: 25,
+                                          size: 22,
                                           color: Color.fromARGB(255, 51, 0, 67),
                                           fill: 1,
                                         ),
@@ -163,7 +169,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                               color: Color.fromARGB(
                                                   255, 51, 0, 67),
                                               fontFamily: "Poppins",
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ],
