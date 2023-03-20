@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -62,17 +63,17 @@ class _PerfilPageState extends State<PerfilPage> {
                           TextButton(
                             onPressed: uploadImage,
                             child: CircleAvatar(
-                                radius: 45,
+                                radius: 40,
                                 backgroundImage: NetworkImage(profilePhoto())),
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 5),
                           Column(
                             mainAxisSize: MainAxisSize.min,
                             // mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 220,
+                                width: 215,
                                 child: Text(
                                   maxLines: 1,
                                   textAlign: TextAlign.start,
@@ -87,7 +88,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 220,
+                                width: 215,
                                 child: Text(
                                   maxLines: 1,
                                   textAlign: TextAlign.start,
@@ -186,7 +187,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
                                     fontFamily: "PaytoneOne",
-                                    fontSize: 20,
+                                    fontSize: 14,
                                     //fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -222,17 +223,30 @@ class _PerfilPageState extends State<PerfilPage> {
   }
 
   void uploadImage() async {
+    final user = FirebaseAuth.instance;
     try {
       final profilePhoto = await ImagePicker()
           .pickImage(source: ImageSource.gallery, imageQuality: 50);
 
+      await FirebaseStorage.instance
+          .ref()
+          .child('users/${userInfo.user.uid}/profilePhoto.jpg')
+          .delete();
       final profilephotoRef = FirebaseStorage.instance
           .ref()
           .child('users/${userInfo.user.uid}/profilePhoto.jpg');
 
       await profilephotoRef.putFile(File(profilePhoto!.path));
-      profilephotoRef.getDownloadURL().then((value) async {
-        userInfo.userProfilePhoto = value;
+      profilephotoRef.getDownloadURL().then((value) {
+        setState(() {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.currentUser!.uid)
+              .update({
+            'profilePhoto': value,
+          });
+          userInfo.userProfilePhoto = value;
+        });
       });
     } catch (e) {
       scaffoldMessenger(

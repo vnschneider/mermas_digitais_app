@@ -9,6 +9,8 @@ import 'package:mermas_digitais_app/src/models/new_post_window/new_post_window.d
 import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../models/alertDialogs/alertDialogs.dart';
+
 class ComunicadosPage extends StatefulWidget {
   const ComunicadosPage({super.key});
 
@@ -55,97 +57,111 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 6),
-                            child: Card(
-                              color: const Color.fromARGB(255, 221, 199, 248),
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            doc['postTitle'].toString(),
-                                            maxLines: 1,
-                                            textAlign: TextAlign.start,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 51, 0, 67),
-                                                fontFamily: "PaytoneOne",
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            doc['postContent'].toString(),
-                                            maxLines: 3,
-                                            textAlign: TextAlign.start,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 51, 0, 67),
-                                              fontFamily: "Poppins",
-                                              fontSize: 14,
+                            child: GestureDetector(
+                              onLongPress: () => showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PostAlertDialog(
+                                    postTitle: doc['postTitle'],
+                                    postContent: doc['postContent'],
+                                    postLink: doc['postLink'],
+                                  );
+                                },
+                              ),
+                              child: Card(
+                                color: const Color.fromARGB(255, 221, 199, 248),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              doc['postTitle'].toString(),
+                                              maxLines: 1,
+                                              textAlign: TextAlign.start,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 51, 0, 67),
+                                                  fontFamily: "PaytoneOne",
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    doc['postLink'].toString().isNotEmpty
-                                        ? Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  if (doc['postLink']
-                                                      .toString()
-                                                      .isNotEmpty) {
-                                                    _launchUrl(Uri.parse(
-                                                        doc['postLink']
-                                                            .toString()));
-                                                  }
-                                                },
-                                                child: const Text(
-                                                  'Mais sobre',
-                                                  maxLines: 1,
-                                                  textAlign: TextAlign.start,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 51, 0, 67),
-                                                    fontFamily: "Poppins",
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12,
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              doc['postContent'].toString(),
+                                              maxLines: 4,
+                                              textAlign: TextAlign.start,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 51, 0, 67),
+                                                fontFamily: "Poppins",
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      doc['postLink'].toString().isNotEmpty
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    if (doc['postLink']
+                                                        .toString()
+                                                        .isNotEmpty) {
+                                                      _launchUrl(Uri.parse(
+                                                          doc['postLink']
+                                                              .toString()));
+                                                    }
+                                                  },
+                                                  child: const Text(
+                                                    'Mais sobre',
+                                                    maxLines: 1,
+                                                    textAlign: TextAlign.start,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 51, 0, 67),
+                                                      fontFamily: "Poppins",
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          )
-                                        : const SizedBox()
-                                  ],
+                                              ],
+                                            )
+                                          : const SizedBox()
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -181,8 +197,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                       onTap: () => showDialog(
                         context: context,
                         builder: (context) {
-                          return const Hero(
-                              tag: 'tag1', child: NewPostWindow());
+                          return const NewPostWindow();
                         },
                       ),
                     ),
