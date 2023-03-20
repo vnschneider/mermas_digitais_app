@@ -7,8 +7,6 @@ import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dar
 import 'package:mermas_digitais_app/src/models/new_frequence_window/new_frequence_window.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-import '../../models/app_bar/app_bar.dart';
-
 class FrequenciaPage extends StatefulWidget {
   const FrequenciaPage({super.key});
 

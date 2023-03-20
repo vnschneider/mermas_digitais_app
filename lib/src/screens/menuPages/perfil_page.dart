@@ -14,8 +14,6 @@ import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dar
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/students_list_window/students_list_window.dart';
 
-import '../../models/app_bar/app_bar.dart';
-
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
 
