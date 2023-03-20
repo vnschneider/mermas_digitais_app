@@ -47,7 +47,7 @@ class _NewUserPageState extends State<NewUserPage> {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(user.currentUser!.uid)
-        .set({
+        .update({
       'name': name,
       'email': user.currentUser!.email,
       'frequence': 1.0,
@@ -64,7 +64,7 @@ class _NewUserPageState extends State<NewUserPage> {
 
       final profilephotoRef = FirebaseStorage.instance
           .ref()
-          .child('users/${userInfo.user.uid}/profilePhoto.jpg');
+          .child('users/${userInfo.user.uid}/profilePhoto');
 
       await profilephotoRef.putFile(File(profilePhoto!.path));
       profilephotoRef.getDownloadURL().then((value) {
@@ -75,6 +75,7 @@ class _NewUserPageState extends State<NewUserPage> {
               .set({
             'profilePhoto': value,
           });
+          userInfo.userProfilePhoto = value;
         });
       });
     } catch (e) {
