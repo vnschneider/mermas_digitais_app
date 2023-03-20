@@ -72,9 +72,10 @@ class _NewUserPageState extends State<NewUserPage> {
           FirebaseFirestore.instance
               .collection('users')
               .doc(user.currentUser!.uid)
-              .update({
+              .set({
             'profilePhoto': value,
           });
+          userInfo.userProfilePhoto = value;
         });
       });
     } catch (e) {
