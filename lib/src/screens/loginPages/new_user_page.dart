@@ -22,7 +22,6 @@ class NewUserPage extends StatefulWidget {
 class _NewUserPageState extends State<NewUserPage> {
   final user = FirebaseAuth.instance;
   final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   Duration duration = const Duration(seconds: 3);
@@ -65,14 +64,18 @@ class _NewUserPageState extends State<NewUserPage> {
 
       final profilephotoRef = FirebaseStorage.instance
           .ref()
-          .child('users/${userInfo.user.uid}/profilephoto.jpg');
+          .child('users/${userInfo.user.uid}/profilePhoto.jpg');
 
       await profilephotoRef.putFile(File(profilePhoto!.path));
       profilephotoRef.getDownloadURL().then((value) {
         setState(() {
-          userInfo.userProfilePhoto = value;
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.currentUser!.uid)
+              .set({
+            'profilePhoto': value,
+          });
         });
-        print(value);
       });
     } catch (e) {
       scaffoldMessenger(
@@ -92,7 +95,6 @@ class _NewUserPageState extends State<NewUserPage> {
   @override
   void dispose() {
     _nameController.dispose();
-    _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -166,7 +168,7 @@ class _NewUserPageState extends State<NewUserPage> {
                     keyboardType: TextInputType.emailAddress,
                     useController: false,
                     enabled: false,
-                    controller: _emailController,
+                    controller: _nameController,
                     hintText: user.currentUser!.email,
                   ),
                   //Password TextField

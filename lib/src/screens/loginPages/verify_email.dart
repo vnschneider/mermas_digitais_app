@@ -29,7 +29,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
             email: _emailController.text.trim(),
-            password: 'test123',
+            password: 'qwe123qwe',
           )
           .then(
             (value) => Navigator.of(context).push(

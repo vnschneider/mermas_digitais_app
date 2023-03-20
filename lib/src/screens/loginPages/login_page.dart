@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-// import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -33,11 +31,14 @@ class _LoginPageState extends State<LoginPage> {
       );
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          )
-          .then((value) => Navigator.pushNamedAndRemoveUntil(
-              context, 'auth', ModalRoute.withName('/')));
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      )
+          .then((value) {
+        Navigator.of(context).pop();
+        Navigator.pushNamedAndRemoveUntil(
+            context, 'auth', ModalRoute.withName('/'));
+      });
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       if (e.code == 'user-not-found') {

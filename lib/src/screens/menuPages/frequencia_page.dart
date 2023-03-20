@@ -2,6 +2,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/new_frequence_window/new_frequence_window.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -31,12 +32,12 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
           child: Center(
             child: userInfo.userName == ''
                 ? const LoadingWindow()
-                : Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    color: const Color.fromARGB(255, 221, 199, 248),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 12, right: 12, top: 12),
+                : Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      color: const Color.fromARGB(255, 221, 199, 248),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,

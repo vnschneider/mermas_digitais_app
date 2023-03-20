@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
+import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/change_assword_window/change_assword_window.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/students_list_window/students_list_window.dart';
 
 import '../../models/app_bar/app_bar.dart';
@@ -18,6 +24,15 @@ class PerfilPage extends StatefulWidget {
 
 class _PerfilPageState extends State<PerfilPage> {
   GetUserInfo userInfo = GetUserInfo();
+  Duration duration = const Duration(seconds: 3);
+
+  String profilePhoto() {
+    if (userInfo.userProfilePhoto == "") {
+      return "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
+    } else {
+      return userInfo.userProfilePhoto;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +44,12 @@ class _PerfilPageState extends State<PerfilPage> {
           child: CustomAppBar(text: 'Perfil'),
         ),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
-            child: userInfo.userName == ''
-                ? const LoadingWindow()
-                : Card(
+          child: userInfo.userName == ''
+              ? const LoadingWindow()
+              : Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  child: Card(
                     //margin: const EdgeInsets.only(bottom: 520),
                     color: const Color.fromARGB(255, 221, 199, 248),
                     child: Padding(
@@ -43,10 +59,12 @@ class _PerfilPageState extends State<PerfilPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                              radius: 45,
-                              backgroundImage:
-                                  NetworkImage(userInfo.userProfilePhoto)),
+                          TextButton(
+                            onPressed: uploadImage,
+                            child: CircleAvatar(
+                                radius: 45,
+                                backgroundImage: NetworkImage(profilePhoto())),
+                          ),
                           const SizedBox(width: 10),
                           Column(
                             mainAxisSize: MainAxisSize.min,
@@ -96,8 +114,12 @@ class _PerfilPageState extends State<PerfilPage> {
                                       );
                                       await FirebaseAuth.instance
                                           .signOut()
-                                          .then((value) => Navigator.pushNamed(
-                                              context, 'login'));
+                                          .then((value) =>
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                  context,
+                                                  'login',
+                                                  ModalRoute.withName(
+                                                      '/login')));
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -155,13 +177,27 @@ class _PerfilPageState extends State<PerfilPage> {
                                   ),
                                 ],
                               ),
+                              TextButton(
+                                onPressed: () {
+                                  print(userInfo.userProfilePhoto);
+                                },
+                                child: const Text(
+                                  "Aperta aqui",
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                    fontFamily: "PaytoneOne",
+                                    fontSize: 20,
+                                    //fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
                             ],
                           )
                         ],
                       ),
                     ),
                   ),
-          ),
+                ),
         ),
         floatingActionButton: userInfo.userStatus == 'Admin'
             ? FloatingActionButton(
@@ -183,5 +219,27 @@ class _PerfilPageState extends State<PerfilPage> {
             : null,
       ),
     );
+  }
+
+  void uploadImage() async {
+    try {
+      final profilePhoto = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+      final profilephotoRef = FirebaseStorage.instance
+          .ref()
+          .child('users/${userInfo.user.uid}/profilePhoto.jpg');
+
+      await profilephotoRef.putFile(File(profilePhoto!.path));
+      profilephotoRef.getDownloadURL().then((value) async {
+        userInfo.userProfilePhoto = value;
+      });
+    } catch (e) {
+      scaffoldMessenger(
+        context: context,
+        duration: duration,
+        text: "Erro em Upload Img: $e",
+      );
+    }
   }
 }
