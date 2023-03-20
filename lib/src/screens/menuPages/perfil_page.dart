@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -52,7 +53,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     //margin: const EdgeInsets.only(bottom: 520),
                     color: const Color.fromARGB(255, 221, 199, 248),
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -60,139 +61,136 @@ class _PerfilPageState extends State<PerfilPage> {
                         children: [
                           TextButton(
                             onPressed: uploadImage,
-                            child: CircleAvatar(
-                                radius: 40,
-                                backgroundImage: NetworkImage(profilePhoto())),
+                            child: userInfo.userProfilePhoto == ""
+                                ? const Icon(
+                                    BootstrapIcons.person_add,
+                                    size: 80,
+                                  )
+                                : CachedNetworkImage(
+                                    // fit: BoxFit.cover,
+                                    imageUrl: userInfo.userProfilePhoto,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      width: 90.0,
+                                      height: 90.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ),
                           ),
                           const SizedBox(width: 5),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 215,
-                                child: Text(
-                                  maxLines: 1,
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                  userInfo.userName,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 51, 0, 67),
-                                    fontFamily: "PaytoneOne",
-                                    fontSize: 20,
-                                    //fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 215,
-                                child: Text(
-                                  maxLines: 1,
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                  userInfo.userEmail,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 51, 0, 67),
-                                    fontFamily: "Poppins",
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return const LoadingWindow();
-                                        },
-                                      );
-                                      await FirebaseAuth.instance
-                                          .signOut()
-                                          .then((value) =>
-                                              Navigator.pushNamedAndRemoveUntil(
-                                                  context,
-                                                  'login',
-                                                  ModalRoute.withName(
-                                                      '/login')));
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: const [
-                                        Icon(
-                                          BootstrapIcons.escape,
-                                          size: 22,
-                                          color: Color.fromARGB(255, 51, 0, 67),
-                                          fill: 1,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          'Sair',
-                                          style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 51, 0, 67),
-                                              fontFamily: "Poppins",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    maxLines: 1,
+                                    textAlign: TextAlign.start,
+                                    overflow: TextOverflow.ellipsis,
+                                    userInfo.userName,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 51, 0, 67),
+                                      fontFamily: "PaytoneOne",
+                                      fontSize: 20,
+                                      //fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(width: 20),
-                                  GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return const ChangePassword();
-                                        },
-                                      );
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: const [
-                                        Icon(
-                                          Iconsax.refresh,
-                                          size: 22,
-                                          color: Color.fromARGB(255, 51, 0, 67),
-                                          fill: 1,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          'Alterar senha',
-                                          style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 51, 0, 67),
-                                              fontFamily: "Poppins",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                                ),
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    maxLines: 1,
+                                    textAlign: TextAlign.start,
+                                    overflow: TextOverflow.ellipsis,
+                                    userInfo.userEmail,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 51, 0, 67),
+                                      fontFamily: "Poppins",
+                                      fontSize: 16,
                                     ),
                                   ),
-                                ],
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  print(
-                                      'userProfilePhotolink: ${userInfo.userProfilePhoto}');
-                                },
-                                child: const Text(
-                                  "Aperta aqui",
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 51, 0, 67),
-                                    fontFamily: "PaytoneOne",
-                                    fontSize: 14,
-                                    //fontWeight: FontWeight.bold,
-                                  ),
                                 ),
-                              )
-                            ],
-                          )
+                                const SizedBox(height: 8),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextButton(
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return const ConfirmSignOut();
+                                            },
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const [
+                                            Icon(
+                                              BootstrapIcons.escape,
+                                              size: 20,
+                                              color: Color.fromARGB(
+                                                  255, 51, 0, 67),
+                                              fill: 1,
+                                            ),
+                                            SizedBox(width: 6),
+                                            Text(
+                                              'Sair',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 51, 0, 67),
+                                                  fontFamily: "Poppins",
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        )),
+                                    const SizedBox(width: 10),
+                                    TextButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return const ChangePassword();
+                                          },
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: const [
+                                          Icon(
+                                            Iconsax.refresh,
+                                            size: 20,
+                                            color:
+                                                Color.fromARGB(255, 51, 0, 67),
+                                            fill: 1,
+                                          ),
+                                          SizedBox(width: 6),
+                                          Text(
+                                            'Alterar senha',
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 51, 0, 67),
+                                                fontFamily: "Poppins",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),

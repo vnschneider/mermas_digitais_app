@@ -1,3 +1,5 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +108,7 @@ class _StudentsListState extends State<StudentsList> {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 10),
                               SizedBox(
                                 width: double.infinity,
                                 //height: 130,
@@ -114,126 +116,169 @@ class _StudentsListState extends State<StudentsList> {
                                   color:
                                       const Color.fromARGB(255, 221, 199, 248),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        doc['profilePhoto']
-                                                .toString()
-                                                .isNotEmpty
-                                            ? CircleAvatar(
-                                                radius: 45,
-                                                backgroundImage: NetworkImage(
-                                                    doc['profilePhoto']
-                                                        .toString()))
-                                            : const CircleAvatar(
-                                                radius: 45,
-                                                child: Icon(
-                                                  Iconsax.personalcard,
-                                                  size: 45,
-                                                  color: Color.fromARGB(
-                                                      255, 221, 199, 248),
-                                                ),
-                                              ),
-                                        const SizedBox(width: 10),
-                                        Column(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Expanded(
+                                      child: FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                              MainAxisAlignment.start,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            SizedBox(
-                                              width: 170,
-                                              child: Text(
-                                                maxLines: 1,
-                                                textAlign: TextAlign.start,
-                                                overflow: TextOverflow.ellipsis,
-                                                doc['name'].toString(),
-                                                style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 51, 0, 67),
-                                                    fontFamily: "PaytoneOne",
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                            const SizedBox(height: 10),
-                                            SizedBox(
-                                              width: 170,
-                                              child: Text(
-                                                maxLines: 1,
-                                                textAlign: TextAlign.start,
-                                                overflow: TextOverflow.ellipsis,
-                                                doc['email'].toString(),
-                                                style: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 51, 0, 67),
-                                                  fontFamily: "Poppins",
-                                                  fontSize: 14,
+                                            doc['profilePhoto']
+                                                    .toString()
+                                                    .isNotEmpty
+                                                ? CachedNetworkImage(
+                                                    fadeInCurve:
+                                                        Curves.bounceInOut,
+                                                    // fit: BoxFit.cover,
+                                                    imageUrl:
+                                                        doc['profilePhoto']
+                                                            .toString(),
+                                                    imageBuilder: (context,
+                                                            imageProvider) =>
+                                                        Container(
+                                                      width: 80.0,
+                                                      height: 80.0,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit: BoxFit.cover),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const CircleAvatar(
+                                                    radius: 40,
+                                                    child: Icon(
+                                                      BootstrapIcons
+                                                          .person_circle,
+                                                      size: 60,
+                                                      color: Color.fromARGB(
+                                                          255, 221, 199, 248),
+                                                    ),
+                                                  ),
+                                            const SizedBox(width: 10),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  maxLines: 1,
+                                                  textAlign: TextAlign.start,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  doc['name'].toString(),
+                                                  style: const TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 51, 0, 67),
+                                                      fontFamily: "PaytoneOne",
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
-                                              ),
+                                                const SizedBox(height: 10),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 180,
+                                                      child: Text(
+                                                        maxLines: 1,
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        doc['email'].toString(),
+                                                        style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 51, 0, 67),
+                                                          fontFamily: "Poppins",
+                                                          fontSize: 14,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 5),
+                                                    Text(
+                                                      maxLines: 1,
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      'Frequência: ${(doc['frequence'] * 100).toStringAsFixed(0)}%',
+                                                      style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 51, 0, 67),
+                                                        fontFamily: "Poppins",
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 5),
+                                                    Text(
+                                                      maxLines: 1,
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      'UserLevel: ${doc['status'].toString()}',
+                                                      style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 51, 0, 67),
+                                                        fontFamily: "Poppins",
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                            const SizedBox(height: 5),
-                                            Text(
-                                              maxLines: 1,
-                                              textAlign: TextAlign.start,
-                                              overflow: TextOverflow.ellipsis,
-                                              'Frequência: ${(doc['frequence'] * 100).toStringAsFixed(0)}%',
-                                              style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 51, 0, 67),
-                                                fontFamily: "Poppins",
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Text(
-                                              maxLines: 1,
-                                              textAlign: TextAlign.start,
-                                              overflow: TextOverflow.ellipsis,
-                                              'UserLevel: ${doc['status'].toString()}',
-                                              style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 51, 0, 67),
-                                                fontFamily: "Poppins",
-                                                fontSize: 14,
-                                              ),
+                                            Column(
+                                              children: [
+                                                userInfo.userStatus == 'Admin'
+                                                    ? TextButton(
+                                                        onPressed: () {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return EditUserProfileWindow(
+                                                                userName:
+                                                                    doc['name'],
+                                                                userEmail: doc[
+                                                                    'email'],
+                                                                userStatus: doc[
+                                                                    'status'],
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: const Icon(
+                                                          Iconsax.edit,
+                                                          color: Color.fromARGB(
+                                                              255, 51, 0, 67),
+                                                        ),
+                                                      )
+                                                    : const SizedBox(),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                        userInfo.userStatus == 'Admin'
-                                            ? IconButton(
-                                                onPressed: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return EditUserProfileWindow(
-                                                        userName: doc['name'],
-                                                        userEmail: doc['email'],
-                                                        userStatus:
-                                                            doc['status'],
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                icon: const Icon(
-                                                  Iconsax.edit,
-                                                  color: Color.fromARGB(
-                                                      255, 51, 0, 67),
-                                                ),
-                                              )
-                                            : const SizedBox(),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 10),
                             ],
                           );
                         }),
