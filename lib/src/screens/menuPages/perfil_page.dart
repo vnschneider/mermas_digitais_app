@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/change_assword_window/change_assword_window.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/students_list_window/students_list_window.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -17,6 +22,15 @@ class PerfilPage extends StatefulWidget {
 
 class _PerfilPageState extends State<PerfilPage> {
   GetUserInfo userInfo = GetUserInfo();
+  Duration duration = const Duration(seconds: 3);
+
+  String profilePhoto() {
+    if (userInfo.userProfilePhoto == "") {
+      return "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
+    } else {
+      return userInfo.userProfilePhoto;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +56,12 @@ class _PerfilPageState extends State<PerfilPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                              radius: 45,
-                              backgroundImage:
-                                  NetworkImage(userInfo.userProfilePhoto)),
+                          TextButton(
+                            onPressed: uploadImage,
+                            child: CircleAvatar(
+                                radius: 45,
+                                backgroundImage: NetworkImage(profilePhoto())),
+                          ),
                           const SizedBox(width: 10),
                           Column(
                             mainAxisSize: MainAxisSize.min,
@@ -197,5 +213,27 @@ class _PerfilPageState extends State<PerfilPage> {
             : null,
       ),
     );
+  }
+
+  void uploadImage() async {
+    try {
+      final profilePhoto = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+      final profilephotoRef = FirebaseStorage.instance
+          .ref()
+          .child('users/${userInfo.user.uid}/profilePhoto.jpg');
+
+      await profilephotoRef.putFile(File(profilePhoto!.path));
+      profilephotoRef.getDownloadURL().then((value) async {
+        userInfo.userProfilePhoto = value;
+      });
+    } catch (e) {
+      scaffoldMessenger(
+        context: context,
+        duration: duration,
+        text: "Erro em Upload Img: $e",
+      );
+    }
   }
 }

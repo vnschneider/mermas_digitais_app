@@ -27,7 +27,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
+          .signInWithEmailAndPassword(
             email: _emailController.text.trim(),
             password: 'qwe123qwe',
           )

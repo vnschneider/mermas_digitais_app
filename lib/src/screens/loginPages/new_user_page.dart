@@ -69,9 +69,13 @@ class _NewUserPageState extends State<NewUserPage> {
       await profilephotoRef.putFile(File(profilePhoto!.path));
       profilephotoRef.getDownloadURL().then((value) {
         setState(() {
-          userInfo.userProfilePhoto = value;
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.currentUser!.uid)
+              .set({
+            'profilePhoto': value,
+          });
         });
-        print(value);
       });
     } catch (e) {
       scaffoldMessenger(

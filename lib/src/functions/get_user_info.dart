@@ -23,7 +23,6 @@ class GetUserInfo {
       userEmail = data['email'];
       userFrequence = data['frequence'];
       userStatus = data['status'];
-
       //getProfilePhoto
       final profilephotoRef = FirebaseStorage.instance
           .ref()
