@@ -180,7 +180,7 @@ class _PerfilPageState extends State<PerfilPage> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  print(userInfo.userProfilePhoto);
+                                  setState(() {});
                                 },
                                 child: const Text(
                                   "Aperta aqui",
@@ -224,17 +224,19 @@ class _PerfilPageState extends State<PerfilPage> {
 
   void uploadImage() async {
     final user = FirebaseAuth.instance;
+    const LoadingWindow();
     try {
       final profilePhoto = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+          .pickImage(source: ImageSource.gallery, imageQuality: 60);
+
+      final profilephotoRef = FirebaseStorage.instance
+          .ref()
+          .child('users/${userInfo.user.uid}/profilePhoto.jpg');
 
       await FirebaseStorage.instance
           .ref()
           .child('users/${userInfo.user.uid}/profilePhoto.jpg')
           .delete();
-      final profilephotoRef = FirebaseStorage.instance
-          .ref()
-          .child('users/${userInfo.user.uid}/profilePhoto.jpg');
 
       await profilephotoRef.putFile(File(profilePhoto!.path));
       profilephotoRef.getDownloadURL().then((value) {
@@ -245,7 +247,7 @@ class _PerfilPageState extends State<PerfilPage> {
               .update({
             'profilePhoto': value,
           });
-          userInfo.userProfilePhoto = value;
+          print('Nova foto URL: $value');
         });
       });
     } catch (e) {
