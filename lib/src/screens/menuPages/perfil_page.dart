@@ -180,7 +180,8 @@ class _PerfilPageState extends State<PerfilPage> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  setState(() {});
+                                  print(
+                                      'userProfilePhotolink: ${userInfo.userProfilePhoto}');
                                 },
                                 child: const Text(
                                   "Aperta aqui",
@@ -224,7 +225,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
   void uploadImage() async {
     final user = FirebaseAuth.instance;
-    const LoadingWindow();
+
     try {
       final profilePhoto = await ImagePicker()
           .pickImage(source: ImageSource.gallery, imageQuality: 60);
