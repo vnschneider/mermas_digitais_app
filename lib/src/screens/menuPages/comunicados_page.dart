@@ -1,15 +1,15 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:mermas_digitais_app/src/functions/postFunctions.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/new_post_window/new_post_window.dart';
+import 'package:mermas_digitais_app/src/models/post_menu_windows/post_menu_windows.dart';
 import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../models/alertDialogs/alertDialogs.dart';
 
 class ComunicadosPage extends StatefulWidget {
   const ComunicadosPage({super.key});
@@ -20,7 +20,9 @@ class ComunicadosPage extends StatefulWidget {
 
 class _ComunicadosPageState extends State<ComunicadosPage> {
   final isDialOpen = ValueNotifier(false);
+
   GetUserInfo userInfo = GetUserInfo();
+  PostOptions postOptions = PostOptions();
 
   _launchUrl(Uri url) async {
     try {
@@ -69,35 +71,21 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 6),
-                              child: GestureDetector(
-                                onLongPress: () => showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return PostAlertDialog(
-                                      postTitle: doc['postTitle'],
-                                      postContent: doc['postContent'],
-                                      postLink: doc['postLink'],
-                                    );
-                                  },
-                                ),
-                                child: Card(
-                                  color:
-                                      const Color.fromARGB(255, 221, 199, 248),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
+                              child: Card(
+                                color: const Color.fromARGB(255, 221, 199, 248),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Flexible(
+                                            child: FittedBox(
+                                              fit: BoxFit.fitWidth,
                                               child: Text(
                                                 doc['postTitle'].toString(),
                                                 maxLines: 1,
@@ -107,76 +95,122 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                                                     color: Color.fromARGB(
                                                         255, 51, 0, 67),
                                                     fontFamily: "PaytoneOne",
-                                                    fontSize: 20,
+                                                    fontSize: 18,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
                                             ),
-                                          ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      ExpandableText(
+                                        doc['postContent'].toString(),
+                                        maxLines: 4,
+                                        textAlign: TextAlign.start,
+                                        // overflow: TextOverflow.clip,
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(255, 51, 0, 67),
+                                          fontFamily: "Poppins",
+                                          fontSize: 14,
                                         ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                doc['postContent'].toString(),
-                                                maxLines: 4,
-                                                textAlign: TextAlign.start,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 51, 0, 67),
-                                                  fontFamily: "Poppins",
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        doc['postLink'].toString().isNotEmpty
-                                            ? Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      if (doc['postLink']
-                                                          .toString()
-                                                          .isNotEmpty) {
-                                                        _launchUrl(Uri.parse(
-                                                            doc['postLink']
-                                                                .toString()));
-                                                      }
-                                                    },
-                                                    child: const Text(
-                                                      'Mais sobre',
-                                                      maxLines: 1,
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 51, 0, 67),
-                                                        fontFamily: "Poppins",
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 12,
-                                                      ),
+                                        linkStyle: const TextStyle(
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                        expandText: 'mostrar mais',
+                                        collapseText: 'mostrar menos',
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          doc['postLink'].toString().isNotEmpty
+                                              ? TextButton(
+                                                  onPressed: () {
+                                                    if (doc['postLink']
+                                                        .toString()
+                                                        .isNotEmpty) {
+                                                      _launchUrl(Uri.parse(
+                                                          doc['postLink']
+                                                              .toString()));
+                                                    }
+                                                  },
+                                                  child: const Text(
+                                                    'Mais sobre',
+                                                    maxLines: 1,
+                                                    textAlign: TextAlign.start,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 51, 0, 67),
+                                                      fontFamily: "Poppins",
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12,
                                                     ),
                                                   ),
-                                                ],
-                                              )
-                                            : const SizedBox()
-                                      ],
-                                    ),
+                                                )
+                                              : const SizedBox(),
+                                          userInfo.userStatus == 'Admin'
+                                              ? Row(
+                                                  children: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return EditPostWindow(
+                                                                  postTitle: doc[
+                                                                      'postTitle'],
+                                                                  postUID: doc[
+                                                                      'postUID'],
+                                                                  postContent: doc[
+                                                                      'postContent'],
+                                                                  postLink: doc[
+                                                                      'postLink']);
+                                                            });
+                                                      },
+                                                      child: const Icon(
+                                                        BootstrapIcons
+                                                            .pencil_square,
+                                                        color: Color.fromARGB(
+                                                            255, 51, 0, 67),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return DeletePostDBWindow(
+                                                              Title:
+                                                                  'Deseja apagar este comunicado?',
+                                                              Content:
+                                                                  'Atenção! Essa alteração não poderá ser desfeita.',
+                                                              postUID: doc[
+                                                                  'postUID'],
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: const Icon(
+                                                        BootstrapIcons.trash3,
+                                                        color: Color.fromARGB(
+                                                            255, 51, 0, 67),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              : const SizedBox(),
+                                        ],
+                                      )
+                                    ],
                                   ),
                                 ),
                               ),
@@ -187,8 +221,8 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
             ),
             floatingActionButton: userInfo.userStatus == 'Admin'
                 ? SpeedDial(
+                    heroTag: 'postTag',
                     tooltip: 'Menu',
-
                     openCloseDial: isDialOpen,
                     curve: Curves.elasticInOut,
                     overlayColor: Colors.black,
@@ -213,7 +247,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                         onTap: () => showDialog(
                           context: context,
                           builder: (context) {
-                            return const NewPostWindow();
+                            return const CreatePostWindow();
                           },
                         ),
                       ),
