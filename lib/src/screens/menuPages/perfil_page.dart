@@ -6,12 +6,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/change_password_window/change_password_window.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/students_list_window/students_list_window.dart';
 
@@ -55,15 +57,44 @@ class _PerfilPageState extends State<PerfilPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             userInfo.userProfilePhoto == ""
-                                ? const Icon(
-                                    BootstrapIcons.person_circle,
-                                    size: 100,
-                                    color: Color.fromARGB(255, 51, 0, 67),
+                                ? Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image:
+                                            AssetImage('assets/logo_roxa.png'),
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: TextButton(
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(
+                                              134, 221, 199, 248),
+                                          shape: const CircleBorder(
+                                              side: BorderSide.none),
+                                        ),
+                                        onPressed: () {
+                                          uploadImage();
+                                        },
+                                        child:
+                                            const Icon(BootstrapIcons.camera),
+                                      ),
+                                    ),
                                   )
                                 : CachedNetworkImage(
-                                    progressIndicatorBuilder:
-                                        (context, url, progress) =>
-                                            const CircularProgressIndicator(),
+                                    progressIndicatorBuilder: (context, url,
+                                            progress) =>
+                                        const SizedBox(
+                                            height: 100,
+                                            width: 100,
+                                            child: CircularProgressIndicator(
+                                              color: Color.fromARGB(
+                                                  255, 221, 199, 248),
+                                            )),
                                     errorWidget: (context, url, error) =>
                                         const Icon(
                                       BootstrapIcons.person_circle,
@@ -72,31 +103,39 @@ class _PerfilPageState extends State<PerfilPage> {
                                     ),
                                     imageUrl: userInfo.userProfilePhoto,
                                     imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      width: 100,
+                                        SizedBox(
                                       height: 100,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: TextButton(
-                                          style: TextButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    134, 221, 199, 248),
-                                            shape: const CircleBorder(
-                                                side: BorderSide.none),
+                                      width: 100,
+                                      child: FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Container(
+                                          width: 180,
+                                          height: 180,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                          onPressed: () {
-                                            uploadImage();
-                                          },
-                                          child:
-                                              const Icon(BootstrapIcons.camera),
+                                          child: Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: TextButton(
+                                              style: TextButton.styleFrom(
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        215, 221, 199, 248),
+                                                shape: const CircleBorder(
+                                                    side: BorderSide.none),
+                                              ),
+                                              onPressed: () {
+                                                uploadImage();
+                                              },
+                                              child: const Icon(
+                                                  BootstrapIcons.camera,
+                                                  size: 40),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -241,42 +280,43 @@ class _PerfilPageState extends State<PerfilPage> {
   }
 
   void uploadImage() async {
-    final user = FirebaseAuth.instance;
-
     try {
       final profilePhoto = await ImagePicker()
           .pickImage(source: ImageSource.gallery, imageQuality: 50)
-          .then((value) {
-        value.toString().isEmpty ? '' : value;
-      });
+          .whenComplete(() => null);
+
+      if (profilePhoto != null && userInfo.userProfilePhoto != '') {
+        await FirebaseStorage.instance
+            .ref()
+            .child('users/${userInfo.user.uid}/profilePhoto')
+            .delete()
+            .whenComplete(
+                () => showToastMessage(message: 'Foto antiga deletada!'));
+      } else if (profilePhoto == null) {
+        showToastMessage(message: 'Você não selecionou nenhuma foto');
+      } else {
+        showToastMessage(message: 'Error ao fazer o upload da foto');
+      }
 
       final profilephotoRef = FirebaseStorage.instance
           .ref()
-          .child('users/${userInfo.user.uid}/profilePhoto.jpg');
-
-      await FirebaseStorage.instance
-          .ref()
-          .child('users/${userInfo.user.uid}/profilePhoto.jpg')
-          .delete();
+          .child('users/${userInfo.user.uid}/profilePhoto');
 
       await profilephotoRef.putFile(File(profilePhoto!.path));
       profilephotoRef.getDownloadURL().then((value) {
         setState(() {
           FirebaseFirestore.instance
               .collection('users')
-              .doc(user.currentUser!.uid)
+              .doc(userInfo.user.uid)
               .update({
             'profilePhoto': value,
           });
-          print('Nova foto URL: $value');
+          //userInfo.userProfilePhoto = value;
+          showToastMessage(message: 'Você alterou sua foto de perfil!');
         });
       });
     } catch (e) {
-      scaffoldMessenger(
-        context: context,
-        duration: duration,
-        text: "Erro em Upload Img: $e",
-      );
+      showToastMessage(message: 'Erro: $e');
     }
   }
 }
