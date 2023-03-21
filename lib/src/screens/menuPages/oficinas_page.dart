@@ -1,5 +1,6 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
@@ -86,18 +87,24 @@ class _OficinasPageState extends State<OficinasPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Expanded(
-                                          child: Text(
-                                            maxLines: 3,
-                                            textAlign: TextAlign.start,
-                                            overflow: TextOverflow.ellipsis,
+                                        Flexible(
+                                          child: ExpandableText(
                                             doc['classContent'].toString(),
+                                            maxLines: 2,
+                                            textAlign: TextAlign.start,
+                                            // overflow: TextOverflow.clip,
                                             style: const TextStyle(
                                               color: Color.fromARGB(
                                                   255, 51, 0, 67),
                                               fontFamily: "Poppins",
                                               fontSize: 14,
                                             ),
+                                            linkStyle: const TextStyle(
+                                                fontFamily: "Poppins",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                            expandText: 'mostrar mais',
+                                            collapseText: 'mostrar menos',
                                           ),
                                         ),
                                       ],
