@@ -10,7 +10,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
-import 'package:mermas_digitais_app/src/models/change_assword_window/change_assword_window.dart';
+import 'package:mermas_digitais_app/src/models/change_password_window/change_password_window.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/students_list_window/students_list_window.dart';
