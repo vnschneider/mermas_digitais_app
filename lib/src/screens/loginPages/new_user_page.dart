@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,6 +13,8 @@ import 'package:mermas_digitais_app/src/models/alertDialogs/alertDialogs.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/textFields/custom_text_field.dart';
+
+import '../../models/showToastMessage.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key});
@@ -60,7 +64,19 @@ class _NewUserPageState extends State<NewUserPage> {
   void uploadImage() async {
     try {
       final profilePhoto = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+          .pickImage(source: ImageSource.gallery, imageQuality: 50)
+          .whenComplete(() => null);
+
+      if (profilePhoto != null && userInfo.userProfilePhoto != '') {
+        await FirebaseStorage.instance
+            .ref()
+            .child('users/${userInfo.user.uid}/profilePhoto')
+            .delete()
+            .whenComplete(
+                () => showToastMessage(message: 'Foto antiga deletada!'));
+      } else if (profilePhoto == null) {
+        showToastMessage(message: 'Você não selecionou nenhuma foto');
+      }
 
       final profilephotoRef = FirebaseStorage.instance
           .ref()
@@ -79,11 +95,7 @@ class _NewUserPageState extends State<NewUserPage> {
         });
       });
     } catch (e) {
-      scaffoldMessenger(
-        context: context,
-        duration: duration,
-        text: "Erro em Upload Img: $e",
-      );
+      showToastMessage(message: 'Erro: $e');
     }
   }
 
@@ -135,24 +147,77 @@ class _NewUserPageState extends State<NewUserPage> {
                   const SizedBox(height: 60),
                   //ProfilePhoto Container
 
-                  GestureDetector(
-                    onTap: () {
-                      uploadImage();
-                    },
-                    child: userInfo.userProfilePhoto != ''
-                        ? CircleAvatar(
-                            radius: 80,
-                            backgroundImage:
-                                NetworkImage(userInfo.userProfilePhoto))
-                        : const CircleAvatar(
-                            radius: 60,
-                            child: Icon(
-                              Iconsax.personalcard,
-                              size: 120,
-                              color: Color.fromARGB(255, 221, 199, 248),
+                  userInfo.userProfilePhoto != ''
+                      ? CachedNetworkImage(
+                          progressIndicatorBuilder: (context, url, progress) =>
+                              const SizedBox(
+                                  height: 180,
+                                  width: 180,
+                                  child: CircularProgressIndicator(
+                                    color: Color.fromARGB(255, 221, 199, 248),
+                                  )),
+                          errorWidget: (context, url, error) => const Icon(
+                            BootstrapIcons.person_circle,
+                            size: 100,
+                            color: Color.fromARGB(255, 51, 0, 67),
+                          ),
+                          imageUrl: userInfo.userProfilePhoto,
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 180,
+                            height: 180,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 221, 199, 248),
+                                  shape:
+                                      const CircleBorder(side: BorderSide.none),
+                                ),
+                                onPressed: () {
+                                  uploadImage();
+                                },
+                                child: const Icon(
+                                  BootstrapIcons.camera,
+                                  size: 30,
+                                ),
+                              ),
                             ),
                           ),
-                  ),
+                        )
+                      : Container(
+                          width: 180,
+                          height: 180,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: AssetImage('assets/logo_branca.png'),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(134, 221, 199, 248),
+                                shape:
+                                    const CircleBorder(side: BorderSide.none),
+                              ),
+                              onPressed: () {
+                                uploadImage();
+                              },
+                              child: const Icon(BootstrapIcons.camera),
+                            ),
+                          ),
+                        ),
                   const SizedBox(height: 30),
                   //UID TextField
 
