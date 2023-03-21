@@ -43,148 +43,171 @@ class _StudentsListState extends State<StudentsList> {
                 .hasData
             ? const LoadingWindow()
             : Scaffold(
-                appBar: EasySearchBar(
-                  isFloating: true,
-                  backgroundColor: const Color.fromARGB(255, 51, 0, 67),
-                  searchBackgroundColor: const Color.fromARGB(255, 51, 0, 67),
-                  searchHintText: 'Insira um nome',
-                  searchHintStyle: const TextStyle(
-                    color: Color.fromARGB(255, 221, 199, 248),
-                    fontFamily: "Poppins",
-                    fontSize: 16,
+                appBar: PreferredSize(
+                  preferredSize: const Size.fromHeight(65),
+                  child: EasySearchBar(
+                    isFloating: true,
+                    backgroundColor: const Color.fromARGB(255, 51, 0, 67),
+                    searchBackgroundColor: const Color.fromARGB(255, 51, 0, 67),
+                    searchHintText: 'Insira um nome',
+                    searchHintStyle: const TextStyle(
+                      color: Color.fromARGB(255, 221, 199, 248),
+                      fontFamily: "Poppins",
+                      fontSize: 16,
+                    ),
+                    searchTextStyle: const TextStyle(
+                      color: Color.fromARGB(255, 221, 199, 248),
+                      fontFamily: "Poppins",
+                      fontSize: 14,
+                    ),
+                    searchTextKeyboardType: TextInputType.name,
+                    title: const Text(
+                      'Usuários',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 221, 199, 248),
+                          fontFamily: 'PaytoneOne',
+                          //fontWeight: FontWeight.bold,
+                          fontSize: 28),
+                    ),
+                    suggestions: List.empty(),
+                    onSearch: (value) => setState(() {
+                      searchValue = value;
+                      onSearch = true;
+                    }),
                   ),
-                  searchTextStyle: const TextStyle(
-                    color: Color.fromARGB(255, 221, 199, 248),
-                    fontFamily: "Poppins",
-                    fontSize: 14,
-                  ),
-                  searchTextKeyboardType: TextInputType.name,
-                  title: const Text(
-                    'Usuários',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 221, 199, 248),
-                        fontFamily: 'PaytoneOne',
-                        //fontWeight: FontWeight.bold,
-                        fontSize: 28),
-                  ),
-                  suggestions: List.empty(),
-                  onSearch: (value) => setState(() {
-                    searchValue = value;
-                    onSearch = true;
-                  }),
                 ),
-//Nomal AppBar
-                /*AppBar(
-              actions: [
-                IconButton(
-                  tooltip: 'Pesquisar',
-                  onPressed: () {},
-                  icon: const Icon(Iconsax.search_normal),
-                )
-              ],
-              elevation: 3,
-              toolbarHeight: 70,
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15))),
-              title: const Text(
-                'Usuários',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 221, 199, 248),
-                    fontFamily: 'PaytoneOne',
-                    //fontWeight: FontWeight.bold,
-                    fontSize: 28),
-              ),
-              backgroundColor: const Color.fromARGB(255, 51, 0, 67)),*/
                 body: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          final DocumentSnapshot doc =
-                              snapshot.data!.docs[index];
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 10),
-                              SizedBox(
-                                width: double.infinity,
-                                //height: 130,
-                                child: Card(
-                                  color:
-                                      const Color.fromARGB(255, 221, 199, 248),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Expanded(
-                                      child: FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            doc['profilePhoto']
-                                                    .toString()
-                                                    .isNotEmpty
-                                                ? CachedNetworkImage(
-                                                    fadeInCurve:
-                                                        Curves.bounceInOut,
-                                                    // fit: BoxFit.cover,
-                                                    imageUrl:
-                                                        doc['profilePhoto']
-                                                            .toString(),
-                                                    imageBuilder: (context,
-                                                            imageProvider) =>
-                                                        Container(
-                                                      width: 80.0,
-                                                      height: 80.0,
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        image: DecorationImage(
-                                                            image:
-                                                                imageProvider,
-                                                            fit: BoxFit.cover),
+                  child: ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        final DocumentSnapshot doc = snapshot.data!.docs[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
+                          child: Hero(
+                            tag: 'StudentsListTag',
+                            child: Card(
+                              color: const Color.fromARGB(255, 221, 199, 248),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Flexible(
+                                                child: FittedBox(
+                                                  fit: BoxFit.contain,
+                                                  child: Text(
+                                                    maxLines: 1,
+                                                    textAlign: TextAlign.start,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    doc['name'].toString(),
+                                                    style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 51, 0, 67),
+                                                        fontFamily:
+                                                            "PaytoneOne",
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              userInfo.userStatus == 'Admin'
+                                                  ? TextButton(
+                                                      onPressed: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return EditUserProfileWindow(
+                                                              userName:
+                                                                  doc['name'],
+                                                              userEmail:
+                                                                  doc['email'],
+                                                              userStatus:
+                                                                  doc['status'],
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: const Icon(
+                                                        Iconsax.edit,
+                                                        color: Color.fromARGB(
+                                                            255, 51, 0, 67),
                                                       ),
-                                                    ),
-                                                  )
-                                                : const CircleAvatar(
-                                                    radius: 40,
-                                                    child: Icon(
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Row(
+                                            children: [
+                                              doc['profilePhoto']
+                                                      .toString()
+                                                      .isEmpty
+                                                  ? const Icon(
                                                       BootstrapIcons
                                                           .person_circle,
-                                                      size: 60,
-                                                      color: Color.fromARGB(
-                                                          255, 221, 199, 248),
-                                                    ),
-                                                  ),
-                                            const SizedBox(width: 10),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  maxLines: 1,
-                                                  textAlign: TextAlign.start,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  doc['name'].toString(),
-                                                  style: const TextStyle(
+                                                      size: 90,
                                                       color: Color.fromARGB(
                                                           255, 51, 0, 67),
-                                                      fontFamily: "PaytoneOne",
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                const SizedBox(height: 10),
-                                                Column(
+                                                    )
+                                                  : CachedNetworkImage(
+                                                      progressIndicatorBuilder:
+                                                          (context, url,
+                                                                  progress) =>
+                                                              const CircularProgressIndicator(),
+
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                        BootstrapIcons
+                                                            .person_circle,
+                                                        size: 90,
+                                                        color: Color.fromARGB(
+                                                            255, 51, 0, 67),
+                                                      ),
+                                                      // fit: BoxFit.cover,
+                                                      imageUrl:
+                                                          doc['profilePhoto'],
+                                                      imageBuilder: (context,
+                                                              imageProvider) =>
+                                                          Container(
+                                                        width: 90,
+                                                        height: 90,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          image:
+                                                              DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                              const SizedBox(width: 8),
+                                              Flexible(
+                                                child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   mainAxisAlignment:
@@ -192,8 +215,8 @@ class _StudentsListState extends State<StudentsList> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    SizedBox(
-                                                      width: 180,
+                                                    FittedBox(
+                                                      fit: BoxFit.contain,
                                                       child: Text(
                                                         maxLines: 1,
                                                         textAlign:
@@ -205,7 +228,7 @@ class _StudentsListState extends State<StudentsList> {
                                                           color: Color.fromARGB(
                                                               255, 51, 0, 67),
                                                           fontFamily: "Poppins",
-                                                          fontSize: 14,
+                                                          fontSize: 15,
                                                         ),
                                                       ),
                                                     ),
@@ -241,48 +264,20 @@ class _StudentsListState extends State<StudentsList> {
                                                     ),
                                                   ],
                                                 ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                userInfo.userStatus == 'Admin'
-                                                    ? TextButton(
-                                                        onPressed: () {
-                                                          showDialog(
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return EditUserProfileWindow(
-                                                                userName:
-                                                                    doc['name'],
-                                                                userEmail: doc[
-                                                                    'email'],
-                                                                userStatus: doc[
-                                                                    'status'],
-                                                              );
-                                                            },
-                                                          );
-                                                        },
-                                                        child: const Icon(
-                                                          Iconsax.edit,
-                                                          color: Color.fromARGB(
-                                                              255, 51, 0, 67),
-                                                        ),
-                                                      )
-                                                    : const SizedBox(),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 10),
-                            ],
-                          );
-                        }),
-                  ),
+                            ),
+                          ),
+                        );
+                        //const SizedBox(height: 10),
+                      }),
                 ),
               ),
       ),

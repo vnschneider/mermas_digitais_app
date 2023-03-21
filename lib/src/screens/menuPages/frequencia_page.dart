@@ -64,10 +64,21 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                 const SizedBox(height: 60),
                                 userInfo.userProfilePhoto == ""
                                     ? const Icon(
-                                        BootstrapIcons.person_add,
-                                        size: 80,
+                                        BootstrapIcons.person_circle,
+                                        size: 140,
+                                        color: Color.fromARGB(255, 51, 0, 67),
                                       )
                                     : CachedNetworkImage(
+                                        progressIndicatorBuilder: (context, url,
+                                                progress) =>
+                                            const CircularProgressIndicator(),
+
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(
+                                          BootstrapIcons.person_circle,
+                                          size: 140,
+                                          color: Color.fromARGB(255, 51, 0, 67),
+                                        ),
                                         // fit: BoxFit.cover,
                                         imageUrl: userInfo.userProfilePhoto,
                                         imageBuilder:
@@ -78,8 +89,9 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover),
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -89,7 +101,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
                                     fontFamily: "Poppins",
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

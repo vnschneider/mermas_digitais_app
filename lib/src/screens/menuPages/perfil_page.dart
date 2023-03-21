@@ -26,14 +26,6 @@ class _PerfilPageState extends State<PerfilPage> {
   GetUserInfo userInfo = GetUserInfo();
   Duration duration = const Duration(seconds: 3);
 
-  String profilePhoto() {
-    if (userInfo.userProfilePhoto == "") {
-      return "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
-    } else {
-      return userInfo.userProfilePhoto;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -49,85 +41,145 @@ class _PerfilPageState extends State<PerfilPage> {
               : Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  child: Card(
-                    //margin: const EdgeInsets.only(bottom: 520),
-                    color: const Color.fromARGB(255, 221, 199, 248),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: uploadImage,
-                            child: userInfo.userProfilePhoto == ""
+                  child: Hero(
+                    createRectTween: (begin, end) => RectTween(),
+                    tag: 'StudentsListTag',
+                    child: Card(
+                      //margin: const EdgeInsets.only(bottom: 520),
+                      color: const Color.fromARGB(255, 221, 199, 248),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            userInfo.userProfilePhoto == ""
                                 ? const Icon(
-                                    BootstrapIcons.person_add,
-                                    size: 80,
+                                    BootstrapIcons.person_circle,
+                                    size: 100,
+                                    color: Color.fromARGB(255, 51, 0, 67),
                                   )
                                 : CachedNetworkImage(
-                                    // fit: BoxFit.cover,
+                                    progressIndicatorBuilder:
+                                        (context, url, progress) =>
+                                            const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      BootstrapIcons.person_circle,
+                                      size: 100,
+                                      color: Color.fromARGB(255, 51, 0, 67),
+                                    ),
                                     imageUrl: userInfo.userProfilePhoto,
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
-                                      width: 90.0,
-                                      height: 90.0,
+                                      width: 100,
+                                      height: 100,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover),
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: TextButton(
+                                          style: TextButton.styleFrom(
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    134, 221, 199, 248),
+                                            shape: const CircleBorder(
+                                                side: BorderSide.none),
+                                          ),
+                                          onPressed: () {
+                                            uploadImage();
+                                          },
+                                          child:
+                                              const Icon(BootstrapIcons.camera),
+                                        ),
                                       ),
                                     ),
                                   ),
-                          ),
-                          const SizedBox(width: 5),
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text(
-                                    maxLines: 1,
-                                    textAlign: TextAlign.start,
-                                    overflow: TextOverflow.ellipsis,
-                                    userInfo.userName,
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 51, 0, 67),
-                                      fontFamily: "PaytoneOne",
-                                      fontSize: 20,
-                                      //fontWeight: FontWeight.bold,
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: Text(
+                                      maxLines: 1,
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      userInfo.userName,
+                                      style: const TextStyle(
+                                        color: Color.fromARGB(255, 51, 0, 67),
+                                        fontFamily: "PaytoneOne",
+                                        fontSize: 20,
+                                        //fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text(
-                                    maxLines: 1,
-                                    textAlign: TextAlign.start,
-                                    overflow: TextOverflow.ellipsis,
-                                    userInfo.userEmail,
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 51, 0, 67),
-                                      fontFamily: "Poppins",
-                                      fontSize: 16,
+                                  FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: Text(
+                                      maxLines: 1,
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      userInfo.userEmail,
+                                      style: const TextStyle(
+                                        color: Color.fromARGB(255, 51, 0, 67),
+                                        fontFamily: "Poppins",
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    TextButton(
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextButton(
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return const ConfirmSignOut();
+                                              },
+                                            );
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: const [
+                                              Icon(
+                                                BootstrapIcons.escape,
+                                                size: 20,
+                                                color: Color.fromARGB(
+                                                    255, 51, 0, 67),
+                                                fill: 1,
+                                              ),
+                                              SizedBox(width: 6),
+                                              Text(
+                                                'Sair',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 51, 0, 67),
+                                                    fontFamily: "Poppins",
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          )),
+                                      const SizedBox(width: 10),
+                                      TextButton(
                                         onPressed: () {
                                           showDialog(
                                             context: context,
                                             builder: (context) {
-                                              return const ConfirmSignOut();
+                                              return const ChangePassword();
                                             },
                                           );
                                         },
@@ -135,7 +187,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: const [
                                             Icon(
-                                              BootstrapIcons.escape,
+                                              Iconsax.refresh,
                                               size: 20,
                                               color: Color.fromARGB(
                                                   255, 51, 0, 67),
@@ -143,7 +195,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                             ),
                                             SizedBox(width: 6),
                                             Text(
-                                              'Sair',
+                                              'Alterar senha',
                                               style: TextStyle(
                                                   color: Color.fromARGB(
                                                       255, 51, 0, 67),
@@ -152,46 +204,15 @@ class _PerfilPageState extends State<PerfilPage> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ],
-                                        )),
-                                    const SizedBox(width: 10),
-                                    TextButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return const ChangePassword();
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: const [
-                                          Icon(
-                                            Iconsax.refresh,
-                                            size: 20,
-                                            color:
-                                                Color.fromARGB(255, 51, 0, 67),
-                                            fill: 1,
-                                          ),
-                                          SizedBox(width: 6),
-                                          Text(
-                                            'Alterar senha',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 51, 0, 67),
-                                                fontFamily: "Poppins",
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -224,7 +245,10 @@ class _PerfilPageState extends State<PerfilPage> {
 
     try {
       final profilePhoto = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 60);
+          .pickImage(source: ImageSource.gallery, imageQuality: 50)
+          .then((value) {
+        value.toString().isEmpty ? '' : value;
+      });
 
       final profilephotoRef = FirebaseStorage.instance
           .ref()

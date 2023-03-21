@@ -19,65 +19,68 @@ class EditUserProfileWindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        userName,
-        style: const TextStyle(
-          color: Color.fromARGB(255, 51, 0, 67),
-          fontFamily: "PaytoneOne",
-          fontSize: 20,
+    return Hero(
+      tag: 'StudentsListTag',
+      child: AlertDialog(
+        title: Text(
+          userName,
+          style: const TextStyle(
+            color: Color.fromARGB(255, 51, 0, 67),
+            fontFamily: "PaytoneOne",
+            fontSize: 20,
+          ),
         ),
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            userName,
-            style: const TextStyle(
-              color: Color.fromARGB(255, 51, 0, 67),
-              fontFamily: "Poppins",
-              fontSize: 16,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              userName,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 51, 0, 67),
+                fontFamily: "Poppins",
+                fontSize: 16,
+              ),
             ),
+            Text(
+              userEmail,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 51, 0, 67),
+                fontFamily: "Poppins",
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              userStatus,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 51, 0, 67),
+                fontFamily: "Poppins",
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancelar'),
           ),
-          Text(
-            userEmail,
-            style: const TextStyle(
-              color: Color.fromARGB(255, 51, 0, 67),
-              fontFamily: "Poppins",
-              fontSize: 16,
-            ),
-          ),
-          Text(
-            userStatus,
-            style: const TextStyle(
-              color: Color.fromARGB(255, 51, 0, 67),
-              fontFamily: "Poppins",
-              fontSize: 16,
-            ),
+          TextButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const LoadingWindow();
+                  });
+              Navigator.of(context).pop();
+            },
+            child: const Text('Adicionar'),
           ),
         ],
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Cancelar'),
-        ),
-        TextButton(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return const LoadingWindow();
-                });
-            Navigator.of(context).pop();
-          },
-          child: const Text('Adicionar'),
-        ),
-      ],
     );
   }
 }
