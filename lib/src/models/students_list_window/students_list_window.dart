@@ -38,7 +38,10 @@ class _StudentsListState extends State<StudentsList> {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('users').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .orderBy(FieldPath.fromString('name'))
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => !snapshot
                 .hasData
             ? const LoadingWindow()
@@ -161,19 +164,25 @@ class _StudentsListState extends State<StudentsList> {
                                             children: [
                                               doc['profilePhoto']
                                                       .toString()
-                                                      .isEmpty
-                                                  ? const Icon(
-                                                      BootstrapIcons
-                                                          .person_circle,
-                                                      size: 90,
-                                                      color: Color.fromARGB(
-                                                          255, 51, 0, 67),
-                                                    )
-                                                  : CachedNetworkImage(
+                                                      .isNotEmpty
+                                                  ? CachedNetworkImage(
+                                                      memCacheHeight: 2000,
+                                                      memCacheWidth: 2000,
                                                       progressIndicatorBuilder:
                                                           (context, url,
                                                                   progress) =>
-                                                              const CircularProgressIndicator(),
+                                                              const SizedBox(
+                                                                  height: 90,
+                                                                  width: 90,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            221,
+                                                                            199,
+                                                                            248),
+                                                                  )),
 
                                                       errorWidget: (context,
                                                               url, error) =>
@@ -187,6 +196,54 @@ class _StudentsListState extends State<StudentsList> {
                                                       // fit: BoxFit.cover,
                                                       imageUrl:
                                                           doc['profilePhoto'],
+                                                      imageBuilder: (context,
+                                                              imageProvider) =>
+                                                          Container(
+                                                        width: 90,
+                                                        height: 90,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          image:
+                                                              DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : CachedNetworkImage(
+                                                      progressIndicatorBuilder:
+                                                          (context, url,
+                                                                  progress) =>
+                                                              const SizedBox(
+                                                                  height: 90,
+                                                                  width: 90,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            221,
+                                                                            199,
+                                                                            248),
+                                                                  )),
+
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                        BootstrapIcons
+                                                            .person_circle,
+                                                        size: 90,
+                                                        color: Color.fromARGB(
+                                                            255, 51, 0, 67),
+                                                      ),
+                                                      // fit: BoxFit.cover,
+                                                      imageUrl:
+                                                          'https://firebasestorage.googleapis.com/v0/b/mermas-digitais-2023.appspot.com/o/fundo-roxo-v.png?alt=media&token=32460753-3c18-46fc-be25-d682f3af5ad6',
+
                                                       imageBuilder: (context,
                                                               imageProvider) =>
                                                           Container(

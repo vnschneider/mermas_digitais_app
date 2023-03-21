@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/ola_merma.dart';
+import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/textFields/custom_text_field.dart';
 
@@ -114,7 +115,9 @@ class _LoginPageState extends State<LoginPage> {
             if (_emailController.text.isNotEmpty) {
               try {
                 FirebaseAuth.instance
-                    .sendPasswordResetEmail(email: _emailController.text);
+                    .sendPasswordResetEmail(email: _emailController.text)
+                    .whenComplete(() => showToastMessage(
+                        message: 'Email para recuperação de senha enviado!'));
               } catch (e) {
                 return print("Algo deu errado $e");
               }
@@ -201,6 +204,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 5),
                 //Esqueceu sua senha?
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -217,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         },
                         child: const Text(
-                          'Esqueci minha senha',
+                          'Esqueceu sua senha?',
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               color: Color.fromARGB(255, 221, 199, 248),

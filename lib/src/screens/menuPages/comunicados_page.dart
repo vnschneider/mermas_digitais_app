@@ -39,7 +39,10 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .orderBy(FieldPath.fromString('postUID'), descending: true)
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) =>
             WillPopScope(
           onWillPop: () async {
@@ -228,7 +231,12 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                     overlayColor: Colors.black,
                     overlayOpacity: 0.2,
                     buttonSize: const Size(58, 58),
-                    //shape: const StadiumBorder(side: BorderSide.none),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
+                    // BeveledRectangleBorder(
+                    // borderRadius: BorderRadius.circular(15)),
+                    //shape: Border(top: BorderSide.none),
+
                     icon: BootstrapIcons.menu_app,
                     activeIcon: BootstrapIcons.x,
                     children: [
