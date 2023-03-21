@@ -35,169 +35,166 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                 : Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    child: ListView(
-                      children: [
-                        Card(
-                          color: const Color.fromARGB(255, 221, 199, 248),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
+                    child: Card(
+                      color: const Color.fromARGB(255, 221, 199, 248),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              // ignore: prefer_const_literals_to_create_immutables
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  children: [
-                                    const Text(
-                                      'Situação',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 51, 0, 67),
-                                        fontFamily: "PaytoneOne",
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 60),
-                                userInfo.userProfilePhoto == ""
-                                    ? const Icon(
-                                        BootstrapIcons.person_circle,
-                                        size: 140,
-                                        color: Color.fromARGB(255, 51, 0, 67),
-                                      )
-                                    : CachedNetworkImage(
-                                        progressIndicatorBuilder: (context, url,
-                                                progress) =>
-                                            const CircularProgressIndicator(),
-
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(
-                                          BootstrapIcons.person_circle,
-                                          size: 140,
-                                          color: Color.fromARGB(255, 51, 0, 67),
-                                        ),
-                                        // fit: BoxFit.cover,
-                                        imageUrl: userInfo.userProfilePhoto,
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          width: 140,
-                                          height: 140,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  userInfo.userName,
-                                  style: const TextStyle(
+                                const Text(
+                                  'Situação',
+                                  style: TextStyle(
                                     color: Color.fromARGB(255, 51, 0, 67),
-                                    fontFamily: "Poppins",
-                                    fontSize: 20,
+                                    fontFamily: "PaytoneOne",
+                                    fontSize: 24,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(height: 30),
-                                LinearPercentIndicator(
-                                  barRadius: const Radius.circular(8),
-                                  animation: true,
-                                  animateFromLastPercent: true,
-                                  animationDuration: 1000,
-                                  lineHeight: 30,
-                                  percent:
-                                      userInfo.userFrequence, //_userFrequence,
-                                  progressColor:
-                                      const Color.fromARGB(255, 51, 0, 67),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 221, 199, 248),
+                              ],
+                            ),
+                            const SizedBox(height: 60),
+                            userInfo.userProfilePhoto == ""
+                                ? const Icon(
+                                    BootstrapIcons.person_circle,
+                                    size: 140,
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                  )
+                                : CachedNetworkImage(
+                                    progressIndicatorBuilder: (context, url,
+                                            progress) =>
+                                        const SizedBox(
+                                            height: 140,
+                                            width: 140,
+                                            child: CircularProgressIndicator(
+                                              color: Color.fromARGB(
+                                                  255, 221, 199, 248),
+                                            )),
+
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      BootstrapIcons.person_circle,
+                                      size: 140,
+                                      color: Color.fromARGB(255, 51, 0, 67),
+                                    ),
+                                    // fit: BoxFit.cover,
+                                    imageUrl: userInfo.userProfilePhoto,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      width: 140,
+                                      height: 140,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            const SizedBox(height: 10),
+                            Text(
+                              userInfo.userName,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 51, 0, 67),
+                                fontFamily: "Poppins",
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            LinearPercentIndicator(
+                              barRadius: const Radius.circular(8),
+                              animation: true,
+                              animateFromLastPercent: true,
+                              animationDuration: 1000,
+                              lineHeight: 30,
+                              percent: userInfo.userFrequence, //_userFrequence,
+                              progressColor:
+                                  const Color.fromARGB(255, 51, 0, 67),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 221, 199, 248),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 320,
+                                  child: Text(
+                                    'Você possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
+                                    overflow: TextOverflow.clip,
+                                    textAlign: TextAlign.start,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 51, 0, 67),
+                                      fontFamily: "Poppins",
+                                      fontSize: 15,
+                                    ),
+                                  ),
                                 ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 320,
-                                      child: Text(
-                                        'Você possui ${(userInfo.userFrequence * 100).toStringAsFixed(0)}% de presença nas aulas.',
-                                        overflow: TextOverflow.clip,
-                                        textAlign: TextAlign.start,
-                                        maxLines: 1,
-                                        style: const TextStyle(
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                userInfo.userFrequence >= 0.25
+                                    ? const Text(
+                                        'Parabéns pelo seu empenho!',
+                                        style: TextStyle(
                                           color: Color.fromARGB(255, 51, 0, 67),
                                           fontFamily: "Poppins",
                                           fontSize: 15,
                                         ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    userInfo.userFrequence >= 0.25
-                                        ? const Text(
-                                            'Parabéns pelo seu empenho!',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 51, 0, 67),
-                                              fontFamily: "Poppins",
-                                              fontSize: 15,
-                                            ),
-                                          )
-                                        : const Expanded(
-                                            child: Text(
-                                              maxLines: 2,
-                                              textAlign: TextAlign.start,
-                                              overflow: TextOverflow.clip,
-                                              'Cuidado, você corre o risco de ser reprovada. :(',
-                                              style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 51, 0, 67),
-                                                fontFamily: "Poppins",
-                                                fontSize: 15,
-                                              ),
-                                            ),
+                                      )
+                                    : const Expanded(
+                                        child: Text(
+                                          maxLines: 2,
+                                          textAlign: TextAlign.start,
+                                          overflow: TextOverflow.clip,
+                                          'Cuidado, você corre o risco de ser reprovada. :(',
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 51, 0, 67),
+                                            fontFamily: "Poppins",
+                                            fontSize: 15,
                                           ),
-                                  ],
-                                ),
-                                const SizedBox(height: 100),
-                                TextButton(
-                                  style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5))),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              const Color.fromARGB(
-                                                  255, 51, 0, 67))),
-                                  onPressed: () {
-                                    showToastMessage(
-                                        message:
-                                            'Em breve você poderá acessar esta função');
-                                  },
-                                  child: const Text(
-                                    '   Detalhes   ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 221, 199, 248),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
+                                        ),
+                                      ),
                               ],
                             ),
-                          ),
+                            const SizedBox(height: 100),
+                            TextButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5))),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromARGB(255, 51, 0, 67))),
+                              onPressed: () {
+                                showToastMessage(
+                                    message:
+                                        'Em breve você poderá acessar esta função');
+                              },
+                              child: const Text(
+                                '   Detalhes   ',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 221, 199, 248),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
           ),
