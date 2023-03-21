@@ -35,7 +35,10 @@ class _OficinasPageState extends State<OficinasPage> {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('class').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('class')
+            .orderBy(FieldPath.fromString('classTitle'))
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
           appBar: const PreferredSize(
             preferredSize: Size.fromHeight(65),
