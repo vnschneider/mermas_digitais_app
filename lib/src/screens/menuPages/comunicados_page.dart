@@ -30,7 +30,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
         await canLaunchUrl(url);
       }
     } catch (e) {
-      showToastMessage(message: 'Não foi possível abrir o link. Erro: $e');
+      showToastMessage(message: 'Não foi possível abrir o link.');
     }
   }
 
@@ -47,9 +47,9 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
             WillPopScope(
           onWillPop: () async {
             if (isDialOpen.value) {
+              print('FABMENU FECHADO!!!');
               //close speed dial
               isDialOpen.value = false;
-
               return false;
             } else {
               return true;
@@ -119,7 +119,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                                         ),
                                         linkStyle: const TextStyle(
                                             fontFamily: "Poppins",
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.bold),
                                         expandText: 'mostrar mais',
                                         collapseText: 'mostrar menos',

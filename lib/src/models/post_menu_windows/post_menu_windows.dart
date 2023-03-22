@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, must_be_immutable
+// ignore_for_file: non_constant_identifier_names
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,8 @@ import 'package:mermas_digitais_app/src/functions/postFunctions.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
-import 'package:mermas_digitais_app/src/models/textFields/custom_text_field.dart';
+
+import '../textFields/dialogs_text_fields.dart';
 
 ///FUNÇÃO QUE CRIA UM POST////
 class CreatePostWindow extends StatefulWidget {
@@ -39,106 +40,116 @@ class _CreatePostWindowState extends State<CreatePostWindow> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
-      builder: (context, snapshot) => AlertDialog(
-        title: const Text(
-          "Novo comunicado",
-          style: TextStyle(
-            color: Color.fromARGB(255, 51, 0, 67),
-            fontFamily: "PaytoneOne",
-            fontSize: 20,
-          ),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
+      builder: (context, snapshot) => Center(
+        child: SingleChildScrollView(
+          child: AlertDialog(
+            title: const Text(
+              "Novo comunicado",
+              style: TextStyle(
+                color: Color.fromARGB(255, 51, 0, 67),
+                fontFamily: "PaytoneOne",
+                fontSize: 20,
+              ),
+            ),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Text(
-                  'Adicionar link',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 51, 0, 67),
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Adicionar link',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 51, 0, 67),
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Switch(
+                      thumbColor: const MaterialStatePropertyAll(
+                        Color.fromARGB(255, 221, 199, 248),
+                      ),
+                      value: isSwitched,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitched = value;
+                        });
+                      },
+                    ),
+                  ],
                 ),
-                Switch(
-                  inactiveThumbColor: const Color.fromARGB(255, 221, 199, 248),
-                  value: isSwitched,
-                  onChanged: (value) {
-                    setState(() {
-                      isSwitched = value;
-                    });
-                  },
+                DialogTextField(
+                  expanded: false,
+                  keyboardType: TextInputType.text,
+                  enabled: true,
+                  useController: true,
+                  controller: _titleController,
+                  hintText: 'Título',
                 ),
+                const SizedBox(height: 10),
+                DialogTextField(
+                  expanded: true,
+                  keyboardType: TextInputType.multiline,
+                  enabled: true,
+                  useController: true,
+                  controller: _contentController,
+                  hintText: 'Conteúdo',
+                ),
+                const SizedBox(height: 10),
+                isSwitched == false
+                    ? const SizedBox()
+                    : DialogTextField(
+                        expanded: false,
+                        keyboardType: TextInputType.url,
+                        enabled: true,
+                        useController: true,
+                        controller: _linkController,
+                        hintText: 'Link',
+                      )
               ],
             ),
-            CustomTextField(
-              expanded: false,
-              keyboardType: TextInputType.text,
-              enabled: true,
-              useController: true,
-              controller: _titleController,
-              hintText: 'Título',
-            ),
-            CustomTextField(
-              expanded: true,
-              keyboardType: TextInputType.text,
-              enabled: true,
-              useController: true,
-              controller: _contentController,
-              hintText: 'Conteúdo',
-            ),
-            isSwitched == false
-                ? const SizedBox()
-                : CustomTextField(
-                    expanded: true,
-                    keyboardType: TextInputType.url,
-                    enabled: true,
-                    useController: true,
-                    controller: _linkController,
-                    hintText: 'Link',
-                  )
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () {
-              if (_titleController.text.isNotEmpty &&
-                      _contentController.text.isNotEmpty &&
-                      isSwitched == false ||
-                  _linkController.text.isNotEmpty) {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const LoadingWindow();
-                    });
-                postOptions
-                    .createPostDB(_titleController.text,
-                        _contentController.text, _linkController.text)
-                    .whenComplete(() {
-                  showToastMessage(message: 'Comunicado adicionado!');
+            actions: [
+              TextButton(
+                onPressed: () {
                   Navigator.of(context).pop();
-                });
-                Navigator.of(context).pop();
-              } else {
-                showToastMessage(
-                    message:
-                        'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
-              }
-            },
-            child: const Text('Adicionar'),
+                },
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_titleController.text.isNotEmpty &&
+                          _contentController.text.isNotEmpty &&
+                          isSwitched == false ||
+                      _linkController.text.isNotEmpty) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const LoadingWindow();
+                        });
+                    postOptions
+                        .createPostDB(_titleController.text,
+                            _contentController.text, _linkController.text)
+                        .whenComplete(() {
+                      showToastMessage(message: 'Comunicado adicionado!');
+                      Navigator.of(context).pop();
+                    });
+                    Navigator.of(context).pop();
+                  } else {
+                    showToastMessage(
+                        message:
+                            'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
+                  }
+                },
+                child: const Text('Adicionar'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -195,112 +206,123 @@ class _EditPostWindowState extends State<EditPostWindow> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
-      builder: (context, snapshot) => AlertDialog(
-        title: const Text(
-          "Editar comunicado",
-          style: TextStyle(
-            color: Color.fromARGB(255, 51, 0, 67),
-            fontFamily: "PaytoneOne",
-            fontSize: 20,
-          ),
-        ),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Adicionar link',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 51, 0, 67),
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+      builder: (context, snapshot) => Center(
+        child: SingleChildScrollView(
+          child: AlertDialog(
+            title: const Text(
+              "Editar comunicado",
+              style: TextStyle(
+                color: Color.fromARGB(255, 51, 0, 67),
+                fontFamily: "PaytoneOne",
+                fontSize: 20,
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Adicionar link',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 51, 0, 67),
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  Switch(
-                    inactiveThumbColor:
-                        const Color.fromARGB(255, 221, 199, 248),
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                    },
-                  ),
-                ],
+                    const SizedBox(width: 10),
+                    Switch(
+                      thumbColor: const MaterialStatePropertyAll(
+                        Color.fromARGB(255, 221, 199, 248),
+                      ),
+                      value: isSwitched,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitched = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                DialogTextField(
+                  expanded: false,
+                  keyboardType: TextInputType.text,
+                  enabled: true,
+                  useController: true,
+                  controller: _titleController,
+                  hintText: 'Título',
+                ),
+                const SizedBox(height: 10),
+                DialogTextField(
+                  expanded: true,
+                  keyboardType: TextInputType.multiline,
+                  enabled: true,
+                  useController: true,
+                  controller: _contentController,
+                  hintText: 'Conteúdo',
+                ),
+                const SizedBox(height: 10),
+                isSwitched == false
+                    ? const SizedBox()
+                    : DialogTextField(
+                        expanded: false,
+                        keyboardType: TextInputType.url,
+                        enabled: true,
+                        useController: true,
+                        controller: _linkController,
+                        hintText: 'Link',
+                      )
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancelar'),
               ),
-              CustomTextField(
-                expanded: false,
-                keyboardType: TextInputType.text,
-                enabled: true,
-                useController: true,
-                controller: _titleController,
-                hintText: 'Título',
+              TextButton(
+                onPressed: () {
+                  if (_titleController.text.isNotEmpty &&
+                          _titleController.text != widget.postTitle ||
+                      _contentController.text.isNotEmpty &&
+                          _contentController.text != widget.postContent ||
+                      _linkController.text != widget.postLink &&
+                          (_linkController.text.isNotEmpty ||
+                              isSwitched == false)) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const LoadingWindow();
+                        });
+                    postOptions
+                        .editPostDB(
+                            _titleController.text,
+                            _contentController.text,
+                            _linkController.text,
+                            widget.postUID)
+                        .whenComplete(() {
+                      showToastMessage(message: 'Comunicado atualizado!');
+                      Navigator.of(context).pop();
+                    });
+                    Navigator.of(context).pop();
+                  } else {
+                    showToastMessage(
+                        message:
+                            'Tenha certeza de que alterou os dados do comunicado ou não deixou nenhum campo vazio.');
+                  }
+                },
+                child: const Text('Confirmar'),
               ),
-              CustomTextField(
-                expanded: true,
-                keyboardType: TextInputType.text,
-                enabled: true,
-                useController: true,
-                controller: _contentController,
-                hintText: 'Conteúdo',
-              ),
-              isSwitched == false
-                  ? const SizedBox()
-                  : CustomTextField(
-                      expanded: true,
-                      keyboardType: TextInputType.url,
-                      enabled: true,
-                      useController: true,
-                      controller: _linkController,
-                      hintText: 'Link',
-                    )
             ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () {
-              if (_titleController.text.isNotEmpty &&
-                      _titleController.text != widget.postTitle ||
-                  _contentController.text.isNotEmpty &&
-                      _contentController.text != widget.postContent ||
-                  _linkController.text != widget.postLink &&
-                      (_linkController.text.isNotEmpty ||
-                          isSwitched == false)) {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const LoadingWindow();
-                    });
-                postOptions
-                    .editPostDB(_titleController.text, _contentController.text,
-                        _linkController.text, widget.postUID)
-                    .whenComplete(() {
-                  showToastMessage(message: 'Comunicado atualizado!');
-                  Navigator.of(context).pop();
-                });
-                Navigator.of(context).pop();
-              } else {
-                showToastMessage(
-                    message:
-                        'Tenha certeza de que alterou os dados do comunicado ou não deixou nenhum campo vazio.');
-              }
-            },
-            child: const Text('Confirmar'),
-          ),
-        ],
       ),
     );
   }
@@ -345,7 +367,7 @@ class _DeletePostDBWindowState extends State<DeletePostDBWindow> {
         style: const TextStyle(
           color: Color.fromARGB(255, 51, 0, 67),
           fontFamily: "Poppins",
-          fontSize: 14,
+          fontSize: 15,
         ),
       ),
       actions: [

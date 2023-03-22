@@ -41,7 +41,6 @@ class CustomTextField extends StatelessWidget {
                   showCursor: true,
                   cursorHeight: 15,
                   cursorWidth: 1,
-                  cursorColor: Colors.white,
                   maxLines: expanded == false ? 1 : null,
                   keyboardType: keyboardType,
                   enabled: enabled,

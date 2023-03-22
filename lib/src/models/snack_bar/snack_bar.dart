@@ -10,12 +10,13 @@ void scaffoldMessenger({
       content: Text(
         text,
         style: const TextStyle(
-          color: Color.fromARGB(228, 22, 22, 22),
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
+          color: Color.fromARGB(255, 51, 0, 67),
+          fontFamily: "Poppins",
+          //fontWeight: FontWeight.bold,
+          fontSize: 14,
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 221, 199, 248),
       duration: duration,
     ),
   );

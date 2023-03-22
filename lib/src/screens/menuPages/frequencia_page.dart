@@ -171,14 +171,14 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             ),
                             const SizedBox(height: 100),
                             TextButton(
-                              style: ButtonStyle(
+                              /*   style: ButtonStyle(
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5))),
                                   backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromARGB(255, 51, 0, 67))),
+                                      const Color.fromARGB(255, 51, 0, 67))),*/
                               onPressed: () {
                                 showToastMessage(
                                     message:
@@ -187,7 +187,10 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                               child: const Text(
                                 '   Detalhes   ',
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 221, 199, 248),
+                                  color: Color.fromARGB(255, 51, 0, 67),
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
                                 ),
                               ),
                             ),

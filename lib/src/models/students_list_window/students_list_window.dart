@@ -5,7 +5,7 @@ import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
-import 'package:mermas_digitais_app/src/models/edit_user_profile_window/edit_user_profile_window.dart';
+import 'package:mermas_digitais_app/src/models/students_list_window/edit_user_profile_window.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 
 class StudentsList extends StatefulWidget {

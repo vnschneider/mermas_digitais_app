@@ -7,6 +7,7 @@ import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dar
 import 'package:mermas_digitais_app/src/models/textFields/custom_text_field.dart';
 import '../../functions/get_user_info.dart';
 import '../showToastMessage.dart';
+import '../textFields/dialogs_text_fields.dart';
 
 class NewOficinaWindow extends StatefulWidget {
   const NewOficinaWindow({super.key});
@@ -50,78 +51,84 @@ class _NewOficinaWindowState extends State<NewOficinaWindow> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
-      builder: (context, snapshot) => AlertDialog(
-        title: const Text(
-          "Nova oficina",
-          style: TextStyle(
-            color: Color.fromARGB(255, 51, 0, 67),
-            fontFamily: "PaytoneOne",
-            fontSize: 20,
-          ),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomTextField(
-              expanded: false,
-              keyboardType: TextInputType.text,
-              enabled: true,
-              useController: true,
-              controller: _titleController,
-              hintText: 'Nome',
+      builder: (context, snapshot) => Center(
+        child: SingleChildScrollView(
+          child: AlertDialog(
+            title: const Text(
+              "Nova oficina",
+              style: TextStyle(
+                color: Color.fromARGB(255, 51, 0, 67),
+                fontFamily: "PaytoneOne",
+                fontSize: 20,
+              ),
             ),
-            CustomTextField(
-              expanded: true,
-              keyboardType: TextInputType.text,
-              enabled: true,
-              useController: true,
-              controller: _classContentController,
-              hintText: 'Descrição',
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                DialogTextField(
+                  expanded: false,
+                  keyboardType: TextInputType.text,
+                  enabled: true,
+                  useController: true,
+                  controller: _titleController,
+                  hintText: 'Nome',
+                ),
+                const SizedBox(height: 10),
+                DialogTextField(
+                  expanded: true,
+                  keyboardType: TextInputType.multiline,
+                  enabled: true,
+                  useController: true,
+                  controller: _classContentController,
+                  hintText: 'Descrição',
+                ),
+                const SizedBox(height: 10),
+                DialogTextField(
+                  expanded: false,
+                  keyboardType: TextInputType.url,
+                  enabled: true,
+                  useController: true,
+                  controller: _linkController,
+                  hintText: 'Link do material de apoio',
+                ),
+              ],
             ),
-            CustomTextField(
-              expanded: true,
-              keyboardType: TextInputType.url,
-              enabled: true,
-              useController: true,
-              controller: _linkController,
-              hintText: 'Link do material de apoio',
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () {
-              if (_titleController.text.isNotEmpty &&
-                  _classContentController.text.isNotEmpty &&
-                  _linkController.text.isNotEmpty) {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const LoadingWindow();
-                    });
-                createPostDB(_titleController.text,
-                        _classContentController.text, _linkController.text)
-                    .whenComplete(() {
-                  showToastMessage(message: 'Oficina adicionada!');
+            actions: [
+              TextButton(
+                onPressed: () {
                   Navigator.of(context).pop();
-                });
-                Navigator.of(context).pop();
-              } else {
-                showToastMessage(
-                    message:
-                        'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
-              }
-            },
-            child: const Text('Adicionar'),
+                },
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_titleController.text.isNotEmpty &&
+                      _classContentController.text.isNotEmpty &&
+                      _linkController.text.isNotEmpty) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const LoadingWindow();
+                        });
+                    createPostDB(_titleController.text,
+                            _classContentController.text, _linkController.text)
+                        .whenComplete(() {
+                      showToastMessage(message: 'Oficina adicionada!');
+                      Navigator.of(context).pop();
+                    });
+                    Navigator.of(context).pop();
+                  } else {
+                    showToastMessage(
+                        message:
+                            'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
+                  }
+                },
+                child: const Text('Adicionar'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

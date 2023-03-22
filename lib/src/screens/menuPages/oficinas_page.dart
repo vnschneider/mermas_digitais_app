@@ -26,7 +26,7 @@ class _OficinasPageState extends State<OficinasPage> {
         await canLaunchUrl(url);
       }
     } catch (e) {
-      showToastMessage(message: 'Não foi possível abrir o link. Erro: $e');
+      showToastMessage(message: 'Não foi possível abrir o link.');
     }
   }
 
@@ -93,9 +93,8 @@ class _OficinasPageState extends State<OficinasPage> {
                                         Flexible(
                                           child: ExpandableText(
                                             doc['classContent'].toString(),
-                                            maxLines: 2,
+                                            maxLines: 4,
                                             textAlign: TextAlign.start,
-                                            // overflow: TextOverflow.clip,
                                             style: const TextStyle(
                                               color: Color.fromARGB(
                                                   255, 51, 0, 67),
@@ -104,7 +103,7 @@ class _OficinasPageState extends State<OficinasPage> {
                                             ),
                                             linkStyle: const TextStyle(
                                                 fontFamily: "Poppins",
-                                                fontSize: 14,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.bold),
                                             expandText: 'mostrar mais',
                                             collapseText: 'mostrar menos',
@@ -118,7 +117,8 @@ class _OficinasPageState extends State<OficinasPage> {
                                           MainAxisAlignment.start,
                                       children: [
                                         TextButton(
-                                          style: ButtonStyle(
+                                          //ALTERNATIVE STYLE
+                                          /*  style: ButtonStyle(
                                               shape: MaterialStateProperty.all<
                                                       RoundedRectangleBorder>(
                                                   RoundedRectangleBorder(
@@ -128,7 +128,7 @@ class _OficinasPageState extends State<OficinasPage> {
                                               backgroundColor:
                                                   MaterialStateProperty.all(
                                                       const Color.fromARGB(
-                                                          255, 51, 0, 67))),
+                                                          255, 51, 0, 67))),*/
                                           onPressed: () {
                                             _launchUrl(Uri.parse(
                                                 doc['classLink'].toString()));
@@ -137,13 +137,17 @@ class _OficinasPageState extends State<OficinasPage> {
                                             'Material de apoio',
                                             style: TextStyle(
                                               color: Color.fromARGB(
-                                                  255, 221, 199, 248),
+                                                  255, 51, 0, 67),
+                                              fontFamily: "Poppins",
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13,
                                             ),
                                           ),
                                         ),
                                         const SizedBox(width: 10),
                                         TextButton(
-                                          style: ButtonStyle(
+                                          //ALTERNATIVE STYLE
+                                          /*  style: ButtonStyle(
                                               shape: MaterialStateProperty.all<
                                                       RoundedRectangleBorder>(
                                                   RoundedRectangleBorder(
@@ -153,13 +157,20 @@ class _OficinasPageState extends State<OficinasPage> {
                                               backgroundColor:
                                                   MaterialStateProperty.all(
                                                       const Color.fromARGB(
-                                                          255, 51, 0, 67))),
-                                          onPressed: () {},
+                                                          255, 51, 0, 67))), */
+                                          onPressed: () {
+                                            showToastMessage(
+                                                message:
+                                                    'Em breve você poderá acessar esta função');
+                                          },
                                           child: const Text(
                                             'Monitores',
                                             style: TextStyle(
                                               color: Color.fromARGB(
-                                                  255, 221, 199, 248),
+                                                  255, 51, 0, 67),
+                                              fontFamily: "Poppins",
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13,
                                             ),
                                           ),
                                         ),
