@@ -55,7 +55,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
         //'Senha incorreta!';
       }
-      Navigator.of(context).pop();
     }
   }
 
@@ -102,6 +101,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     onTap: () {
                       _emailController.text.isNotEmpty
                           ? signIn()
+                              .whenComplete(() => Navigator.of(context).pop())
                           //adicionar alerta >> snackbar
 
                           : showDialog(
