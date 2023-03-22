@@ -1,4 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
+import 'package:mermas_digitais_app/src/models/alertDialogs/alertDialogs.dart';
 import 'package:mermas_digitais_app/src/utils/screens.dart';
 import 'package:mermas_digitais_app/src/utils/icon_data.dart';
 
@@ -107,4 +110,43 @@ class _NavbarState extends State<Navbar> {
       ),
     );
   }
+}
+
+@override
+Widget ExitAppDialog(BuildContext context, bool value) {
+  return AlertDialog(
+      backgroundColor: const Color.fromARGB(255, 221, 199, 248),
+      title: const Text(
+        'Title',
+        textAlign: TextAlign.start,
+        style: TextStyle(
+          fontFamily: "PaytoneOne",
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Color.fromARGB(255, 51, 0, 67),
+        ),
+      ),
+      content: const Text(
+        'Content',
+        textAlign: TextAlign.start,
+        style: TextStyle(
+          fontFamily: "Poppins",
+          fontSize: 14,
+          color: Color.fromARGB(255, 51, 0, 67),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(value);
+          },
+          child: const Text('Cancelar'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(value);
+          },
+          child: const Text('Confirmar'),
+        ),
+      ]);
 }
