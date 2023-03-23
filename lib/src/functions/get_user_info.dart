@@ -14,15 +14,6 @@ class GetUserInfo {
 
   Future getUserInfo() async {
     try {
-      /* //getProfilePhoto
-      final profilephotoRef = FirebaseStorage.instance
-          .ref()
-          .child('users/${user.uid}/profilephoto');
-
-      await profilephotoRef.getDownloadURL().then((value) {
-        userProfilePhoto = value;
-      });*/
-      //get UserData
       final docRef =
           FirebaseFirestore.instance.collection("users").doc(user.uid);
       final doc = await docRef.get();
