@@ -18,5 +18,6 @@
         "titleBar.inactiveBackground": "#33004399",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#330043"
+    "peacock.color": "#330043",
+    "cmake.sourceDirectory": "${workspaceFolder}/linux"
 }
