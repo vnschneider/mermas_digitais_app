@@ -41,13 +41,12 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
       builder: (context, snapshot) => StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('posts')
-            .orderBy(FieldPath.fromString('postUID'), descending: true)
+            .orderBy(FieldPath.fromString('postDate'), descending: true)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) =>
             WillPopScope(
           onWillPop: () async {
             if (isDialOpen.value) {
-              print('FABMENU FECHADO!!!');
               //close speed dial
               isDialOpen.value = false;
               return false;
@@ -233,11 +232,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                     buttonSize: const Size(58, 58),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18)),
-                    // BeveledRectangleBorder(
-                    // borderRadius: BorderRadius.circular(15)),
-                    //shape: Border(top: BorderSide.none),
-
-                    icon: BootstrapIcons.menu_app,
+                    icon: BootstrapIcons.envelope,
                     activeIcon: BootstrapIcons.x,
                     children: [
                       SpeedDialChild(
@@ -261,7 +256,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                       ),
                       SpeedDialChild(
                         child: const Icon(
-                          BootstrapIcons.send_plus,
+                          BootstrapIcons.window_plus,
                           color: Color.fromARGB(255, 221, 199, 248),
                         ),
                         backgroundColor: const Color.fromARGB(255, 51, 0, 67),

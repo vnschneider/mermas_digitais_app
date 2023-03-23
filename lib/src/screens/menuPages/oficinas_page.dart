@@ -199,7 +199,7 @@ class _OficinasPageState extends State<OficinasPage> {
                   },
                   child: const Icon(
                     BootstrapIcons.journal_plus,
-                    size: 36,
+                    size: 26,
                   ))
               : null,
         ),

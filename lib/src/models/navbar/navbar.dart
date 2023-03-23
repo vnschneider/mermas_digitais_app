@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:mermas_digitais_app/src/models/alertDialogs/alertDialogs.dart';
 import 'package:mermas_digitais_app/src/utils/screens.dart';
 import 'package:mermas_digitais_app/src/utils/icon_data.dart';
 
@@ -76,6 +75,7 @@ class _NavbarState extends State<Navbar> {
           backgroundColor: const Color.fromARGB(255, 51, 0, 67),
           unselectedItemColor: const Color.fromARGB(150, 221, 199, 248),
           selectedItemColor: const Color.fromARGB(255, 221, 199, 248),
+
           currentIndex: indexOf,
           onTap: (index) => setState(() {
             indexOf = index;

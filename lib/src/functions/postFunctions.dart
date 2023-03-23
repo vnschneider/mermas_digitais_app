@@ -19,6 +19,7 @@ class PostOptions {
       'postContent': content,
       'postLink': link,
       'postUID': dateTime,
+      'postDate': dateTime,
       'autor':
           'uid: ${user.currentUser!.uid} email: ${user.currentUser!.email}',
     });
@@ -29,6 +30,7 @@ class PostOptions {
       'postTitle': title,
       'postContent': content,
       'postLink': link,
+      'postDate': dateTime,
       'autor':
           'uid: ${user.currentUser!.uid} email: ${user.currentUser!.email}',
     });
