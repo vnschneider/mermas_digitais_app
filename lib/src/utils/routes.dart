@@ -9,6 +9,7 @@ import 'package:mermas_digitais_app/src/screens/menuPages/frequencia_page.dart';
 import 'package:mermas_digitais_app/src/screens/menuPages/oficinas_page.dart';
 import 'package:mermas_digitais_app/src/screens/menuPages/perfil_page.dart';
 
+
 Map<String, Widget Function(BuildContext)> routes = {
   'auth': (context) => const CheckLogin(),
   'login': (context) => const LoginPage(),
