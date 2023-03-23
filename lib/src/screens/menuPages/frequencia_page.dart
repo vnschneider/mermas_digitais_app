@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
+import 'package:mermas_digitais_app/src/models/frequence_windows/frequence_list.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/new_frequence_window/new_frequence_window.dart';
+import 'package:mermas_digitais_app/src/models/frequence_windows/new_frequence_window.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../models/showToastMessage.dart';
@@ -57,11 +58,11 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 // ignore: prefer_const_literals_to_create_immutables
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Situação',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 51, 0, 67),
@@ -243,8 +244,12 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                           color: Color.fromARGB(255, 51, 0, 67),
                           fontFamily: 'Poppins'),
                       label: 'Frequências registradas',
-                      onTap: () => showToastMessage(
-                          message: 'Em breve você poderá acessar esta função'),
+                      onTap: () => showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const FrequenceList();
+                        },
+                      ),
                     ),
                     SpeedDialChild(
                       child: const Icon(
