@@ -1,6 +1,13 @@
 // ignore_for_file: file_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../functions/get_user_info.dart';
+import '../../functions/postFunctions.dart';
+import '../loading_window/loading_window.dart';
+import '../showToastMessage.dart';
+import '../textFields/dialogs_text_fields.dart';
 
 class NewFrequenceWindow extends StatefulWidget {
   const NewFrequenceWindow({super.key});
@@ -38,18 +45,6 @@ class _NewFrequenceWindowState extends State<NewFrequenceWindow> {
     );
   }
 }
-
-
-// ignore_for_file: non_constant_identifier_names
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:mermas_digitais_app/src/functions/postFunctions.dart';
-import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
-import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
-
-import '../textFields/dialogs_text_fields.dart';
 
 ///FUNÇÃO QUE CRIA UM POST////
 class CreatePostWindow extends StatefulWidget {
