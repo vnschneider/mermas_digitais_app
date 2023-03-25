@@ -47,136 +47,137 @@ class _PerfilPageState extends State<PerfilPage> {
                     color: const Color.fromARGB(255, 221, 199, 248),
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: Flexible(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            userInfo.userProfilePhoto == ""
-                                ? Container(
-                                    width: 100,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          userInfo.userProfilePhoto == ""
+                              ? Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage('assets/logo_roxa.png'),
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            134, 221, 199, 248),
+                                        shape: const CircleBorder(
+                                            side: BorderSide.none),
+                                      ),
+                                      onPressed: () {
+                                        uploadImage();
+                                      },
+                                      child: const Icon(BootstrapIcons.camera),
+                                    ),
+                                  ),
+                                )
+                              : CachedNetworkImage(
+                                  progressIndicatorBuilder:
+                                      (context, url, progress) =>
+                                          const SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child: CircularProgressIndicator(
+                                                color: Color.fromARGB(
+                                                    255, 221, 199, 248),
+                                              )),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(
+                                    BootstrapIcons.person_circle,
+                                    size: 100,
+                                    color: Color.fromARGB(255, 51, 0, 67),
+                                  ),
+                                  imageUrl: userInfo.userProfilePhoto,
+                                  imageBuilder: (context, imageProvider) =>
+                                      SizedBox(
                                     height: 100,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image:
-                                            AssetImage('assets/logo_roxa.png'),
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: TextButton(
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: const Color.fromARGB(
-                                              134, 221, 199, 248),
-                                          shape: const CircleBorder(
-                                              side: BorderSide.none),
+                                    width: 100,
+                                    child: FittedBox(
+                                      fit: BoxFit.contain,
+                                      child: Container(
+                                        width: 180,
+                                        height: 180,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                        onPressed: () {
-                                          uploadImage();
-                                        },
-                                        child:
-                                            const Icon(BootstrapIcons.camera),
+                                        child: Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: TextButton(
+                                            style: TextButton.styleFrom(
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                      215, 221, 199, 248),
+                                              shape: const CircleBorder(
+                                                  side: BorderSide.none),
+                                            ),
+                                            onPressed: () {
+                                              uploadImage();
+                                            },
+                                            child: const Icon(
+                                                BootstrapIcons.camera,
+                                                size: 40),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  )
-                                : CachedNetworkImage(
-                                    progressIndicatorBuilder: (context, url,
-                                            progress) =>
-                                        const SizedBox(
-                                            height: 100,
-                                            width: 100,
-                                            child: CircularProgressIndicator(
-                                              color: Color.fromARGB(
-                                                  255, 221, 199, 248),
-                                            )),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(
-                                      BootstrapIcons.person_circle,
-                                      size: 100,
+                                  ),
+                                ),
+                          const SizedBox(width: 5),
+                          Flexible(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    maxLines: 1,
+                                    textAlign: TextAlign.start,
+                                    overflow: TextOverflow.ellipsis,
+                                    userInfo.userName,
+                                    style: const TextStyle(
                                       color: Color.fromARGB(255, 51, 0, 67),
-                                    ),
-                                    imageUrl: userInfo.userProfilePhoto,
-                                    imageBuilder: (context, imageProvider) =>
-                                        SizedBox(
-                                      height: 100,
-                                      width: 100,
-                                      child: FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Container(
-                                          width: 180,
-                                          height: 180,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          child: Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: TextButton(
-                                              style: TextButton.styleFrom(
-                                                backgroundColor:
-                                                    const Color.fromARGB(
-                                                        215, 221, 199, 248),
-                                                shape: const CircleBorder(
-                                                    side: BorderSide.none),
-                                              ),
-                                              onPressed: () {
-                                                uploadImage();
-                                              },
-                                              child: const Icon(
-                                                  BootstrapIcons.camera,
-                                                  size: 40),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      fontFamily: "PaytoneOne",
+                                      fontSize: 20,
+                                      //fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                            const SizedBox(width: 5),
-                            Flexible(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  FittedBox(
-                                    fit: BoxFit.contain,
-                                    child: Text(
-                                      maxLines: 1,
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.ellipsis,
-                                      userInfo.userName,
-                                      style: const TextStyle(
-                                        color: Color.fromARGB(255, 51, 0, 67),
-                                        fontFamily: "PaytoneOne",
-                                        fontSize: 20,
-                                        //fontWeight: FontWeight.bold,
-                                      ),
+                                ),
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    maxLines: 1,
+                                    textAlign: TextAlign.start,
+                                    overflow: TextOverflow.ellipsis,
+                                    userInfo.userEmail,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 51, 0, 67),
+                                      fontFamily: "Poppins",
+                                      fontSize: 16,
                                     ),
                                   ),
-                                  FittedBox(
-                                    fit: BoxFit.contain,
-                                    child: Text(
-                                      maxLines: 1,
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.ellipsis,
-                                      userInfo.userEmail,
-                                      style: const TextStyle(
-                                        color: Color.fromARGB(255, 51, 0, 67),
-                                        fontFamily: "Poppins",
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Row(
+                                ),
+                                //const SizedBox(height: 8),
+                                Flexible(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
+                                      const Expanded(child: SizedBox()),
                                       TextButton(
                                         onPressed: () {
                                           showDialog(
@@ -253,11 +254,11 @@ class _PerfilPageState extends State<PerfilPage> {
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
