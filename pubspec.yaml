@@ -57,6 +57,7 @@ dependencies:
   firebase_messaging: ^14.3.0
   cached_network_image: ^3.2.3
   expandable_text: ^2.3.0
+  uuid: ^3.0.7
   
 flutter_icons:
   android: true

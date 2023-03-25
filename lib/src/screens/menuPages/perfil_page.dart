@@ -186,9 +186,9 @@ class _PerfilPageState extends State<PerfilPage> {
                                             },
                                           );
                                         },
-                                        child: const Row(
+                                        child: Row(
                                           mainAxisSize: MainAxisSize.min,
-                                          children: [
+                                          children: const [
                                             Icon(
                                               BootstrapIcons.escape,
                                               size: 20,
@@ -223,18 +223,19 @@ class _PerfilPageState extends State<PerfilPage> {
                                             },
                                           );
                                         },
-                                        child: const Row(
+                                        child: Row(
                                           mainAxisSize: MainAxisSize.min,
+                                          // ignore: prefer_const_literals_to_create_immutables
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Iconsax.refresh,
                                               size: 20,
                                               color: Color.fromARGB(
                                                   255, 51, 0, 67),
                                               fill: 1,
                                             ),
-                                            SizedBox(width: 2),
-                                            FittedBox(
+                                            const SizedBox(width: 2),
+                                            const FittedBox(
                                               fit: BoxFit.contain,
                                               child: Text(
                                                 'Alterar senha',

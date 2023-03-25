@@ -58,11 +58,11 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 // ignore: prefer_const_literals_to_create_immutables
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Situação',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 51, 0, 67),
@@ -266,7 +266,7 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                       onTap: () => showDialog(
                         context: context,
                         builder: (context) {
-                          return const NewFrequenceWindow();
+                          return const CreateFrequenceWindow();
                         },
                       ),
                     ),

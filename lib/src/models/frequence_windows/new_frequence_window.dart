@@ -1,8 +1,9 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, non_constant_identifier_names
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../functions/frequence_functions.dart';
 import '../../functions/get_user_info.dart';
 import '../../functions/postFunctions.dart';
 import '../loading_window/loading_window.dart';
@@ -19,8 +20,8 @@ class NewFrequenceWindow extends StatefulWidget {
 class _NewFrequenceWindowState extends State<NewFrequenceWindow> {
   @override
   Widget build(BuildContext context) {
-    return const AlertDialog(
-      title: Text(
+    return AlertDialog(
+      title: const Text(
         "Nova frequência",
         style: TextStyle(
           color: Color.fromARGB(255, 51, 0, 67),
@@ -31,7 +32,7 @@ class _NewFrequenceWindowState extends State<NewFrequenceWindow> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Text(
             'content',
             style: TextStyle(
@@ -47,29 +48,27 @@ class _NewFrequenceWindowState extends State<NewFrequenceWindow> {
 }
 
 ///FUNÇÃO QUE CRIA UM POST////
-class CreatePostWindow extends StatefulWidget {
-  const CreatePostWindow({super.key});
+class CreateFrequenceWindow extends StatefulWidget {
+  const CreateFrequenceWindow({super.key});
 
   @override
-  State<CreatePostWindow> createState() => _CreatePostWindowState();
+  State<CreateFrequenceWindow> createState() => _CreateFrequenceWindowState();
 }
 
-class _CreatePostWindowState extends State<CreatePostWindow> {
+class _CreateFrequenceWindowState extends State<CreateFrequenceWindow> {
   final _titleController = TextEditingController();
-  final _contentController = TextEditingController();
-  final _linkController = TextEditingController();
+  final _classController = TextEditingController();
   final user = FirebaseAuth.instance;
-  final postUID = '';
-  String dateTime = DateTime.now().toString();
-  bool isSwitched = false;
+  final frequenceUID = '';
+  String startDate = DateTime.now().toString();
   GetUserInfo userInfo = GetUserInfo();
 
-  PostOptions postOptions = PostOptions();
+  FrequenceOptions frequenceOptions = FrequenceOptions();
 
   @override
   void dispose() {
     _titleController.dispose();
-    _contentController.dispose();
+    _classController.dispose();
     super.dispose();
   }
 
@@ -93,33 +92,6 @@ class _CreatePostWindowState extends State<CreatePostWindow> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Adicionar link',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 51, 0, 67),
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Switch(
-                      thumbColor: const MaterialStatePropertyAll(
-                        Color.fromARGB(255, 221, 199, 248),
-                      ),
-                      value: isSwitched,
-                      onChanged: (value) {
-                        setState(() {
-                          isSwitched = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
                 DialogTextField(
                   expanded: false,
                   keyboardType: TextInputType.text,
@@ -134,20 +106,9 @@ class _CreatePostWindowState extends State<CreatePostWindow> {
                   keyboardType: TextInputType.multiline,
                   enabled: true,
                   useController: true,
-                  controller: _contentController,
+                  controller: _classController,
                   hintText: 'Conteúdo',
                 ),
-                const SizedBox(height: 10),
-                isSwitched == false
-                    ? const SizedBox()
-                    : DialogTextField(
-                        expanded: false,
-                        keyboardType: TextInputType.url,
-                        enabled: true,
-                        useController: true,
-                        controller: _linkController,
-                        hintText: 'Link',
-                      )
               ],
             ),
             actions: [
@@ -160,19 +121,18 @@ class _CreatePostWindowState extends State<CreatePostWindow> {
               TextButton(
                 onPressed: () {
                   if (_titleController.text.isNotEmpty &&
-                          _contentController.text.isNotEmpty &&
-                          isSwitched == false ||
-                      _linkController.text.isNotEmpty) {
+                      _classController.text.isNotEmpty) {
                     showDialog(
                         context: context,
                         builder: (context) {
                           return const LoadingWindow();
                         });
-                    postOptions
-                        .createPostDB(_titleController.text,
-                            _contentController.text, _linkController.text)
+
+                    frequenceOptions
+                        .createFrequenceDB(_titleController.text,
+                            _classController.text, userInfo.user.uid)
                         .whenComplete(() {
-                      showToastMessage(message: 'Comunicado adicionado!');
+                      showToastMessage(message: 'Aula adicionada!');
                       Navigator.of(context).pop();
                     });
                     Navigator.of(context).pop();
@@ -193,49 +153,45 @@ class _CreatePostWindowState extends State<CreatePostWindow> {
 }
 
 ///FUNÇÃO QUE EDITA UM POST////
-class EditPostWindow extends StatefulWidget {
-  const EditPostWindow(
+class EditFrequenceWindow extends StatefulWidget {
+  const EditFrequenceWindow(
       {super.key,
-      required this.postTitle,
-      required this.postUID,
-      required this.postContent,
-      required this.postLink});
+      required this.frequenceTitle,
+      required this.classContent,
+      required this.frequenceUID});
 
-  final String postTitle;
-  final String postContent;
-  final String postLink;
-  final String postUID;
+  final String frequenceTitle;
+  final String classContent;
+
+  final String frequenceUID;
 
   @override
-  State<EditPostWindow> createState() => _EditPostWindowState();
+  State<EditFrequenceWindow> createState() => _EditFrequenceWindowState();
 }
 
-class _EditPostWindowState extends State<EditPostWindow> {
+class _EditFrequenceWindowState extends State<EditFrequenceWindow> {
   late TextEditingController _titleController = TextEditingController();
-  late TextEditingController _contentController = TextEditingController();
+  late TextEditingController _classController = TextEditingController();
 
-  late TextEditingController _linkController = TextEditingController();
   final user = FirebaseAuth.instance;
 
-  String dateTime = DateTime.now().toString();
-  bool isSwitched = false;
+  String startTime = DateTime.now().toString();
+
   GetUserInfo userInfo = GetUserInfo();
-  PostOptions postOptions = PostOptions();
+  FrequenceOptions frequenceOptions = FrequenceOptions();
 
   @override
   void initState() {
-    _titleController = TextEditingController(text: widget.postTitle);
-    _contentController = TextEditingController(text: widget.postContent);
-    _linkController = TextEditingController(text: widget.postLink);
+    _titleController = TextEditingController(text: widget.frequenceTitle);
+    _classController = TextEditingController(text: widget.classContent);
 
-    if (widget.postLink.isNotEmpty) isSwitched = !isSwitched;
     super.initState();
   }
 
   @override
   void dispose() {
     _titleController.dispose();
-    _contentController.dispose();
+    _classController.dispose();
     super.dispose();
   }
 
@@ -247,7 +203,7 @@ class _EditPostWindowState extends State<EditPostWindow> {
         child: SingleChildScrollView(
           child: AlertDialog(
             title: const Text(
-              "Editar comunicado",
+              "Editar aula",
               style: TextStyle(
                 color: Color.fromARGB(255, 51, 0, 67),
                 fontFamily: "PaytoneOne",
@@ -259,34 +215,6 @@ class _EditPostWindowState extends State<EditPostWindow> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Adicionar link',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 51, 0, 67),
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Switch(
-                      thumbColor: const MaterialStatePropertyAll(
-                        Color.fromARGB(255, 221, 199, 248),
-                      ),
-                      value: isSwitched,
-                      onChanged: (value) {
-                        setState(() {
-                          isSwitched = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
                 DialogTextField(
                   expanded: false,
                   keyboardType: TextInputType.text,
@@ -301,20 +229,9 @@ class _EditPostWindowState extends State<EditPostWindow> {
                   keyboardType: TextInputType.multiline,
                   enabled: true,
                   useController: true,
-                  controller: _contentController,
+                  controller: _classController,
                   hintText: 'Conteúdo',
                 ),
-                const SizedBox(height: 10),
-                isSwitched == false
-                    ? const SizedBox()
-                    : DialogTextField(
-                        expanded: false,
-                        keyboardType: TextInputType.url,
-                        enabled: true,
-                        useController: true,
-                        controller: _linkController,
-                        hintText: 'Link',
-                      )
               ],
             ),
             actions: [
@@ -327,25 +244,18 @@ class _EditPostWindowState extends State<EditPostWindow> {
               TextButton(
                 onPressed: () {
                   if (_titleController.text.isNotEmpty &&
-                          _titleController.text != widget.postTitle ||
-                      _contentController.text.isNotEmpty &&
-                          _contentController.text != widget.postContent ||
-                      _linkController.text != widget.postLink &&
-                          (_linkController.text.isNotEmpty ||
-                              isSwitched == false)) {
+                          _titleController.text != widget.frequenceTitle ||
+                      _classController.text.isNotEmpty) {
                     showDialog(
                         context: context,
                         builder: (context) {
                           return const LoadingWindow();
                         });
-                    postOptions
-                        .editPostDB(
-                            _titleController.text,
-                            _contentController.text,
-                            _linkController.text,
-                            widget.postUID)
+                    frequenceOptions
+                        .editFrequenceDB(_titleController.text,
+                            _classController.text, 'Open', widget.frequenceUID)
                         .whenComplete(() {
-                      showToastMessage(message: 'Comunicado atualizado!');
+                      showToastMessage(message: 'Aula atualizado!');
                       Navigator.of(context).pop();
                     });
                     Navigator.of(context).pop();
@@ -367,22 +277,23 @@ class _EditPostWindowState extends State<EditPostWindow> {
 
 ///FUNÇÃO QUE DELETA UM POST////
 
-class DeletePostDBWindow extends StatefulWidget {
-  const DeletePostDBWindow(
+class DeleteFrequenceDBWindow extends StatefulWidget {
+  const DeleteFrequenceDBWindow(
       {super.key,
       required this.Title,
-      required this.Content,
-      required this.postUID});
+      required this.frequenceClass,
+      required this.frequenceUID});
 
   final String Title;
-  final String Content;
-  final String postUID;
+  final String frequenceClass;
+  final String frequenceUID;
 
   @override
-  State<DeletePostDBWindow> createState() => _DeletePostDBWindowState();
+  State<DeleteFrequenceDBWindow> createState() =>
+      _DeleteFrequenceDBWindowState();
 }
 
-class _DeletePostDBWindowState extends State<DeletePostDBWindow> {
+class _DeleteFrequenceDBWindowState extends State<DeleteFrequenceDBWindow> {
   PostOptions postOptions = PostOptions();
 
   @override
@@ -399,7 +310,7 @@ class _DeletePostDBWindowState extends State<DeletePostDBWindow> {
             fontWeight: FontWeight.bold),
       ),
       content: Text(
-        widget.Content,
+        widget.frequenceClass,
         textAlign: TextAlign.start,
         style: const TextStyle(
           color: Color.fromARGB(255, 51, 0, 67),
@@ -421,14 +332,14 @@ class _DeletePostDBWindowState extends State<DeletePostDBWindow> {
                 builder: (context) {
                   return const LoadingWindow();
                 });
-            if (widget.postUID.isNotEmpty) {
-              postOptions.deletePostDB(widget.postUID).whenComplete(() {
-                showToastMessage(message: 'Comunicado excluído com sucesso!');
+            if (widget.frequenceUID.isNotEmpty) {
+              postOptions.deletePostDB(widget.frequenceUID).whenComplete(() {
+                showToastMessage(message: 'Aula excluída com sucesso!');
                 Navigator.of(context).pop();
               });
             }
 
-            showToastMessage(message: 'O post selecionado não possui UID');
+            showToastMessage(message: 'A aula selecionada não possui UID');
             Navigator.of(context).pop();
           },
           child: const Text('Confirmar'),

@@ -25,6 +25,7 @@ class _CreatePostWindowState extends State<CreatePostWindow> {
   final postUID = '';
   String dateTime = DateTime.now().toString();
   bool isSwitched = false;
+  
   GetUserInfo userInfo = GetUserInfo();
 
   PostOptions postOptions = PostOptions();
