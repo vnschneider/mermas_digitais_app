@@ -9,6 +9,7 @@ import 'package:mermas_digitais_app/src/screens/menuPages/frequencia_page.dart';
 import 'package:mermas_digitais_app/src/screens/menuPages/oficinas_page.dart';
 import 'package:mermas_digitais_app/src/screens/menuPages/perfil_page.dart';
 
+import '../models/frequence_windows/new_frequence_window.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
   'auth': (context) => const CheckLogin(),
@@ -20,4 +21,5 @@ Map<String, Widget Function(BuildContext)> routes = {
   'oficinas': (context) => const OficinasPage(),
   'perfil': (context) => const PerfilPage(),
   'navbar': (context) => const Navbar(),
+  'addStudents': (context) => const CreateFrequenceWindow(),
 };

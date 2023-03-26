@@ -24,7 +24,7 @@ class CustomAlertDialog extends StatefulWidget {
   final Text? confirmButtonText;
   final bool asyncType;
   final bool userActions;
-  final Function? function;
+  final Function()? function;
   final bool? NavigatorPOPFunc;
 
   @override
@@ -65,13 +65,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                   child: widget.cancelButtonText ?? const Text('Cancelar'),
                 ),
                 TextButton(
-                  onPressed: widget.NavigatorPOPFunc == true
-                      ? () {
-                          Navigator.of(context).pop();
-                        }
-                      : () {
-                          widget.function;
-                        },
+                  onPressed: widget.function,
                   child: widget.confirmButtonText ?? const Text('Confirmar'),
                 ),
               ]

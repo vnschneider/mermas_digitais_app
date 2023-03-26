@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 final ThemeData themeData = ThemeData(
+  unselectedWidgetColor: const Color.fromARGB(255, 145, 100, 200),
   textTheme: const TextTheme(
       titleLarge: TextStyle(
           color: Color.fromARGB(255, 221, 199, 248),

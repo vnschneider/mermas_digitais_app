@@ -1,11 +1,11 @@
-// ignore_for_file: file_names, non_constant_identifier_names
-
+import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import '../../functions/frequence_functions.dart';
 import '../../functions/get_user_info.dart';
-import '../../functions/postFunctions.dart';
 import '../loading_window/loading_window.dart';
 import '../showToastMessage.dart';
 import '../textFields/dialogs_text_fields.dart';
@@ -47,7 +47,7 @@ class _NewFrequenceWindowState extends State<NewFrequenceWindow> {
   }
 }
 
-///FUNÇÃO QUE CRIA UM POST////
+///FUNÇÃO QUE CRIA UMA AULA////
 class CreateFrequenceWindow extends StatefulWidget {
   const CreateFrequenceWindow({super.key});
 
@@ -56,103 +56,213 @@ class CreateFrequenceWindow extends StatefulWidget {
 }
 
 class _CreateFrequenceWindowState extends State<CreateFrequenceWindow> {
-  final _titleController = TextEditingController();
-  final _classController = TextEditingController();
   final user = FirebaseAuth.instance;
   final frequenceUID = '';
+  bool showStudentsList = false;
   String startDate = DateTime.now().toString();
   GetUserInfo userInfo = GetUserInfo();
-
   FrequenceOptions frequenceOptions = FrequenceOptions();
 
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _classController.dispose();
-    super.dispose();
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
-      builder: (context, snapshot) => Center(
-        child: SingleChildScrollView(
-          child: AlertDialog(
-            title: const Text(
-              "Novo comunicado",
-              style: TextStyle(
-                color: Color.fromARGB(255, 51, 0, 67),
-                fontFamily: "PaytoneOne",
-                fontSize: 20,
-              ),
-            ),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                DialogTextField(
-                  expanded: false,
-                  keyboardType: TextInputType.text,
-                  enabled: true,
-                  useController: true,
-                  controller: _titleController,
-                  hintText: 'Título',
-                ),
-                const SizedBox(height: 10),
-                DialogTextField(
-                  expanded: true,
-                  keyboardType: TextInputType.multiline,
-                  enabled: true,
-                  useController: true,
-                  controller: _classController,
-                  hintText: 'Conteúdo',
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Cancelar'),
-              ),
-              TextButton(
-                onPressed: () {
-                  if (_titleController.text.isNotEmpty &&
-                      _classController.text.isNotEmpty) {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const LoadingWindow();
-                        });
+      builder: (context, snapshot) => StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .orderBy(FieldPath.fromString('name'))
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
+          appBar: const PreferredSize(
+              preferredSize: Size.fromHeight(65),
+              child: CustomAppBar(text: "Nova aula")),
+          body: !snapshot.hasData
+              ? const LoadingWindow()
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        final DocumentSnapshot doc = snapshot.data!.docs[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Card(
+                            color: const Color.fromARGB(255, 221, 199, 248),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      doc['profilePhoto'].toString().isNotEmpty
+                                          ? CachedNetworkImage(
+                                              memCacheHeight: 2000,
+                                              memCacheWidth: 2000,
+                                              progressIndicatorBuilder: (context,
+                                                      url, progress) =>
+                                                  const SizedBox(
+                                                      height: 50,
+                                                      width: 50,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: Color.fromARGB(
+                                                            255, 221, 199, 248),
+                                                      )),
 
-                    frequenceOptions
-                        .createFrequenceDB(_titleController.text,
-                            _classController.text, userInfo.user.uid)
-                        .whenComplete(() {
-                      showToastMessage(message: 'Aula adicionada!');
-                      Navigator.of(context).pop();
-                    });
-                    Navigator.of(context).pop();
-                  } else {
-                    showToastMessage(
-                        message:
-                            'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
-                  }
-                },
-                child: const Text('Adicionar'),
-              ),
-            ],
-          ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(
+                                                BootstrapIcons.person_circle,
+                                                size: 50,
+                                                color: Color.fromARGB(
+                                                    255, 51, 0, 67),
+                                              ),
+                                              // fit: BoxFit.cover,
+                                              imageUrl: doc['profilePhoto'],
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                width: 50,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : CachedNetworkImage(
+                                              progressIndicatorBuilder: (context,
+                                                      url, progress) =>
+                                                  const SizedBox(
+                                                      height: 50,
+                                                      width: 50,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: Color.fromARGB(
+                                                            255, 221, 199, 248),
+                                                      )),
+
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(
+                                                BootstrapIcons.person_circle,
+                                                size: 50,
+                                                color: Color.fromARGB(
+                                                    255, 51, 0, 67),
+                                              ),
+                                              // fit: BoxFit.cover,
+                                              imageUrl:
+                                                  'https://firebasestorage.googleapis.com/v0/b/mermas-digitais-2023.appspot.com/o/fundo-roxo-v.png?alt=media&token=32460753-3c18-46fc-be25-d682f3af5ad6',
+
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                width: 50,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Flexible(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          //  mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Flexible(
+                                              child: FittedBox(
+                                                fit: BoxFit.contain,
+                                                child: Text(
+                                                  doc['name'],
+                                                  maxLines: 1,
+                                                  textAlign: TextAlign.start,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 51, 0, 67),
+                                                      fontFamily: "PaytoneOne",
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          //mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              maxLines: 1,
+                                              textAlign: TextAlign.start,
+                                              overflow: TextOverflow.ellipsis,
+                                              'UserLevel: ${doc['status'].toString()}',
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 51, 0, 67),
+                                                fontFamily: "Poppins",
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      frequenceOptions.addMissignStudent(
+                                          doc['userUID'], frequenceUID);
+                                    },
+                                    child: const Icon(BootstrapIcons.plus),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
         ),
       ),
     );
   }
 }
 
-///FUNÇÃO QUE EDITA UM POST////
+
+///FUNÇÃO QUE EDITA UMA AULA////
 class EditFrequenceWindow extends StatefulWidget {
   const EditFrequenceWindow(
       {super.key,
@@ -275,8 +385,10 @@ class _EditFrequenceWindowState extends State<EditFrequenceWindow> {
   }
 }
 
-///FUNÇÃO QUE DELETA UM POST////
 
+
+///FUNÇÃO QUE DELETA UM POST////
+/*
 class DeleteFrequenceDBWindow extends StatefulWidget {
   const DeleteFrequenceDBWindow(
       {super.key,
@@ -347,4 +459,4 @@ class _DeleteFrequenceDBWindowState extends State<DeleteFrequenceDBWindow> {
       ],
     );
   }
-}
+}*/
