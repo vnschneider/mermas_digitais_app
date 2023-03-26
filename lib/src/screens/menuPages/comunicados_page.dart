@@ -24,7 +24,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
 
   _launchUrl(Uri url) async {
     try {
-      if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      if (await launchUrl(url, mode: LaunchMode.platformDefault)) {
         await canLaunchUrl(url);
       }
     } catch (e) {

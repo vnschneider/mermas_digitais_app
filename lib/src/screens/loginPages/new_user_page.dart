@@ -140,10 +140,10 @@ class _NewUserPageState extends State<NewUserPage> {
                       uploadImage();
                     },
                     child: userInfo.userProfilePhoto != ''
-                        ? CircleAvatar(
+                        ? const CircleAvatar(
                             radius: 80,
-                            backgroundImage:
-                                NetworkImage(userInfo.userProfilePhoto))
+                            backgroundImage: NetworkImage(
+                                "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"))
                         : const CircleAvatar(
                             radius: 60,
                             child: Icon(
