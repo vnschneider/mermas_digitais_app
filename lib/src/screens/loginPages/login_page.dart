@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //TextControllers
+  // Dependências
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   Duration duration = const Duration(seconds: 3);
