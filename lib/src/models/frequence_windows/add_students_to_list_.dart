@@ -7,7 +7,7 @@ import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import '../../functions/frequence_functions.dart';
 import '../../functions/get_user_info.dart';
 import '../loading_window/loading_window.dart';
-import '../showToastMessage.dart';
+import '../../utils/showToastMessage.dart';
 import '../textFields/dialogs_text_fields.dart';
 
 class NewFrequenceWindow extends StatefulWidget {
@@ -49,7 +49,8 @@ class _NewFrequenceWindowState extends State<NewFrequenceWindow> {
 
 ///FUNÇÃO QUE CRIA UMA AULA////
 class CreateFrequenceWindow extends StatefulWidget {
-  const CreateFrequenceWindow({super.key});
+  const CreateFrequenceWindow({super.key, required this.frequenceUID});
+  final String frequenceUID;
 
   @override
   State<CreateFrequenceWindow> createState() => _CreateFrequenceWindowState();
@@ -57,14 +58,10 @@ class CreateFrequenceWindow extends StatefulWidget {
 
 class _CreateFrequenceWindowState extends State<CreateFrequenceWindow> {
   final user = FirebaseAuth.instance;
-  final frequenceUID = '';
-  bool showStudentsList = false;
+
   String startDate = DateTime.now().toString();
   GetUserInfo userInfo = GetUserInfo();
   FrequenceOptions frequenceOptions = FrequenceOptions();
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +70,12 @@ class _CreateFrequenceWindowState extends State<CreateFrequenceWindow> {
       builder: (context, snapshot) => StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('users')
-            .orderBy(FieldPath.fromString('name'))
+            .where(FieldPath.fromString('userLevel'), isEqualTo: 'Aluna')
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
           appBar: const PreferredSize(
               preferredSize: Size.fromHeight(65),
-              child: CustomAppBar(text: "Nova aula")),
+              child: CustomAppBar(text: "Lista de alunas")),
           body: !snapshot.hasData
               ? const LoadingWindow()
               : Padding(
@@ -228,7 +225,7 @@ class _CreateFrequenceWindowState extends State<CreateFrequenceWindow> {
                                               maxLines: 1,
                                               textAlign: TextAlign.start,
                                               overflow: TextOverflow.ellipsis,
-                                              'UserLevel: ${doc['status'].toString()}',
+                                              'UserLevel: ${doc['userLevel'].toString()}',
                                               style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 51, 0, 67),
@@ -244,7 +241,12 @@ class _CreateFrequenceWindowState extends State<CreateFrequenceWindow> {
                                   TextButton(
                                     onPressed: () {
                                       frequenceOptions.addMissignStudent(
-                                          doc['userUID'], frequenceUID);
+                                          doc['userUID'].toString(),
+                                          widget.frequenceUID);
+
+                                      showToastMessage(
+                                          message:
+                                              'Falta adicionada ao usuário');
                                     },
                                     child: const Icon(BootstrapIcons.plus),
                                   ),
@@ -260,7 +262,6 @@ class _CreateFrequenceWindowState extends State<CreateFrequenceWindow> {
     );
   }
 }
-
 
 ///FUNÇÃO QUE EDITA UMA AULA////
 class EditFrequenceWindow extends StatefulWidget {

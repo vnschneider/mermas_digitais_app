@@ -1,13 +1,15 @@
+// ignore_for_file: file_names, unrelated_type_equality_checks
+
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mermas_digitais_app/src/functions/frequence_functions.dart';
-import 'package:mermas_digitais_app/src/models/frequence_windows/new_frequence_window.dart';
+import 'package:mermas_digitais_app/src/models/frequence_windows/add_students_to_list_.dart';
 
 import '../../functions/get_user_info.dart';
 import '../loading_window/loading_window.dart';
-import '../showToastMessage.dart';
+import '../../utils/showToastMessage.dart';
 
 class NewFrequenceAlertDialog extends StatefulWidget {
   const NewFrequenceAlertDialog({super.key});
@@ -28,7 +30,7 @@ class _NewFrequenceAlertDialogState extends State<NewFrequenceAlertDialog> {
 
   Future loadOficinasList() async {
     try {
-      final docRef = FirebaseFirestore.instance.collection('class');
+      final docRef = FirebaseFirestore.instance.collection('classes');
       var querySnap = await docRef.get();
       if (items.isEmpty) {
         for (var queryDocumentSnapshot in querySnap.docs) {
@@ -71,99 +73,119 @@ class _NewFrequenceAlertDialogState extends State<NewFrequenceAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Nova frequencia'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //TEXTFIELD
-          Container(
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 51, 0, 67),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxHeight: 100),
-                child: TextFormField(
-                  keyboardType: TextInputType.name,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Título da aula',
-                    hintStyle: TextStyle(
-                        //fontSize: 15,
-                        fontFamily: 'Poppins',
-                        color: Color.fromARGB(255, 221, 199, 248)),
+    return FutureBuilder(
+      future: loadOficinasList(),
+      builder: (context, snapshot) => AlertDialog(
+        title: const Text(
+          'Nova frequencia',
+          style: TextStyle(
+            fontFamily: "PaytoneOne",
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 51, 0, 67),
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //TEXTFIELD
+            Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 51, 0, 67),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 100),
+                  child: TextFormField(
+                    keyboardType: TextInputType.name,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Título da aula',
+                      hintStyle: TextStyle(
+                          //fontSize: 15,
+                          fontFamily: 'Poppins',
+                          color: Color.fromARGB(255, 221, 199, 248)),
+                    ),
+                    controller: _titleController,
                   ),
-                  controller: _titleController,
                 ),
               ),
             ),
-          ),
 
-          const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-          ///DROP DOWN MENU
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 51, 0, 67),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                alignment: Alignment.center,
-                icon: const Icon(BootstrapIcons.caret_down_fill),
-                isExpanded: true,
-                iconDisabledColor: const Color.fromARGB(255, 221, 199, 248),
-                iconEnabledColor: const Color.fromARGB(255, 221, 199, 248),
-                dropdownColor: const Color.fromARGB(255, 51, 0, 67),
-                value: value,
-                items: items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() => this.value = value),
+            ///DROP DOWN MENU
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 51, 0, 67),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  alignment: Alignment.center,
+                  icon: const Icon(BootstrapIcons.caret_down_fill),
+                  isExpanded: true,
+                  iconDisabledColor: const Color.fromARGB(255, 221, 199, 248),
+                  iconEnabledColor: const Color.fromARGB(255, 221, 199, 248),
+                  dropdownColor: const Color.fromARGB(255, 51, 0, 67),
+                  value: value,
+                  hint: const Text(
+                    'Selecione a oficina',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 221, 199, 248),
+                      fontFamily: "Poppins",
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  items: items.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() => this.value = value),
+                ),
               ),
             ),
+            const SizedBox(height: 20),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancelar'),
           ),
-          const SizedBox(height: 20),
+          TextButton(
+            onPressed: () {
+              if (_titleController.text.isNotEmpty &&
+                  value.toString().isNotEmpty) {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const LoadingWindow();
+                    });
+
+                frequenceOptions
+                    .createFrequenceDB(_titleController.text, value,
+                        userInfo.user.uid, frequenceUID)
+                    .then((value) {
+                  showToastMessage(message: 'Aula adicionada!');
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          CreateFrequenceWindow(frequenceUID: value)));
+                });
+                Navigator.of(context).pop();
+              } else {
+                showToastMessage(
+                    message:
+                        'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
+              }
+            },
+            child: const Text('Adicionar'),
+          ),
         ],
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Cancelar'),
-        ),
-        TextButton(
-          onPressed: () {
-            if (_titleController.text.isNotEmpty &&
-                value.toString().isNotEmpty) {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const LoadingWindow();
-                  });
-
-              frequenceOptions
-                  .createFrequenceDB(
-                      _titleController.text, value, userInfo.user.uid)
-                  .whenComplete(() {
-                showToastMessage(message: 'Aula adicionada!');
-                Navigator.of(context).pushNamed('addStudents');
-
-                frequenceOptions.getFrequenceUID(frequenceUID);
-              });
-              //Navigator.of(context).pop();
-            } else {
-              showToastMessage(
-                  message:
-                      'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
-            }
-          },
-          child: const Text('Adicionar'),
-        ),
-      ],
     );
   }
 }

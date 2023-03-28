@@ -9,7 +9,7 @@ import 'package:mermas_digitais_app/src/models/frequence_windows/frequenceStuden
 import '../../functions/get_user_info.dart';
 import '../loading_window/loading_window.dart';
 import '../searchAppBar/searchAppBar.dart';
-import '../showToastMessage.dart';
+import '../../utils/showToastMessage.dart';
 
 class FrequenceList extends StatefulWidget {
   const FrequenceList({super.key});
@@ -364,7 +364,7 @@ class _FrequenceListState extends State<FrequenceList> {
                                                           const Expanded(
                                                               child:
                                                                   SizedBox()),
-                                                          userInfo.userStatus ==
+                                                          userInfo.userLevel ==
                                                                   'Admin'
                                                               ? TextButton(
                                                                   onPressed:

@@ -8,7 +8,7 @@ import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/post_menu_windows/post_menu_windows.dart';
-import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
+import 'package:mermas_digitais_app/src/utils/showToastMessage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ComunicadosPage extends StatefulWidget {
@@ -158,7 +158,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                                                   ),
                                                 )
                                               : const SizedBox(),
-                                          userInfo.userStatus == 'Admin'
+                                          userInfo.userLevel == 'Admin'
                                               ? Row(
                                                   children: [
                                                     TextButton(
@@ -221,7 +221,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
                         );
                       }),
             ),
-            floatingActionButton: userInfo.userStatus == 'Admin'
+            floatingActionButton: userInfo.userLevel == 'Admin'
                 ? SpeedDial(
                     heroTag: 'postTag',
                     tooltip: 'Menu',

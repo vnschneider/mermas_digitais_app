@@ -13,7 +13,7 @@ import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/profileUserWindows/profile_user_windows.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
+import 'package:mermas_digitais_app/src/utils/showToastMessage.dart';
 import 'package:mermas_digitais_app/src/models/profileUserWindows/students_list_window/students_list_window.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -264,7 +264,7 @@ class _PerfilPageState extends State<PerfilPage> {
                   ),
                 ),
         ),
-        floatingActionButton: userInfo.userStatus == 'Admin'
+        floatingActionButton: userInfo.userLevel == 'Admin'
             ? FloatingActionButton(
                 tooltip: 'Lista de usuários',
                 elevation: 2,

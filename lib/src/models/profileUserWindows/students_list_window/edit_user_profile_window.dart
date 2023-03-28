@@ -10,12 +10,12 @@ class EditUserProfileWindow extends StatelessWidget {
   const EditUserProfileWindow(
       {super.key,
       required this.userName,
-      required this.userStatus,
+      required this.userLevel,
       required this.userEmail});
 
   final String userName;
   final String userEmail;
-  final String userStatus;
+  final String userLevel;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class EditUserProfileWindow extends StatelessWidget {
               ),
             ),
             Text(
-              userStatus,
+              userLevel,
               style: const TextStyle(
                 color: Color.fromARGB(255, 51, 0, 67),
                 fontFamily: "Poppins",

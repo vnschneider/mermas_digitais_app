@@ -7,7 +7,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/profileUserWindows/students_list_window/edit_user_profile_window.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/showToastMessage.dart';
+import 'package:mermas_digitais_app/src/utils/showToastMessage.dart';
 
 class StudentsList extends StatefulWidget {
   const StudentsList({super.key});
@@ -178,7 +178,7 @@ class _StudentsListState extends State<StudentsList> {
                                               ),
                                             ),
                                             const SizedBox(width: 8),
-                                            userInfo.userStatus == 'Admin'
+                                            userInfo.userLevel == 'Admin'
                                                 ? TextButton(
                                                     onPressed: () {
                                                       showDialog(
@@ -189,8 +189,8 @@ class _StudentsListState extends State<StudentsList> {
                                                                 doc['name'],
                                                             userEmail:
                                                                 doc['email'],
-                                                            userStatus:
-                                                                doc['status'],
+                                                            userLevel: doc[
+                                                                'userLevel'],
                                                           );
                                                         },
                                                       );
@@ -345,7 +345,7 @@ class _StudentsListState extends State<StudentsList> {
                                                     textAlign: TextAlign.start,
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    'UserLevel: ${doc['status'].toString()}',
+                                                    'UserLevel: ${doc['userLevel'].toString()}',
                                                     style: const TextStyle(
                                                       color: Color.fromARGB(
                                                           255, 51, 0, 67),
@@ -366,7 +366,6 @@ class _StudentsListState extends State<StudentsList> {
                             ),
                           ),
                         );
-                 
                       }),
                 ),
         ),

@@ -16,7 +16,7 @@ import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dar
 import 'package:mermas_digitais_app/src/models/snack_bar/snack_bar.dart';
 import 'package:mermas_digitais_app/src/models/textFields/custom_text_field.dart';
 
-import '../../models/showToastMessage.dart';
+import '../../utils/showToastMessage.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key});
@@ -58,11 +58,12 @@ class _NewUserPageState extends State<NewUserPage> {
         .update({
       'name': name,
       'email': user.currentUser!.email,
+      'userAbsence': 0,
+      'userUID': user.currentUser!.uid,
       'frequence': 1.0,
-      'status': 'Aluna',
+      'userLevel': 'Aluna',
       'profilePhoto': userInfo.userProfilePhoto,
     });
-    print(user.currentUser!.uid);
   }
 
   void uploadImage() async {

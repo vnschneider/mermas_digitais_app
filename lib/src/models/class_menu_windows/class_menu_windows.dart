@@ -1,21 +1,21 @@
 // ignore_for_file: file_names
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
+import '../../functions/classesFunctions.dart';
 import '../../functions/get_user_info.dart';
-import '../showToastMessage.dart';
+import '../../utils/showToastMessage.dart';
 import '../textFields/dialogs_text_fields.dart';
 
-class NewOficinaWindow extends StatefulWidget {
-  const NewOficinaWindow({super.key});
+class NewClassWindow extends StatefulWidget {
+  const NewClassWindow({super.key});
 
   @override
-  State<NewOficinaWindow> createState() => _NewOficinaWindowState();
+  State<NewClassWindow> createState() => _NewClassWindowState();
 }
 
-class _NewOficinaWindowState extends State<NewOficinaWindow> {
+class _NewClassWindowState extends State<NewClassWindow> {
   final _titleController = TextEditingController();
   final _descriController = TextEditingController();
   final _classContentController = TextEditingController();
@@ -23,19 +23,7 @@ class _NewOficinaWindowState extends State<NewOficinaWindow> {
   final user = FirebaseAuth.instance;
   String dateTime = DateTime.now().toString();
   GetUserInfo userInfo = GetUserInfo();
-
-  Future createPostDB(String title, content, link) async {
-    await FirebaseFirestore.instance
-        .collection('class')
-        .doc(_titleController.text)
-        .set({
-      'classTitle': title,
-      'classContent': content,
-      'classLink': link,
-      'autor':
-          'uid: ${user.currentUser!.uid} email: ${user.currentUser!.email}',
-    });
-  }
+  ClassOptions classOptions = ClassOptions();
 
   @override
   void dispose() {
@@ -110,7 +98,8 @@ class _NewOficinaWindowState extends State<NewOficinaWindow> {
                         builder: (context) {
                           return const LoadingWindow();
                         });
-                    createPostDB(_titleController.text,
+                    classOptions
+                        .createClassDB(_titleController.text,
                             _classContentController.text, _linkController.text)
                         .whenComplete(() {
                       showToastMessage(message: 'Oficina adicionada!');
@@ -128,6 +117,58 @@ class _NewOficinaWindowState extends State<NewOficinaWindow> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DeleteClassDBWindow extends StatefulWidget {
+  const DeleteClassDBWindow({super.key, required this.classUID});
+  final String classUID;
+
+  @override
+  State<DeleteClassDBWindow> createState() => _DeleteClassDBWindowState();
+}
+
+class _DeleteClassDBWindowState extends State<DeleteClassDBWindow> {
+  ClassOptions classOptions = ClassOptions();
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: AlertDialog(
+        title: const Text(
+          "Deseja apagar esta oficina?",
+          style: TextStyle(
+            color: Color.fromARGB(255, 51, 0, 67),
+            fontFamily: "PaytoneOne",
+            fontSize: 20,
+          ),
+        ),
+        content: Text(
+          'Você está prestes a excluir o item: ${widget.classUID.toString()}. Atenção! Essa alteração não poderá ser desfeita ',
+          style: const TextStyle(
+            color: Color.fromARGB(255, 51, 0, 67),
+            fontFamily: "Poppins",
+            fontSize: 16,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              classOptions.deleteClassDB(widget.classUID).whenComplete(() {
+                showToastMessage(message: 'Oficina excluída!');
+              });
+              Navigator.of(context).pop();
+            },
+            child: const Text('Adicionar'),
+          ),
+        ],
       ),
     );
   }

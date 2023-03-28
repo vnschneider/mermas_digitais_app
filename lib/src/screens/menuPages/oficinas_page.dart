@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
-import 'package:mermas_digitais_app/src/models/new_class_window/new_class_window.dart';
+import 'package:mermas_digitais_app/src/models/class_menu_windows/class_menu_windows.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../models/showToastMessage.dart';
+import '../../utils/showToastMessage.dart';
 
 class OficinasPage extends StatefulWidget {
   const OficinasPage({super.key});
@@ -36,7 +36,7 @@ class _OficinasPageState extends State<OficinasPage> {
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('class')
+            .collection('classes')
             .orderBy(FieldPath.fromString('classTitle'))
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
@@ -174,8 +174,29 @@ class _OficinasPageState extends State<OficinasPage> {
                                             ),
                                           ),
                                         ),
+                                        const Expanded(child: SizedBox()),
+                                        userInfo.userLevel == 'Admin'
+                                            ? TextButton(
+                                                onPressed: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return DeleteClassDBWindow(
+                                                        classUID:
+                                                            doc['classUID'],
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                child: const Icon(
+                                                  BootstrapIcons.trash3,
+                                                  color: Color.fromARGB(
+                                                      255, 51, 0, 67),
+                                                ),
+                                              )
+                                            : const SizedBox(),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -185,7 +206,7 @@ class _OficinasPageState extends State<OficinasPage> {
                       );
                     }),
           ),
-          floatingActionButton: userInfo.userStatus == 'Admin'
+          floatingActionButton: userInfo.userLevel == 'Admin'
               ? FloatingActionButton(
                   tooltip: 'Nova oficina',
                   elevation: 2,
@@ -193,7 +214,7 @@ class _OficinasPageState extends State<OficinasPage> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return const NewOficinaWindow();
+                        return const NewClassWindow();
                       },
                     );
                   },
