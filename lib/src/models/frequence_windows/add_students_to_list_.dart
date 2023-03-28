@@ -68,10 +68,7 @@ class _CreateFrequenceWindowState extends State<CreateFrequenceWindow> {
     return FutureBuilder(
       future: userInfo.getUserInfo(),
       builder: (context, snapshot) => StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('users')
-            .where(FieldPath.fromString('userLevel'), isEqualTo: 'Aluna')
-            .snapshots(),
+        stream: FirebaseFirestore.instance.collection('users').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => Scaffold(
           appBar: const PreferredSize(
               preferredSize: Size.fromHeight(65),

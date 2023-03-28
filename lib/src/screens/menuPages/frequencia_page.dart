@@ -183,30 +183,27 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      userInfo.userFrequence >= 0.25
-                                          ? const Text(
-                                              'Parabéns pelo seu empenho!',
-                                              style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 51, 0, 67),
-                                                fontFamily: "Poppins",
-                                                fontSize: 15,
-                                              ),
-                                            )
-                                          : const Expanded(
-                                              child: Text(
-                                                maxLines: 2,
-                                                textAlign: TextAlign.start,
-                                                overflow: TextOverflow.clip,
-                                                'Cuidado, você corre o risco de ser reprovada. :(',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 51, 0, 67),
-                                                  fontFamily: "Poppins",
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
+                                      Expanded(
+                                        child: Text(
+                                          userInfo.userFrequence >= 0.75
+                                              ? 'Parabéns pelo seu empenho.'
+                                              : userInfo.userFrequence >= 0.50
+                                                  ? 'Cuidado! Você está se aproximando do limite tolerável de faltas.'
+                                                  : userInfo.userFrequence >=
+                                                          0.25
+                                                      ? 'Está matematicamente reprovada. :('
+                                                      : '',
+                                          maxLines: 2,
+                                          textAlign: TextAlign.start,
+                                          overflow: TextOverflow.clip,
+                                          style: const TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 51, 0, 67),
+                                            fontFamily: "Poppins",
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   const SizedBox(height: 100),
