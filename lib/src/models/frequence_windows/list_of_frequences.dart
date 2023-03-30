@@ -48,7 +48,7 @@ class _FrequenceListState extends State<FrequenceList> {
         for (var queryDocumentSnapshot in querySnap.docs) {
           Map<String, dynamic> data = queryDocumentSnapshot.data();
 
-          _suggestionsList.add(data['frequenceTitle']);
+          _suggestionsList.add(data['frequenceTitle'].toString());
         }
       }
     } catch (e) {
