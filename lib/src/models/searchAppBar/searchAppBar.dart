@@ -155,6 +155,7 @@ class CustomSearchDelegate extends SearchDelegate {
           var result = matchQuery[index];
           return ListTile(
             title: Text(result),
+        
           );
         });
   }

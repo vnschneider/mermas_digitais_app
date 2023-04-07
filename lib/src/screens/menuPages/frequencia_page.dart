@@ -5,12 +5,11 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mermas_digitais_app/src/functions/frequence_functions.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
+import 'package:mermas_digitais_app/src/models/frequence_windows/frequence_details_window.dart';
 import 'package:mermas_digitais_app/src/models/frequence_windows/list_of_frequences.dart';
 import 'package:mermas_digitais_app/src/models/frequence_windows/new_frequence_AlerDialog.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
-import '../../utils/showToastMessage.dart';
 
 class FrequenciaPage extends StatefulWidget {
   const FrequenciaPage({super.key});
@@ -28,11 +27,12 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
 
   getFrequence(userAbsence, userUID) {
     //userInfo.getTotalClasses();
+
     userFrequence =
         ((userInfo.totalClasses - userAbsence) / userInfo.totalClasses);
     print('Frequencia do usuário!!!!!!:   $userFrequence');
-
     frequenceOptions.updateFrequenceUser(userUID, userFrequence);
+
     return userFrequence;
   }
 
@@ -153,7 +153,13 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                     animationDuration: 1000,
                                     lineHeight: 30,
                                     percent: getFrequence(userInfo.userAbsence,
-                                        userInfo.user.uid), //_userFrequence,
+                                                userInfo.user.uid) <=
+                                            0
+                                        ? 0.0
+                                        : getFrequence(
+                                            userInfo.userAbsence,
+                                            userInfo
+                                                .user.uid), //_userFrequence,
                                     progressColor:
                                         const Color.fromARGB(255, 51, 0, 67),
                                     backgroundColor: const Color.fromARGB(
@@ -217,9 +223,11 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                         backgroundColor: MaterialStateProperty.all(
                                             const Color.fromARGB(255, 51, 0, 67))),*/
                                     onPressed: () {
-                                      showToastMessage(
-                                          message:
-                                              'Em breve você poderá acessar esta função');
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return const FrequenceDetailsWindows();
+                                          });
                                     },
                                     child: const Text(
                                       '   Detalhes   ',

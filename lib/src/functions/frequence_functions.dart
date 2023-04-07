@@ -13,7 +13,7 @@ class FrequenceOptions {
   final user = FirebaseAuth.instance;
   final String frequenceUID = '';
   late int totalClasses;
-  late int userAbsence = 0;
+  late int userAbsence;
 
   Future getUserName(userUID) async {
     final docRef = FirebaseFirestore.instance.collection('users').doc(userUID);
@@ -34,6 +34,15 @@ class FrequenceOptions {
     } catch (e) {
       print('Erro ao adicionar frequencia ao usuário: $e');
     }
+  }
+
+  Future getUserAbsence(studentUID) async {
+    final docRef =
+        FirebaseFirestore.instance.collection('users').doc(studentUID);
+    final doc = await docRef.get();
+    final data = doc.data() as Map<String, dynamic>;
+    int userAbsence = data['userAbsence'];
+    return userAbsence;
   }
 
   Future removeMissinngClass(userUID) async {
@@ -80,9 +89,15 @@ class FrequenceOptions {
   }
 
   Future updateFrequenceUser(userUID, double userFrequence) async {
-    await FirebaseFirestore.instance.collection('users').doc(userUID).update({
-      'frequence': userFrequence,
-    });
+    if (userFrequence <= 0.0) {
+      await FirebaseFirestore.instance.collection('users').doc(userUID).update({
+        'frequence': 0.0,
+      });
+    } else {
+      await FirebaseFirestore.instance.collection('users').doc(userUID).update({
+        'frequence': userFrequence,
+      });
+    }
   }
 
   Future addTotalFrequenceDB() async {
@@ -146,8 +161,8 @@ class FrequenceOptions {
       'frequenceUID': frequenceUID,
     });
 
-    await getMissinngClassesUser(studentUID)
-        .then((value) => userAbsence = value.toInt())
+    await getUserAbsence(studentUID)
+        .then((value) => userAbsence = value)
         .whenComplete(() {
       FirebaseFirestore.instance
           .collection('users')
@@ -157,20 +172,24 @@ class FrequenceOptions {
   }
 
   Future removeMissignStudent(studentUID, frequenceUID) async {
-    await FirebaseFirestore.instance
-        .collection('frequences')
-        .doc(frequenceUID)
-        .collection('Students')
-        .doc(studentUID)
-        .delete();
-    await getMissinngClassesUser(studentUID)
+    await getUserAbsence(studentUID)
         .then((value) => userAbsence = value.toInt())
         .whenComplete(() {
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(studentUID)
-          .update({'userAbsence': userAbsence - 1});
-    });
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(studentUID)
+              .update({'userAbsence': userAbsence - 1});
+        })
+        .whenComplete(() => FirebaseFirestore.instance
+            .collection('frequences')
+            .doc(frequenceUID)
+            .collection('Students')
+            .doc(studentUID)
+            .delete())
+        .whenComplete(() => FirebaseFirestore.instance
+            .collection('frequences')
+            .doc(frequenceUID)
+            .delete());
   }
 
   Future editFrequenceDB(
