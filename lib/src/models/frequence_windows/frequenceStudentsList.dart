@@ -13,8 +13,24 @@ class _FrequenceStudentsListState extends State<FrequenceStudentsList> {
   @override
   Widget build(BuildContext context) {
     return const AlertDialog(
-      title: Text('Lista de alunos'),
-      content: Text('alunos'),
+      title: Text(
+        'Lista de alunos',
+        style: TextStyle(
+          color: Color.fromARGB(255, 51, 0, 67),
+          fontFamily: "Poppins",
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+      content: Text(
+        'Em breve...',
+        style: TextStyle(
+          color: Color.fromARGB(255, 51, 0, 67),
+          fontFamily: "Poppins",
+          //fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
     );
   }
 }

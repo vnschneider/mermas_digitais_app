@@ -11,6 +11,8 @@ import 'package:mermas_digitais_app/src/models/frequence_windows/new_frequence_A
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../utils/showToastMessage.dart';
+
 class FrequenciaPage extends StatefulWidget {
   const FrequenciaPage({super.key});
 
@@ -223,11 +225,14 @@ class _FrequenciaPageState extends State<FrequenciaPage> {
                                         backgroundColor: MaterialStateProperty.all(
                                             const Color.fromARGB(255, 51, 0, 67))),*/
                                     onPressed: () {
-                                      showDialog(
+                                      /*showDialog(
                                           context: context,
                                           builder: (context) {
                                             return const FrequenceDetailsWindows();
-                                          });
+                                          });*/
+                                      showToastMessage(
+                                          message:
+                                              'Em breve você poderá ver mais detalhes');
                                     },
                                     child: const Text(
                                       '   Detalhes   ',
