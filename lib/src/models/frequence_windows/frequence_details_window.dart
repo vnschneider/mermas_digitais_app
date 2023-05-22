@@ -1,15 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:mermas_digitais_app/src/models/alertDialogs/alertDialogs.dart';
-
 import '../../functions/get_user_info.dart';
 import '../loading_window/loading_window.dart';
 
 class FrequenceDetailsWindows extends StatefulWidget {
-  const FrequenceDetailsWindows({super.key, this.userUID});
-  final userUID;
+  const FrequenceDetailsWindows({super.key, required this.userUID});
+  final String userUID;
 
   @override
   State<FrequenceDetailsWindows> createState() =>

@@ -5,7 +5,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mermas_digitais_app/src/functions/frequence_functions.dart';
 import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
-import 'package:mermas_digitais_app/src/models/frequence_windows/frequence_details_window.dart';
 import 'package:mermas_digitais_app/src/models/frequence_windows/list_of_frequences.dart';
 import 'package:mermas_digitais_app/src/models/frequence_windows/new_frequence_AlerDialog.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
