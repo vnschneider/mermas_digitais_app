@@ -6,6 +6,6 @@ import 'package:mermas_digitais_app/src/screens/menuPages/perfil_page.dart';
 const telas = [
   ComunicadosPage(),
   OficinasPage(),
-  FrequenciaPage(),
+ // FrequenciaPage(),
   PerfilPage(),
 ];

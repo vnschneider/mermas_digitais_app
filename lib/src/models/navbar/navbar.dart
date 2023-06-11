@@ -58,12 +58,15 @@ class _NavbarState extends State<Navbar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: telas[indexOf],
+      
       bottomNavigationBar: ClipRRect(
+      
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(22.0),
           topRight: Radius.circular(22.0),
         ),
         child: BottomNavigationBar(
+          
           enableFeedback: true,
           iconSize: 36,
           selectedFontSize: 10,
@@ -93,12 +96,12 @@ class _NavbarState extends State<Navbar> {
               tooltip: 'Oficinas',
               activeIcon: activeIcon(widgetIcons[1]),
             ),
-            BottomNavigationBarItem(
+            /*BottomNavigationBarItem(
               tooltip: 'Frequência',
               icon: Icon(widgetIcons[2]),
               activeIcon: activeIcon(widgetIcons[2]),
               label: '',
-            ),
+            ),*/
             BottomNavigationBarItem(
               tooltip: 'Perfil',
               icon: Icon(widgetIcons[3]),
