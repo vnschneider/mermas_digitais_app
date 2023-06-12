@@ -6,8 +6,6 @@ import 'package:mermas_digitais_app/src/functions/get_user_info.dart';
 import 'package:mermas_digitais_app/src/models/app_bar/app_bar.dart';
 import 'package:mermas_digitais_app/src/models/loading_window/loading_window.dart';
 import 'package:mermas_digitais_app/src/models/class_menu_windows/class_menu_windows.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../utils/showToastMessage.dart';
 
 class OficinasPage extends StatefulWidget {
@@ -20,15 +18,7 @@ class OficinasPage extends StatefulWidget {
 class _OficinasPageState extends State<OficinasPage> {
   GetUserInfo userInfo = GetUserInfo();
 
-  _launchUrl(Uri url) async {
-    try {
-      if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
-        await canLaunchUrl(url);
-      }
-    } catch (e) {
-      showToastMessage(message: 'Não foi possível abrir o link.');
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +120,10 @@ class _OficinasPageState extends State<OficinasPage> {
                                                       const Color.fromARGB(
                                                           255, 51, 0, 67))),*/
                                           onPressed: () {
-                                            _launchUrl(Uri.parse(
-                                                doc['classLink'].toString()));
+                                            Navigator.of(context).pushNamed(
+                                                'classPage',
+                                                arguments: doc['classUID']);
+                                       
                                           },
                                           child: const Text(
                                             'Material de apoio',

@@ -12,6 +12,6 @@ Future showToastMessage({required String message}) async {
     textColor: const Color.fromARGB(255, 51, 0, 67),
     backgroundColor: const Color.fromARGB(255, 221, 199, 248),
     msg: message,
-    fontSize: 18,
+    fontSize: 14,
   );
 }

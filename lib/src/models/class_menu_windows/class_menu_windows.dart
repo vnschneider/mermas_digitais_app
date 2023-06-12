@@ -19,7 +19,6 @@ class _NewClassWindowState extends State<NewClassWindow> {
   final _titleController = TextEditingController();
   final _descriController = TextEditingController();
   final _classContentController = TextEditingController();
-  final _linkController = TextEditingController();
   final user = FirebaseAuth.instance;
   String dateTime = DateTime.now().toString();
   GetUserInfo userInfo = GetUserInfo();
@@ -30,7 +29,6 @@ class _NewClassWindowState extends State<NewClassWindow> {
     _titleController.dispose();
     _descriController.dispose();
     _classContentController.dispose();
-    _linkController.dispose();
     super.dispose();
   }
 
@@ -70,15 +68,6 @@ class _NewClassWindowState extends State<NewClassWindow> {
                   controller: _classContentController,
                   hintText: 'Descrição',
                 ),
-                const SizedBox(height: 10),
-                DialogTextField(
-                  expanded: false,
-                  keyboardType: TextInputType.url,
-                  enabled: true,
-                  useController: true,
-                  controller: _linkController,
-                  hintText: 'Link do material de apoio',
-                ),
               ],
             ),
             actions: [
@@ -91,16 +80,15 @@ class _NewClassWindowState extends State<NewClassWindow> {
               TextButton(
                 onPressed: () {
                   if (_titleController.text.isNotEmpty &&
-                      _classContentController.text.isNotEmpty &&
-                      _linkController.text.isNotEmpty) {
+                      _classContentController.text.isNotEmpty) {
                     showDialog(
                         context: context,
                         builder: (context) {
                           return const LoadingWindow();
                         });
                     classOptions
-                        .createClassDB(_titleController.text,
-                            _classContentController.text, _linkController.text)
+                        .createClassDB(
+                            _titleController.text, _classContentController.text)
                         .whenComplete(() {
                       showToastMessage(message: 'Oficina adicionada!');
                       Navigator.of(context).pop();
@@ -169,6 +157,127 @@ class _DeleteClassDBWindowState extends State<DeleteClassDBWindow> {
             child: const Text('Adicionar'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+//NewClassContentWindow
+class NewClassContentWindow extends StatefulWidget {
+  const NewClassContentWindow({super.key, required this.classUID});
+  final String classUID;
+
+  @override
+  State<NewClassContentWindow> createState() => _NewClassContentWindowState();
+}
+
+class _NewClassContentWindowState extends State<NewClassContentWindow> {
+  final _titleController = TextEditingController();
+  final _descriController = TextEditingController();
+  final _classContentController = TextEditingController();
+  final _linkController = TextEditingController();
+  final user = FirebaseAuth.instance;
+  String dateTime = DateTime.now().toString();
+  GetUserInfo userInfo = GetUserInfo();
+  ClassOptions classOptions = ClassOptions();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriController.dispose();
+    _classContentController.dispose();
+    _linkController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: userInfo.getUserInfo(),
+      builder: (context, snapshot) => Center(
+        child: SingleChildScrollView(
+          child: AlertDialog(
+            title: const Text(
+              "Novo material de apoio",
+              style: TextStyle(
+                color: Color.fromARGB(255, 51, 0, 67),
+                fontFamily: "PaytoneOne",
+                fontSize: 20,
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                DialogTextField(
+                  expanded: false,
+                  keyboardType: TextInputType.text,
+                  enabled: true,
+                  useController: true,
+                  controller: _titleController,
+                  hintText: 'Título da aula',
+                ),
+                const SizedBox(height: 10),
+                DialogTextField(
+                  expanded: true,
+                  keyboardType: TextInputType.multiline,
+                  enabled: true,
+                  useController: true,
+                  controller: _classContentController,
+                  hintText: 'Descrição',
+                ),
+                const SizedBox(height: 10),
+                DialogTextField(
+                  expanded: false,
+                  keyboardType: TextInputType.url,
+                  enabled: true,
+                  useController: true,
+                  controller: _linkController,
+                  hintText: 'Link do material',
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_titleController.text.isNotEmpty &&
+                      _classContentController.text.isNotEmpty &&
+                      _linkController.text.isNotEmpty) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const LoadingWindow();
+                        });
+                    classOptions
+                        .createClassContentDB(
+                            widget.classUID,
+                            _titleController.text,
+                            _classContentController.text,
+                            _linkController.text,
+                            userInfo.userName)
+                        .whenComplete(() {
+                      showToastMessage(
+                          message: 'Marterial de apoio adicionado!');
+                      Navigator.of(context).pop();
+                    });
+                    Navigator.of(context).pop();
+                  } else {
+                    showToastMessage(
+                        message:
+                            'Algo deu errado! Tenha certeza de que preencheu os campos corretamente.');
+                  }
+                },
+                child: const Text('Adicionar'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
